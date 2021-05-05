@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { CSSProperties, useEffect, useLayoutEffect, useState } from 'react';
 import React from 'react';
 import { FunctionComponent } from 'react';
-import { createUseStyles } from 'react-jss';
+import { createUseStyles, DefaultTheme } from 'react-jss';
 import { createClassName } from '../modules/join';
 
 interface ICardInfo__Props {
@@ -79,14 +79,10 @@ export const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
 interface IHebubMenu__Props {
 	refNode?: React.RefObject<HTMLDivElement>;
 	children: React.ReactNode;
-	childrenStyle: {
-		childrenWidth: number;
-		childrenHeight: number;
-	};
 }
 
 interface IPos {
-	pos: DOMRect | undefined;
+	posParent: DOMRect | undefined;
 }
 interface IPosY extends IPos {
 	childrenHeight: number;
@@ -94,62 +90,57 @@ interface IPosY extends IPos {
 interface IPosX extends IPos {
 	childrenWidth: number;
 }
-export const ToolTipWrapper = ({
-	refNode,
-	children,
-	childrenStyle,
-}: IHebubMenu__Props) => {
-	let pos = refNode?.current?.getBoundingClientRect();
-	let childrenWidth = childrenStyle.childrenWidth;
-	let childrenHeight = childrenStyle.childrenHeight;
-	const [yPosChildren] = useState(() => yPos({ pos, childrenHeight }));
-	const [xPosChildren] = useState(() => xPos({ pos, childrenWidth }));
+export const ToolTipWrapper = ({ refNode, children }: IHebubMenu__Props) => {
+	let posParent = refNode?.current?.getBoundingClientRect();
+	const [yPosChildren, setYPosChildren] = useState(0);
+	const [xPosChildren, setXPosChildren] = useState(0);
 
-	function yPos({ pos, childrenHeight }: IPosY): number {
+	// let childrenWidth = childrenStyle.childrenWidth;
+	// let childrenHeight = childrenStyle.childrenHeight;
+
+	function yPos({ posParent, childrenHeight }: IPosY): number {
 		let ret = 0;
-		if (pos?.y !== undefined) {
-			if (pos.y < childrenHeight) {
-				ret = pos.height;
+		if (posParent?.y !== undefined) {
+			if (posParent.y < childrenHeight) {
+				ret = posParent.height;
 			} else {
 				ret = -childrenHeight;
 			}
 		}
 		return ret;
 	}
-	function xPos({ pos, childrenWidth }: IPosX): number {
+	function xPos({ posParent, childrenWidth }: IPosX): number {
 		let ret = 0;
-		if (pos?.x !== undefined) {
-			if (pos.x < childrenWidth) {
-				ret = pos.width;
+		if (posParent?.x !== undefined) {
+			if (posParent.x < childrenWidth) {
+				ret = posParent.width;
 			} else {
 				ret = -childrenWidth;
 			}
 		}
 		return ret;
 	}
+	let className = 'wrapper-item';
 
-	let style = createUseStyles(
-		{
-			menu: {
-				display: 'flex',
-				flexDirection: 'column',
-				minWidth: childrenWidth + 'px',
-				minHeight: childrenHeight + 'px',
-				// backgroundColor: 'red',
-				justifyContent: 'center',
-				'&>span': {
-					textAlign: 'center',
-					marign: '2px',
-				},
-				position: 'absolute',
-				top: `${yPosChildren}px`,
-				left: `${xPosChildren}px`,
-			},
-		},
-		{ name: 'Parent' }
+	useLayoutEffect(() => {
+		let elem = document.querySelector(`.${className}`);
+		let paramElem = elem?.getBoundingClientRect();
+		if (paramElem) {
+			let childrenHeight = paramElem.height;
+			let childrenWidth = paramElem.width;
+			setYPosChildren(yPos({ posParent, childrenHeight }));
+			setXPosChildren(xPos({ posParent, childrenWidth }));
+		}
+	}, []);
+	let wrapper: CSSProperties = {
+		position: 'absolute',
+		top: `${yPosChildren}px`,
+		left: `${xPosChildren}px`,
+	};
+
+	return (
+		<div className={className} style={wrapper}>
+			{children}
+		</div>
 	);
-	let className = style();
-	let join = createClassName(className);
-
-	return <div className={join('menu')}>{children}</div>;
 };

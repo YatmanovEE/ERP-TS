@@ -24,8 +24,6 @@ interface IRefWrapper__Props {
 
 const RefWrapper = ({ elem }: IRefWrapper__Props) => {
 	const [state, setState] = useState(false);
-	let childrenWidth = 100;
-	let childrenHeight = 200;
 	let style = createUseStyles({
 		wrapper: {
 			position: 'absolute',
@@ -55,9 +53,9 @@ const RefWrapper = ({ elem }: IRefWrapper__Props) => {
 			top: '50%',
 		},
 		child: {
-			width: childrenWidth + 'px',
-			height: childrenHeight + 'px',
 			backgroundColor: 'yellow',
+			overflowY: 'auto',
+			padding: '10px',
 		},
 	});
 	let join = createClassName(style());
@@ -70,11 +68,11 @@ const RefWrapper = ({ elem }: IRefWrapper__Props) => {
 				onClick={() => setState(!state)}
 			>
 				{state && (
-					<ToolTipWrapper
-						refNode={ref}
-						childrenStyle={{ childrenWidth, childrenHeight }}
-					>
-						<div className={join('child')}></div>
+					<ToolTipWrapper refNode={ref}>
+						<div className={join('child')}>hello</div>
+						<div className={join('child')}>hello</div>
+						<div className={join('child')}>hello</div>
+						<div className={join('child')}>hello</div>
 					</ToolTipWrapper>
 				)}
 			</div>
