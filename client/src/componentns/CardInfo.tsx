@@ -73,9 +73,6 @@ export const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
 				textAlign: 'center',
 			},
 		},
-		menuWrapper: {
-			position: 'relative',
-		},
 	});
 	const className = style();
 	let join = createClassName(className);
@@ -87,16 +84,15 @@ export const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
 		<div className={className.wrapper}>
 			<div className={join('payloadContainer', 'titleContainer', 'flex')}>
 				<div className={className.title}>{props.title}</div>
-				<div className={className.menuWrapper}>
-					<div
-						className={className.menu}
-						ref={node}
-						onClick={() => menuHandler(node)}
-					>
-						<span>.</span>
-						<span>.</span>
-						<span>.</span>
-					</div>
+
+				<div
+					className={className.menu}
+					ref={node}
+					onClick={() => menuHandler(node)}
+				>
+					<span>.</span>
+					<span>.</span>
+					<span>.</span>
 					{tooltipState && (
 						<ToolTipWrapper refNode={node}>
 							<div className={className.wrapper}>

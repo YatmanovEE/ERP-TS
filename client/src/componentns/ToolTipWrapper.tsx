@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { createUseStyles } from 'react-jss';
 
 interface IToolTipWrapper__Props {
@@ -28,6 +29,9 @@ const style = createUseStyles({
 		top: `${posChildren.y}px`,
 		left: `${posChildren.x}px`,
 	}),
+	wrapper: {
+		position: 'relative',
+	},
 });
 
 function yPos({ posParent, childrenHeight }: IPosY): number {
@@ -77,5 +81,15 @@ export const ToolTipWrapper = ({
 			});
 		}
 	}, [className.payloadContainer, refNode]);
-	return <div className={className.payloadContainer}>{children}</div>;
+
+	if (refNode?.current) {
+		return ReactDOM.createPortal(
+			<div className={className.wrapper}>
+				<div className={className.payloadContainer}>{children}</div>
+			</div>,
+			refNode?.current
+		);
+	} else {
+		return null;
+	}
 };
