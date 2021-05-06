@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { CardInfo, ToolTipWrapper } from './componentns/CardInfo';
+import { CardInfo } from './componentns/CardInfo';
+import { ToolTipWrapper } from './componentns/ToolTipWrapper';
 import { createClassName } from './modules/join';
 
 function App() {
@@ -21,44 +22,47 @@ function App() {
 interface IRefWrapper__Props {
 	elem: string;
 }
+interface IStyle__Props {
+	state: boolean;
+}
+let style = createUseStyles({
+	wrapper: (props: IStyle__Props) => ({
+		position: 'absolute',
+
+		backgroundColor: props.state ? 'red' : 'green',
+		width: '20px',
+		height: '20px',
+	}),
+	wrapperLeftDown: {
+		bottom: 0,
+		left: 0,
+	},
+	wrapperRightUp: {
+		top: 0,
+		right: 0,
+	},
+	wrapperRightDown: {
+		bottom: 0,
+		right: 0,
+	},
+	wrapperLeftUp: {
+		left: 0,
+		top: 0,
+	},
+	wrapperCenter: {
+		left: '50%',
+		top: '50%',
+	},
+	child: {
+		backgroundColor: 'yellow',
+		overflowY: 'auto',
+		padding: '10px',
+	},
+});
 
 const RefWrapper = ({ elem }: IRefWrapper__Props) => {
 	const [state, setState] = useState(false);
-	let style = createUseStyles({
-		wrapper: {
-			position: 'absolute',
-
-			backgroundColor: () => (state ? 'red' : 'green'),
-			width: '20px',
-			height: '20px',
-		},
-		wrapperLeftDown: {
-			bottom: 0,
-			left: 0,
-		},
-		wrapperRightUp: {
-			top: 0,
-			right: 0,
-		},
-		wrapperRightDown: {
-			bottom: 0,
-			right: 0,
-		},
-		wrapperLeftUp: {
-			left: 0,
-			top: 0,
-		},
-		wrapperCenter: {
-			left: '50%',
-			top: '50%',
-		},
-		child: {
-			backgroundColor: 'yellow',
-			overflowY: 'auto',
-			padding: '10px',
-		},
-	});
-	let join = createClassName(style());
+	let join = createClassName(style({ state }));
 	let ref = React.useRef(null);
 	if (ref) {
 		return (
