@@ -76,17 +76,17 @@ export const ToolTipWrapper = ({
 
 	let className = style({ posChildren, posParent });
 	useLayoutEffect(() => {
-		let posParent = refNode?.current?.getBoundingClientRect();
+		let rectParent = refNode?.current?.getBoundingClientRect();
 		let elem = document.getElementsByClassName(className.payloadContainer)[0];
 		let paramElem = elem?.getBoundingClientRect();
 		if (paramElem) {
 			let childrenHeight = paramElem.height;
 			let childrenWidth = paramElem.width;
-			let y = yPos({ posParent, childrenHeight });
-			let x = xPos({ posParent, childrenWidth });
+			let y = yPos({ posParent: rectParent, childrenHeight });
+			let x = xPos({ posParent: rectParent, childrenWidth });
 
 			setPosChildren({ x, y });
-			setPosParent({ x: posParent?.left, y: posParent?.top });
+			setPosParent({ x: rectParent?.left, y: rectParent?.top });
 		}
 	}, [className.payloadContainer, refNode]);
 

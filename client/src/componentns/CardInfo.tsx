@@ -4,6 +4,7 @@ import { FunctionComponent } from 'react';
 import { createUseStyles } from 'react-jss';
 import { createClassName } from '../modules/join';
 import { ToolTipWrapper } from './ToolTipWrapper';
+import { MoreVert } from '@material-ui/icons';
 
 interface ICardInfo__Props {
 	title: string;
@@ -45,17 +46,17 @@ let testArr: ITestArr[] = [
 
 export const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
 	const [tooltipState, setTooltipState] = useState(false);
-	const style = createUseStyles({
+	const style = createUseStyles((theme: ITheme) => ({
 		wrapper: {
-			border: BB.BORDER,
+			border: theme.border,
 		},
 		title: {},
 		payloadContainer: {
 			padding: '16px',
 		},
 		titleContainer: {
-			backgroundColor: BB.BACKGROUND_COLOR,
-			borderBottom: BB.BORDER,
+			backgroundColor: theme.backgroundColor,
+			borderBottom: theme.border,
 			alignItems: 'center',
 		},
 		flex: {
@@ -73,7 +74,7 @@ export const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
 				textAlign: 'center',
 			},
 		},
-	});
+	}));
 	const className = style();
 	let join = createClassName(className);
 	const menuHandler = (ref?: React.RefObject<Element>) => {
@@ -90,9 +91,7 @@ export const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
 					ref={node}
 					onClick={() => menuHandler(node)}
 				>
-					<span>.</span>
-					<span>.</span>
-					<span>.</span>
+					<MoreVert></MoreVert>
 					{tooltipState && (
 						<ToolTipWrapper refNode={node}>
 							<div className={className.wrapper}>
