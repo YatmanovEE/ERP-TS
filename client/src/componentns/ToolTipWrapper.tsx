@@ -3,23 +3,23 @@ import ReactDOM from 'react-dom';
 import { createUseStyles } from 'react-jss';
 
 interface IToolTipWrapper__Props {
-	refNode: React.RefObject<HTMLDivElement>;
-	children: React.ReactNode;
+	readonly refNode: React.RefObject<HTMLDivElement>;
+	readonly children: React.ReactNode;
 }
 
 interface IPos {
-	posParent: DOMRect | undefined;
+	readonly posParent: DOMRect | undefined;
 }
 interface IPosY extends IPos {
-	childrenHeight: number;
+	readonly childrenHeight: number;
 }
 interface IPosX extends IPos {
-	childrenWidth: number;
+	readonly childrenWidth: number;
 }
 
 interface IPosStyle {
-	x: number | undefined;
-	y: number | undefined;
+	readonly x: number | undefined;
+	readonly y: number | undefined;
 }
 
 interface ITooltipWrapperStyle__props {
