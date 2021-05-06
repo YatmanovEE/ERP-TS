@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { createUseStyles } from 'react-jss';
 
 interface IToolTipWrapper__Props {
-	refNode?: React.RefObject<HTMLDivElement>;
+	refNode: React.RefObject<HTMLDivElement>;
 	children: React.ReactNode;
 }
 
@@ -17,11 +17,14 @@ interface IPosX extends IPos {
 	childrenWidth: number;
 }
 
+interface IPosStyle {
+	x: number | undefined;
+	y: number | undefined;
+}
+
 interface ITooltipWrapperStyle__props {
-	posChildren: {
-		y: number;
-		x: number;
-	};
+	posChildren: IPosStyle;
+	posParent: IPosStyle;
 }
 const style = createUseStyles({
 	payloadContainer: ({ posChildren }: ITooltipWrapperStyle__props) => ({
@@ -29,9 +32,11 @@ const style = createUseStyles({
 		top: `${posChildren.y}px`,
 		left: `${posChildren.x}px`,
 	}),
-	wrapper: {
-		position: 'relative',
-	},
+	wrapper: ({ posParent }: ITooltipWrapperStyle__props) => ({
+		position: 'absolute',
+		top: `${posParent.y}px`,
+		left: `${posParent.x}px`,
+	}),
 });
 
 function yPos({ posParent, childrenHeight }: IPosY): number {
@@ -56,17 +61,20 @@ function xPos({ posParent, childrenWidth }: IPosX): number {
 	}
 	return ret;
 }
-
 export const ToolTipWrapper = ({
 	refNode,
 	children,
 }: IToolTipWrapper__Props) => {
-	const [posChildren, setPosChildren] = useState({
+	const [posChildren, setPosChildren] = useState<IPosStyle>({
+		y: 0,
+		x: 0,
+	});
+	const [posParent, setPosParent] = useState<IPosStyle>({
 		y: 0,
 		x: 0,
 	});
 
-	let className = style({ posChildren });
+	let className = style({ posChildren, posParent });
 	useLayoutEffect(() => {
 		let posParent = refNode?.current?.getBoundingClientRect();
 		let elem = document.getElementsByClassName(className.payloadContainer)[0];
@@ -76,9 +84,9 @@ export const ToolTipWrapper = ({
 			let childrenWidth = paramElem.width;
 			let y = yPos({ posParent, childrenHeight });
 			let x = xPos({ posParent, childrenWidth });
-			setPosChildren((prev) => {
-				return { ...prev, ...{ x, y } };
-			});
+
+			setPosChildren({ x, y });
+			setPosParent({ x: posParent?.left, y: posParent?.top });
 		}
 	}, [className.payloadContainer, refNode]);
 
@@ -87,7 +95,7 @@ export const ToolTipWrapper = ({
 			<div className={className.wrapper}>
 				<div className={className.payloadContainer}>{children}</div>
 			</div>,
-			refNode?.current
+			document.body
 		);
 	} else {
 		return null;
