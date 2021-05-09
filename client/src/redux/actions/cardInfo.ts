@@ -1,12 +1,14 @@
-import { OPEN_MENU } from './../types';
+import { Action } from 'redux';
+import { ICardInfoState } from '../reducers/cardInfo.reducer';
+import { TOOGLE_MENU } from './../types';
 type actions = {
 	type: string;
-	payload: string;
+	payload: ICardInfoState;
 };
 
-export function openMenu(id: string): actions {
+export function toogleMenu(payload: ICardInfoState): actions {
 	return {
-		type: OPEN_MENU,
-		payload: id,
+		type: TOOGLE_MENU,
+		payload,
 	};
 }

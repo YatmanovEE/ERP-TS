@@ -1,5 +1,12 @@
 import { combineReducers } from 'redux';
-import { cardInfoReducer } from './../reducers/cardInfo.reducer';
+import {
+	cardInfoReducer,
+	ICardInfoState,
+} from './../reducers/cardInfo.reducer';
+
+export interface IRootReducer {
+	card: ICardInfoState;
+}
 
 export const rootReducer = combineReducers({
 	card: cardInfoReducer,

@@ -1,22 +1,29 @@
 import { Reducer } from 'react';
-import { OPEN_MENU } from './../types';
+import { TOOGLE_MENU } from './../types';
 
-interface ICardInfoState {
+export interface ICardInfoState {
 	id: string;
+	status: boolean;
 }
 
 const initialState: ICardInfoState = {
 	id: '0',
+	status: false,
 };
 
-export const cardInfoReducer: Reducer<ICardInfoState, any> = (
+interface IAction {
+	type: string;
+	payload: ICardInfoState;
+}
+
+export const cardInfoReducer: Reducer<ICardInfoState, IAction> = (
 	state: ICardInfoState = initialState,
-	action: any
+	action: IAction
 ): any => {
 	switch (action.type) {
-		case OPEN_MENU:
+		case TOOGLE_MENU:
 			console.log(action);
-			return { ...state, id: action.id };
+			return { ...state, ...action.payload };
 
 		default:
 			return state;

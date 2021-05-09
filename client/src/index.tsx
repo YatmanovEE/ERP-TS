@@ -4,8 +4,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from 'react-jss';
 import { Provider } from 'react-redux';
-import { rootReducer } from './redux/stores/rootStore';
-import { createStore } from 'redux';
+import { rootReducer, IRootReducer } from './redux/stores/rootStore';
+import { createStore, Store } from 'redux';
+
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const theme: ITheme = {
 	border: '1px solid #E1E1E1',
@@ -15,11 +17,13 @@ const theme: ITheme = {
 	secondaryBackground: '#E5E5E5',
 };
 
-const store = createStore(rootReducer);
-
+function store(initialState: IRootReducer): Store<IRootReducer> {
+	return createStore(rootReducer, composeWithDevTools());
+}
+let init: any = {};
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
+		<Provider store={store(init)}>
 			<ThemeProvider theme={theme}>
 				<App />
 			</ThemeProvider>

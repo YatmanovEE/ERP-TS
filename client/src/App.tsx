@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
 import CardInfo from './componentns/CardInfo';
 
 function App() {
 	return (
 		<>
-			<CardInfo title={'Заказчик'}>
+			<CardInfo title={'Первый заказчик'}>
 				<div className="hello">hello</div>
 			</CardInfo>
-			<CardInfo title={'Заказчик'}>
+			<CardInfo title={'Второй заказчик'}>
 				<div className="hello">hello</div>
 			</CardInfo>
 		</>
