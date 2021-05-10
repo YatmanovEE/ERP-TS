@@ -8,6 +8,14 @@ import { rootReducer, IRootReducer } from './redux/stores/rootStore';
 import { createStore, Store } from 'redux';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
+export interface ITheme {
+	border: string;
+	backgroundColor: string;
+	filterBorderColor__active: string;
+	borderColor: string;
+	boxShadow: string;
+	secondaryBackground: string;
+}
 
 const theme: ITheme = {
 	border: '1px solid #E1E1E1',
@@ -15,6 +23,7 @@ const theme: ITheme = {
 	filterBorderColor__active: '#4583CC',
 	borderColor: '#E1E1E1',
 	secondaryBackground: '#E5E5E5',
+	boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.16)',
 };
 
 function store(initialState: IRootReducer): Store<IRootReducer> {
