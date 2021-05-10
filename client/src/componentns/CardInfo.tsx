@@ -1,51 +1,12 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { FunctionComponent } from 'react';
 import { createUseStyles } from 'react-jss';
 import { createClassName } from '../modules/join';
 import { ToolTipWrapper } from './ToolTipWrapper';
 import { MoreVert } from '@material-ui/icons';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { toogleMenu } from './../redux/actions/cardInfo';
-import { IRootReducer } from './../redux/stores/rootStore';
-
-interface ICardInfo__Props {
-	title: string;
-	children: JSX.Element;
-}
-
-enum BB {
-	BORDER = '1px solid #E1E1E1',
-	BACKGROUND_COLOR = '#FBFBFB',
-}
-
-interface ITestArr {
-	title: string;
-	payload: string;
-}
-
-let testArr: ITestArr[] = [
-	{
-		title: '1',
-		payload: 'payload',
-	},
-	{
-		title: '1',
-		payload: 'payload',
-	},
-	{
-		title: '1',
-		payload: 'payload',
-	},
-	{
-		title: '1',
-		payload: 'payload',
-	},
-	{
-		title: '1',
-		payload: 'payload',
-	},
-];
+import { connect } from 'react-redux';
+import CardInfoMenu from './CardInfoMenu';
+import { ITheme } from '..';
 
 const style = createUseStyles((theme: ITheme) => ({
 	wrapper: {
@@ -77,17 +38,18 @@ const style = createUseStyles((theme: ITheme) => ({
 		},
 	},
 }));
-const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
-	// const [tooltipState, setTooltipState] = useState(false);
-	const dispatch = useDispatch();
-	const toolTipState = useSelector(
-		(state: IRootReducer) => state.card.id === props.title && state.card.status
-	);
 
+interface ICardInfo__Props {
+	title: string;
+	children: JSX.Element;
+}
+
+const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
 	const className = style();
+	const [toolTipState, setToolTipState] = useState(false);
 	let join = createClassName(className);
 	const menuHandler = (ref?: React.RefObject<Element>) => {
-		dispatch(toogleMenu({ id: props.title, status: !toolTipState }));
+		setToolTipState(!toolTipState);
 	};
 	const node = React.useRef<HTMLDivElement>(null);
 	return (
@@ -103,16 +65,7 @@ const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
 					<MoreVert></MoreVert>
 					{toolTipState && (
 						<ToolTipWrapper refNode={node}>
-							<div className={className.wrapper}>
-								{testArr.map((testNode, key) => {
-									return (
-										<div key={testNode.title + key}>
-											title:{testNode.title}
-											payload:{testNode.payload}
-										</div>
-									);
-								})}
-							</div>
+							<CardInfoMenu></CardInfoMenu>
 						</ToolTipWrapper>
 					)}
 				</div>
