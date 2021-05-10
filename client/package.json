@@ -46,6 +46,7 @@
 		]
 	},
 	"devDependencies": {
+		"mocha": "^8.4.0",
 		"redux-devtools-extension": "^2.13.9"
 	}
 }
