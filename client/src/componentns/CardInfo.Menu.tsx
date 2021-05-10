@@ -11,7 +11,7 @@ const style = createUseStyles((theme: ITheme) => ({
 		background: theme.backgroundColor,
 		boxShadow: theme.boxShadow,
 		padding: '10px',
-		'&>span': {
+		'&>div': {
 			whiteSpace: 'nowrap',
 			padding: '5px',
 			cursor: 'pointer',
@@ -32,7 +32,7 @@ const CardInfoMenu: FunctionComponent = () => {
 	return (
 		<div className={join('wrapper')}>
 			{cardInfoMenu.map((menuItem, key) => (
-				<span key={menuItem + key}>{menuItem}</span>
+				<div key={menuItem + key}>{menuItem}</div>
 			))}
 		</div>
 	);

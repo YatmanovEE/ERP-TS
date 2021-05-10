@@ -1,76 +1,120 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FunctionComponent } from 'react';
 import { createUseStyles } from 'react-jss';
 import { createClassName } from '../modules/join';
 import { ToolTipWrapper } from './ToolTipWrapper';
-import { MoreVert } from '@material-ui/icons';
 import { connect } from 'react-redux';
-import CardInfoMenu from './CardInfoMenu';
+import CardInfoMenu from './CardInfo.Menu';
 import { ITheme } from '..';
 
-const style = createUseStyles((theme: ITheme) => ({
+const cardInfo__style = createUseStyles((theme: ITheme) => ({
 	wrapper: {
 		border: theme.border,
 		margin: '11px 0px 11px 0px',
 	},
+	payloadContainer: {
+		padding: '16px',
+	},
+
+	flex: {
+		display: 'flex',
+		justifyContent: 'space-between',
+	},
+}));
+
+interface ICardInfoTitle__Props {
+	title: string;
+}
+
+interface ICardInfo__Props extends ICardInfoTitle__Props {
+	children: JSX.Element;
+}
+
+const CardInfo: FunctionComponent<ICardInfo__Props> = ({ title, children }) => {
+	const className = cardInfo__style();
+	return (
+		<div className={className.wrapper}>
+			<CardInfoTitle title={title}></CardInfoTitle>
+			<div className={className.payloadContainer}>{children}</div>
+		</div>
+	);
+};
+
+const cardInfoTitle__style = createUseStyles((theme: ITheme) => ({
 	title: {},
 	payloadContainer: {
 		padding: '16px',
+	},
+	flex: {
+		display: 'flex',
+		justifyContent: 'space-between',
 	},
 	titleContainer: {
 		backgroundColor: theme.backgroundColor,
 		borderBottom: theme.border,
 		alignItems: 'center',
 	},
-	flex: {
-		display: 'flex',
-		justifyContent: 'space-between',
-	},
 	menu: {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '20px',
-		height: '20px',
 		justifyContent: 'center',
+		alignItems: 'center',
 		cursor: 'pointer',
+		width: '24px',
+		height: '24px',
+		pointsEvents: 'none',
 		'&>span': {
+			pointsEvents: 'none',
 			textAlign: 'center',
+			borderRadius: '100%',
+			width: '4px',
+			height: '4px',
+			backgroundColor: 'black',
+			marginTop: '4px',
 		},
 	},
 }));
 
-interface ICardInfo__Props {
-	title: string;
-	children: JSX.Element;
-}
-
-const CardInfo: FunctionComponent<ICardInfo__Props> = (props) => {
-	const className = style();
+const CardInfoTitle: FunctionComponent<ICardInfoTitle__Props> = (props) => {
 	const [toolTipState, setToolTipState] = useState(false);
-	let join = createClassName(className);
-	const menuHandler = (ref?: React.RefObject<Element>) => {
-		setToolTipState(!toolTipState);
-	};
-	const node = React.useRef<HTMLDivElement>(null);
-	return (
-		<div className={className.wrapper}>
-			<div className={join('payloadContainer', 'titleContainer', 'flex')}>
-				<div className={className.title}>{props.title}</div>
 
-				<div
-					className={className.menu}
-					ref={node}
-					onClick={() => menuHandler(node)}
-				>
-					<MoreVert></MoreVert>
-					{toolTipState && (
-						<ToolTipWrapper refNode={node}>
-							<CardInfoMenu></CardInfoMenu>
-						</ToolTipWrapper>
-					)}
-				</div>
+	let className = cardInfoTitle__style();
+	let join = createClassName(className);
+	const node = React.useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const current = node.current;
+		const menuHandler = (e: Event) => {
+			if (e.target === current) {
+				setToolTipState(!toolTipState);
+			} else {
+				setToolTipState(false);
+			}
+		};
+		document.body!.addEventListener('click', menuHandler, {
+			capture: true,
+		});
+		return () =>
+			document.body!.removeEventListener('click', menuHandler, {
+				capture: true,
+			});
+	}, [toolTipState]);
+
+	return (
+		<div className={join('payloadContainer', 'titleContainer', 'flex')}>
+			<div className={className.title}>{props.title}</div>
+
+			<div className={className.menu} ref={node}>
+				<span></span>
+				<span></span>
+				<span></span>
+
+				{toolTipState && (
+					<ToolTipWrapper refNode={node}>
+						<CardInfoMenu></CardInfoMenu>
+					</ToolTipWrapper>
+				)}
 			</div>
-			<div className={className.payloadContainer}>{props.children}</div>
 		</div>
 	);
 };

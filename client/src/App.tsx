@@ -1,4 +1,5 @@
 import CardInfo from './componentns/CardInfo';
+import CardInfoPrimaryInformation from './componentns/CardInfo.PrimaryInformation';
 
 function App() {
 	return (
@@ -9,6 +10,8 @@ function App() {
 			<CardInfo title={'Второй заказчик'}>
 				<div className="hello">hello</div>
 			</CardInfo>
+
+			<CardInfoPrimaryInformation></CardInfoPrimaryInformation>
 		</>
 	);
 }
