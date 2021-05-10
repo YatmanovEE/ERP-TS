@@ -1,1 +1,3 @@
-export const TOOGLE_MENU = 'CardInfo/TOOGLE_MENU';
+export enum CardInfoTypes {
+	TOOGLE_MENU = 'TOOGLE_MENU',
+}

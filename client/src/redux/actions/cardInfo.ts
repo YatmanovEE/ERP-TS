@@ -1,6 +1,5 @@
-import { Action } from 'redux';
-import { ICardInfoState } from '../reducers/cardInfo.reducer';
-import { TOOGLE_MENU } from './../types';
+import { CardInfoTypes } from '../types';
+import { ICardInfoState } from './../reducers/cardInfo.reducer';
 type actions = {
 	type: string;
 	payload: ICardInfoState;
@@ -8,7 +7,7 @@ type actions = {
 
 export function toogleMenu(payload: ICardInfoState): actions {
 	return {
-		type: TOOGLE_MENU,
+		type: CardInfoTypes.TOOGLE_MENU,
 		payload,
 	};
 }
