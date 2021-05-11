@@ -5,8 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 import { ITheme } from '..';
 import { createClassName } from '../modules/join';
-import CardInfoMenu from './CardInfo.Menu';
-import { ToolTipWrapper } from './ToolTipWrapper';
+import MenuWrapper from './CardInfo.MenuWrapper';
 
 let style = createUseStyles((theme: ITheme) => ({
 	flex: {
@@ -69,25 +68,7 @@ const personItemDescription__style = createUseStyles((theme: ITheme) => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 	},
-	menu: {
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		cursor: 'pointer',
-		width: '20px',
-		height: '20px',
-		pointsEvents: 'none',
-		'&>span': {
-			pointsEvents: 'none',
-			textAlign: 'center',
-			borderRadius: '100%',
-			width: '4px',
-			height: '4px',
-			backgroundColor: 'black',
-			marginTop: '4px',
-		},
-	},
+
 	wrapper: {
 		padding: '10px',
 		alignItems: 'center',
@@ -97,9 +78,6 @@ const personItemDescription__style = createUseStyles((theme: ITheme) => ({
 const PersonItemDescription: FC = () => {
 	let className = personItemDescription__style();
 	let join = createClassName(className);
-	let node = useRef(null);
-	const [toolTipState, setToolTipState] = useState(false);
-
 	return (
 		<div className={join('flex', 'wrapper')}>
 			<img src="#" alt="avatar" className={className.avatar} />
@@ -108,17 +86,7 @@ const PersonItemDescription: FC = () => {
 				<span>Генеральный директор</span>
 				<span>Дмитрий Сергеевич</span>
 			</div>
-			<div className={className.menu} ref={node}>
-				<span></span>
-				<span></span>
-				<span></span>
-
-				{toolTipState && (
-					<ToolTipWrapper refNode={node}>
-						<CardInfoMenu></CardInfoMenu>
-					</ToolTipWrapper>
-				)}
-			</div>
+			<MenuWrapper></MenuWrapper>
 		</div>
 	);
 };
