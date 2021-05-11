@@ -3,7 +3,7 @@ import exp from './componentns/CardInfo.PrimaryInformation';
 import PersonItem from './componentns/CardInfo.PersonItem';
 import { createUseStyles } from 'react-jss';
 import { createClassName } from './modules/join';
-
+import EventList from './componentns/EventsList';
 let CardInfoPrimaryInformation = exp.CardInfoPrimaryInformation;
 
 const style = createUseStyles({
@@ -12,6 +12,7 @@ const style = createUseStyles({
 	},
 	wrapper: {
 		justifyContent: 'space-between',
+		flexWrap: 'wrap',
 	},
 });
 
@@ -35,6 +36,7 @@ function App() {
 					<PersonItem></PersonItem>
 				</div>
 			</CardInfo>
+			<EventList></EventList>
 		</>
 	);
 }
