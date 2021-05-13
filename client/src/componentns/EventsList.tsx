@@ -1,8 +1,13 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from './../index';
 import { createClassName } from '../modules/join';
+
+interface IEventItemWrapper {
+	type: eventItemType;
+	children?: ReactNode;
+}
 
 const eventList__style = createUseStyles((theme: ITheme) => ({
 	wrapper: {
@@ -16,9 +21,9 @@ const EventList: FC = () => {
 	let join = createClassName(className);
 	return (
 		<div className={className.wrapper}>
-			<EventItem></EventItem>
-			<EventItem></EventItem>
-			<EventItem></EventItem>
+			<EventItemWrapper type={eventItemType.calendar}>hello</EventItemWrapper>
+			<EventItemWrapper type={eventItemType.createObject}></EventItemWrapper>
+			<EventItemWrapper type={eventItemType.calendar}></EventItemWrapper>
 		</div>
 	);
 };
@@ -44,6 +49,63 @@ const eventItem__style = createUseStyles((theme: ITheme) => ({
 
 		margin: ' 20px 0px',
 	},
+}));
+
+export enum eventItemType {
+	calendar = 'calendar',
+	addComment = 'addComment',
+	createObject = 'createObject',
+	call = 'call',
+}
+
+const EventItemWrapper: FC<IEventItemWrapper> = ({ type, children }) => {
+	let className = eventItem__style();
+	let join = createClassName(className);
+
+	switch (type) {
+		case eventItemType.calendar:
+			return (
+				<div className={join('container', 'flex')}>
+					<img src="#" alt="icon" className={className.icon}></img>
+					<div className={className.eventItem}>
+						<EventTitleCalendar></EventTitleCalendar>
+						<EventComment>{children}</EventComment>
+					</div>
+				</div>
+			);
+		case eventItemType.addComment:
+			return (
+				<div className={join('container', 'flex')}>
+					<img src="#" alt="icon" className={className.icon}></img>
+					<div className={className.eventItem}>
+						<EventTitleCalendar></EventTitleCalendar>
+						<EventComment></EventComment>
+					</div>
+				</div>
+			);
+		case eventItemType.createObject:
+			return (
+				<div className={join('container', 'flex')}>
+					<img src="#" alt="icon" className={className.icon}></img>
+					<div className={className.eventItem}>
+						<EventTitle></EventTitle>
+					</div>
+				</div>
+			);
+		default:
+			return (
+				<div className={join('container', 'flex')}>
+					<img src="#" alt="icon" className={className.icon}></img>
+					<div className={className.eventItem}>
+						<EventTitle></EventTitle>
+						<EventComment></EventComment>
+					</div>
+				</div>
+			);
+	}
+};
+
+const eventTitleCalendar__style = createUseStyles((theme: ITheme) => ({
 	eventItem__title: {
 		alignItems: 'center',
 		marginBottom: '10px',
@@ -52,12 +114,10 @@ const eventItem__style = createUseStyles((theme: ITheme) => ({
 			flex: 'auto',
 		},
 	},
-	title__date: {
+	title__date: ({ color }: IEventTitle__Style) => ({
 		marginRight: '10px',
-	},
-	date_red: {
-		color: 'red',
-	},
+		color: color,
+	}),
 	title__avatar: {
 		width: '30px',
 		height: '30px',
@@ -65,25 +125,65 @@ const eventItem__style = createUseStyles((theme: ITheme) => ({
 		backgroundColor: 'black',
 		justifySelf: 'flex-end',
 	},
+	flex: {
+		display: 'flex',
+	},
 }));
 
-const EventItem: FC = () => {
-	let className = eventItem__style();
+interface IEventTitle__Style {
+	color: string;
+}
+
+function dateFromFuture(date: string): boolean {
+	let future = Date.parse(date);
+	let now = Date.now();
+	return future > now ? false : true;
+}
+
+let monthEnum: string[] = [
+	'Января',
+	'Февраля',
+	'Марта',
+	'Апреля',
+	'Мая	',
+	'Июня',
+	'Июля',
+	'Августа',
+	'Сентября	',
+	'Октября',
+	'Ноября',
+	'Декабря',
+];
+
+const EventTitleCalendar: FC = () => {
+	let date = '05-12-2021';
+	let data = new Date(date);
+	let color = {
+		color: dateFromFuture(date) ? 'green' : 'red',
+	};
+	let className = eventTitleCalendar__style(color);
 	let join = createClassName(className);
 	return (
-		<div className={join('container', 'flex')}>
-			<img src="#" alt="icon" className={className.icon}></img>
-			<div className={className.eventItem}>
-				<div className={join('eventItem__title', 'flex')}>
-					<span className={join('title__date', 'date_red')}>до 10 мая</span>
-					<h3>Запланирована задача</h3>
-					<img src="#" alt="avatar" className={className.title__avatar}></img>
-				</div>
-
-				<EventComment></EventComment>
-			</div>
+		<div className={join('eventItem__title', 'flex')}>
+			<span className={join('title__date', 'date_red')}>
+				{date !== 'infinity'
+					? 'Бесрочно'
+					: `
+                
+				до ${data.getDate()} ${monthEnum[data.getMonth() + 1].toLocaleLowerCase()}`}
+			</span>
+			<h3>Запланирована задача</h3>
+			<img src="#" alt="avatar" className={className.title__avatar}></img>
 		</div>
 	);
+};
+
+const eventTitle__style = createUseStyles((theme: ITheme) => ({}));
+
+const EventTitle: FC = () => {
+	let className = eventTitle__style();
+	let join = createClassName(className);
+	return <div>Объект создан</div>;
 };
 
 const eventComment__style = createUseStyles((theme: ITheme) => ({
@@ -93,14 +193,11 @@ const eventComment__style = createUseStyles((theme: ITheme) => ({
 	},
 }));
 
-const EventComment: FC = () => {
+const EventComment: FC = (props) => {
 	let className = eventComment__style();
 	let join = createClassName(className);
 	return (
-		<div className={join('comment')}>
-			Узнать когда выйдет аукцион и на какой площадке! Позвонить Константину
-			Слуцкому
-		</div>
+		<div className={join('comment')}>{props.children || 'Ничего нет'}</div>
 	);
 };
 
