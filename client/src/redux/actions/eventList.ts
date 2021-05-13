@@ -6,6 +6,7 @@ export interface IAddEvent {
 	type: eventItemType;
 	date: 'string';
 	whoCreate: 'string';
+	payload: {};
 }
 
 export function addEvent({ type, date, whoCreate }: IAddEvent) {

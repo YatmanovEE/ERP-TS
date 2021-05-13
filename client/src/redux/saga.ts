@@ -1,4 +1,4 @@
-import { takeEvery, call } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import { IActionShowEvent } from './actions/eventList';
 import { EventListTypes } from './types';
 
@@ -9,9 +9,9 @@ export function* sagaWatcher() {
 function* fetchEvent(props: IActionShowEvent) {
 	try {
 		const data: JSON = yield call(fetchPost, props.payload.url);
-		console.log(data);
+		yield put({ type: EventListTypes.SHOW_EVENT, payload: data });
 	} catch (error) {
-		throw new Error(error); //for now
+		yield new Error(error); //for now
 	}
 }
 

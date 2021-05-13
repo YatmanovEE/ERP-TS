@@ -81,7 +81,6 @@ const CardInfoTitle: FunctionComponent<ICardInfoTitle__Props> = (props) => {
 	let className = cardInfoTitle__style();
 	let join = createClassName(className);
 	const node = React.useRef<HTMLDivElement>(null);
-
 	useEffect(() => {
 		const current = node.current;
 		const menuHandler = (e: Event) => {

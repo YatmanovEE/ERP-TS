@@ -1,10 +1,11 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from './../index';
 import { createClassName } from '../modules/join';
 import { EventListTypes } from '../redux/types';
 import { showEvent } from './../redux/actions/eventList';
+import { IRootReducer } from './../redux/stores/rootStore';
 
 interface IEventItemWrapper {
 	type: eventItemType;
@@ -22,7 +23,12 @@ const EventList: FC = () => {
 	let className = eventList__style();
 	let join = createClassName(className);
 	const dispatch = useDispatch();
-	dispatch(showEvent({ url: 'https://jsonplaceholder.typicode.com/todos/1' }));
+
+	useEffect(() => {
+		dispatch(
+			showEvent({ url: 'https://jsonplaceholder.typicode.com/todos/1' })
+		);
+	}, []);
 
 	return (
 		<div className={className.wrapper}>
@@ -204,6 +210,12 @@ const EventComment: FC = (props) => {
 	return (
 		<div className={join('comment')}>{props.children || 'Ничего нет'}</div>
 	);
+};
+
+const mapStateToProps = ({ eventList }: IRootReducer) => {
+	return {
+		list: eventList,
+	};
 };
 
 export default connect(null, null)(EventList);
