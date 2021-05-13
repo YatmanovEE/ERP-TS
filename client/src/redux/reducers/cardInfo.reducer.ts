@@ -11,14 +11,17 @@ const initialState: ICardInfoState = {
 	status: true,
 };
 
-interface IAction {
-	type: string;
-	payload: ICardInfoState;
+export interface IAction<T, Y> {
+	type: T;
+	payload: Y;
 }
 
-export const cardInfoReducer: Reducer<ICardInfoState, IAction> = (
+export const cardInfoReducer: Reducer<
+	ICardInfoState,
+	IAction<CardInfoTypes, ICardInfoState>
+> = (
 	state: ICardInfoState = initialState,
-	action: IAction
+	action: IAction<CardInfoTypes, ICardInfoState>
 ): ICardInfoState => {
 	switch (action.type) {
 		case CardInfoTypes.TOOGLE_MENU:
