@@ -1,8 +1,10 @@
 import { FC, ReactNode } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from './../index';
 import { createClassName } from '../modules/join';
+import { EventListTypes } from '../redux/types';
+import { showEvent } from './../redux/actions/eventList';
 
 interface IEventItemWrapper {
 	type: eventItemType;
@@ -19,6 +21,9 @@ const eventList__style = createUseStyles((theme: ITheme) => ({
 const EventList: FC = () => {
 	let className = eventList__style();
 	let join = createClassName(className);
+	const dispatch = useDispatch();
+	dispatch(showEvent({ url: 'https://jsonplaceholder.typicode.com/todos/1' }));
+
 	return (
 		<div className={className.wrapper}>
 			<EventItemWrapper type={eventItemType.calendar}>hello</EventItemWrapper>

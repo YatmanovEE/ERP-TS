@@ -5,9 +5,12 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from 'react-jss';
 import { Provider } from 'react-redux';
 import { rootReducer, IRootReducer } from './redux/stores/rootStore';
-import { createStore, Store } from 'redux';
+import { applyMiddleware, createStore, Store } from 'redux';
+
+import createSagaMiddleware from 'redux-saga';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { sagaWatcher } from './redux/saga';
 export interface ITheme {
 	border: string;
 	backgroundColor: string;
@@ -25,14 +28,22 @@ const theme: ITheme = {
 	secondaryBackground: '#E5E5E5',
 	boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.16)',
 };
+const sagaMiddleware = createSagaMiddleware();
 
 function store(initialState: IRootReducer): Store<IRootReducer> {
-	return createStore(rootReducer, composeWithDevTools());
+	return createStore(
+		rootReducer,
+		composeWithDevTools(applyMiddleware(sagaMiddleware))
+	);
 }
 let init: any = {};
+
+let mountStore = store(init);
+
+sagaMiddleware.run(sagaWatcher);
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store(init)}>
+		<Provider store={mountStore}>
 			<ThemeProvider theme={theme}>
 				<App />
 			</ThemeProvider>

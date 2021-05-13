@@ -25,7 +25,7 @@ export const cardInfoReducer: Reducer<
 ): ICardInfoState => {
 	switch (action.type) {
 		case CardInfoTypes.TOOGLE_MENU:
-			return { ...state, ...action.payload };
+			return { ...state, status: !action.payload.status };
 
 		default:
 			return state;
