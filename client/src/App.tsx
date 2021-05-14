@@ -1,10 +1,11 @@
-import CardInfo from './componentns/CardInfo';
-import exp from './componentns/CardInfo.PrimaryInformation';
-import PersonItem from './componentns/CardInfo.PersonItem';
+import CardInfo from './componentns/CardInfo/CardInfo';
+import CardInfoPrimarySection from './componentns/CardInfo/CardInfo.PrimaryInformation';
+import PersonItem from './componentns/CardInfo/CardInfo.PersonItem';
 import { createUseStyles } from 'react-jss';
 import { createClassName } from './modules/join';
 import EventList from './componentns/EventsList';
-let CardInfoPrimaryInformation = exp.CardInfoPrimaryInformation;
+let CardInfoPrimaryInformation =
+	CardInfoPrimarySection.CardInfoPrimaryInformation;
 
 const style = createUseStyles({
 	flex: {

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { ITheme } from '..';
+import { ITheme } from '../../';
 import CardInfo from './CardInfo';
 import { createUseStyles } from 'react-jss';
-import { createClassName } from '../modules/join';
+import { createClassName } from '../../modules/join';
 import { FunctionComponent } from 'react';
 import { ReactNode } from 'react';
 
@@ -49,9 +49,9 @@ const CardInfoSection: FunctionComponent<ReactNode> = ({ children }) => {
 	return <div className={className.contentWrapper}>{children}</div>;
 };
 
-const exp = {
+const CardInfoPrimarySection = {
 	CardInfoPrimaryInformation: connect(null, null)(CardInfoPrimaryInformation),
 	CardInfoSection: connect(null, null)(CardInfoSection),
 };
 
-export default exp;
+export default CardInfoPrimarySection;

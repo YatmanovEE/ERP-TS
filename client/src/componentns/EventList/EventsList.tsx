@@ -1,11 +1,10 @@
 import { FC, ReactNode, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { createUseStyles } from 'react-jss';
-import { ITheme } from './../index';
-import { createClassName } from '../modules/join';
-import { EventListTypes } from '../redux/types';
-import { showEvent } from './../redux/actions/eventList';
-import { IRootReducer } from './../redux/stores/rootStore';
+import { ITheme } from '../../index';
+import { createClassName } from '../../modules/join';
+import { showEvent } from '../../redux/actions/eventList';
+import { IRootReducer } from '../../redux/stores/rootStore';
 
 interface IEventItemWrapper {
 	type: eventItemType;

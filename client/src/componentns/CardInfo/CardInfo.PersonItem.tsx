@@ -1,10 +1,9 @@
-import { join } from 'node:path';
-import { FC, useRef, useState } from 'react';
+import { FC } from 'react';
 import { FunctionComponent, ReactNode } from 'react';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
-import { ITheme } from '..';
-import { createClassName } from '../modules/join';
+import { ITheme } from '../../';
+import { createClassName } from '../../modules/join';
 import MenuWrapper from './CardInfo.MenuWrapper';
 
 let style = createUseStyles((theme: ITheme) => ({

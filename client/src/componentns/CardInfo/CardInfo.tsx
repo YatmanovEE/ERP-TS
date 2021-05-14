@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { createClassName } from '../modules/join';
-import { ToolTipWrapper } from './ToolTipWrapper';
 import { connect } from 'react-redux';
+import { ITheme } from '../../';
+import { createClassName } from '../../modules/join';
 import CardInfoMenu from './CardInfo.Menu';
-import { ITheme } from '..';
+import { ToolTipWrapper } from '../ToolTipWrapper';
 
 const cardInfo__style = createUseStyles((theme: ITheme) => ({
 	wrapper: {

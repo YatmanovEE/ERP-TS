@@ -1,7 +1,7 @@
 import { FC, useRef, useState } from 'react';
-import { ITheme } from '..';
+import { ITheme } from '../../';
 import CardInfoMenu from './CardInfo.Menu';
-import { ToolTipWrapper } from './ToolTipWrapper';
+import { ToolTipWrapper } from '../ToolTipWrapper';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 
