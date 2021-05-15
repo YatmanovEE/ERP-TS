@@ -1,9 +1,10 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { ITheme } from '../../';
 import CardInfoMenu from './CardInfo.Menu';
 import { ToolTipWrapper } from '../ToolTipWrapper';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
+import { createClassName } from '../../modules/join';
 
 const menuWrapper__style = createUseStyles((theme: ITheme) => ({
 	menu: {
@@ -22,8 +23,14 @@ const menuWrapper__style = createUseStyles((theme: ITheme) => ({
 			width: '4px',
 			height: '4px',
 			backgroundColor: 'black',
-			marginTop: '4px',
+			marginTop: '2px',
 		},
+	},
+	btn: {
+		outline: 'none',
+		border: 'none',
+		padding: '10px',
+		backgroundColor: 'transparent',
 	},
 }));
 
@@ -31,22 +38,44 @@ const MenuWrapper: FC = () => {
 	let node = useRef(null);
 	const [toolTipState, setToolTipState] = useState(false);
 	const className = menuWrapper__style();
+	let join = createClassName(className);
+
+	useEffect(() => {
+		const current = document.querySelector(`.${className.btn}`);
+		const menuHandler = (e: Event) => {
+			console.dir(e.currentTarget);
+			if (e.target === current) {
+				setToolTipState(!toolTipState);
+			} else {
+				setToolTipState(false);
+			}
+		};
+		document.body!.addEventListener('click', menuHandler, {
+			capture: true,
+		});
+		return () =>
+			document.body!.removeEventListener('click', menuHandler, {
+				capture: true,
+			});
+	}, [className.btn, toolTipState]);
 	return (
-		<div
-			className={className.menu}
+		<button
+			className={join('menu', 'btn')}
 			ref={node}
 			onClick={() => setToolTipState(!toolTipState)}
 		>
-			<span></span>
-			<span></span>
-			<span></span>
+			<div className={className.menu}>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
 
 			{toolTipState && (
 				<ToolTipWrapper refNode={node}>
 					<CardInfoMenu></CardInfoMenu>
 				</ToolTipWrapper>
 			)}
-		</div>
+		</button>
 	);
 };
 

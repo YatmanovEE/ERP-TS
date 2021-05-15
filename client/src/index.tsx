@@ -6,11 +6,10 @@ import { ThemeProvider } from 'react-jss';
 import { Provider } from 'react-redux';
 import { rootReducer, IRootReducer } from './redux/stores/rootStore';
 import { applyMiddleware, createStore, Store } from 'redux';
-
 import createSagaMiddleware from 'redux-saga';
-
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { sagaWatcher } from './redux/saga';
+
 export interface ITheme {
 	border: string;
 	backgroundColor: string;
@@ -18,6 +17,7 @@ export interface ITheme {
 	borderColor: string;
 	boxShadow: string;
 	secondaryBackground: string;
+	linkColor: string;
 }
 
 const theme: ITheme = {
@@ -25,8 +25,9 @@ const theme: ITheme = {
 	backgroundColor: '#FBFBFB',
 	filterBorderColor__active: '#4583CC',
 	borderColor: '#E1E1E1',
-	secondaryBackground: '#E5E5E5',
-	boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.16)',
+	boxShadow: '#E5E5E5',
+	secondaryBackground: '0px 4px 12px rgba(0, 0, 0, 0.16)',
+	linkColor: '#2F80ED',
 };
 const sagaMiddleware = createSagaMiddleware();
 

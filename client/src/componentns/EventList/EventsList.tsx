@@ -5,6 +5,12 @@ import { ITheme } from '../../index';
 import { createClassName } from '../../modules/join';
 import { showEvent } from '../../redux/actions/eventList';
 import { IRootReducer } from '../../redux/stores/rootStore';
+export enum eventItemType {
+	calendar = 'calendar',
+	addComment = 'addComment',
+	createObject = 'createObject',
+	call = 'call',
+}
 
 interface IEventItemWrapper {
 	type: eventItemType;
@@ -18,7 +24,7 @@ const eventList__style = createUseStyles((theme: ITheme) => ({
 	},
 }));
 
-const EventList: FC = () => {
+export const EventList: FC = () => {
 	let className = eventList__style();
 	let join = createClassName(className);
 	const dispatch = useDispatch();
@@ -60,13 +66,6 @@ const eventItem__style = createUseStyles((theme: ITheme) => ({
 		margin: ' 20px 0px',
 	},
 }));
-
-export enum eventItemType {
-	calendar = 'calendar',
-	addComment = 'addComment',
-	createObject = 'createObject',
-	call = 'call',
-}
 
 const EventItemWrapper: FC<IEventItemWrapper> = ({ type, children }) => {
 	let className = eventItem__style();

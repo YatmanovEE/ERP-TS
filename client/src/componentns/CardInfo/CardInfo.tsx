@@ -2,9 +2,10 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 import { ITheme } from '../../';
+import { ToolTipWrapper } from '../ToolTipWrapper';
 import { createClassName } from '../../modules/join';
 import CardInfoMenu from './CardInfo.Menu';
-import { ToolTipWrapper } from '../ToolTipWrapper';
+import CardInfoMenuWrapper from './CardInfo.MenuWrapper';
 
 const cardInfo__style = createUseStyles((theme: ITheme) => ({
 	wrapper: {
@@ -72,47 +73,22 @@ const cardInfoTitle__style = createUseStyles((theme: ITheme) => ({
 			marginTop: '4px',
 		},
 	},
+	btn: {
+		outline: 'none',
+		border: 'none',
+		padding: '10px',
+		backgroundColor: 'red',
+	},
 }));
 
 const CardInfoTitle: FunctionComponent<ICardInfoTitle__Props> = (props) => {
-	const [toolTipState, setToolTipState] = useState(false);
-
 	let className = cardInfoTitle__style();
 	let join = createClassName(className);
-	const node = React.useRef<HTMLDivElement>(null);
-	useEffect(() => {
-		const current = node.current;
-		const menuHandler = (e: Event) => {
-			if (e.target === current) {
-				setToolTipState(!toolTipState);
-			} else {
-				setToolTipState(false);
-			}
-		};
-		document.body!.addEventListener('click', menuHandler, {
-			capture: true,
-		});
-		return () =>
-			document.body!.removeEventListener('click', menuHandler, {
-				capture: true,
-			});
-	}, [toolTipState]);
 
 	return (
 		<div className={join('payloadContainer', 'titleContainer', 'flex')}>
 			<div className={className.title}>{props.title}</div>
-
-			<div className={className.menu} ref={node}>
-				<span></span>
-				<span></span>
-				<span></span>
-
-				{toolTipState && (
-					<ToolTipWrapper refNode={node}>
-						<CardInfoMenu></CardInfoMenu>
-					</ToolTipWrapper>
-				)}
-			</div>
+			<CardInfoMenuWrapper></CardInfoMenuWrapper>
 		</div>
 	);
 };

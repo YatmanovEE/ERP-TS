@@ -56,11 +56,14 @@ const personItemDescription__style = createUseStyles((theme: ITheme) => ({
 		backgroundColor: 'black',
 		margin: '10px',
 	},
-	generalInformation: {
+	personInfo: {
 		display: 'flex',
 		flexDirection: 'column',
 		'&>span': {
 			marginTop: '5px',
+		},
+		'&__position': {
+			color: 'red',
 		},
 	},
 	flex: {
@@ -81,8 +84,8 @@ const PersonItemDescription: FC = () => {
 		<div className={join('flex', 'wrapper')}>
 			<img src="#" alt="avatar" className={className.avatar} />
 
-			<div className={className.generalInformation}>
-				<span>Генеральный директор</span>
+			<div className={className.personInfo}>
+				<span className={'position'}>Генеральный директор</span>
 				<span>Дмитрий Сергеевич</span>
 			</div>
 			<MenuWrapper></MenuWrapper>

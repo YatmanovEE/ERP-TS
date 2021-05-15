@@ -1,6 +1,8 @@
-import { eventItemType } from '../../componentns/EventsList';
 import { IAction } from '../reducers/cardInfo.reducer';
 import { EventListTypes } from '../types';
+import EventList, {
+	eventItemType,
+} from './../../componentns/EventList/EventsList';
 
 export interface IAddEvent {
 	type: eventItemType;

@@ -1,13 +1,16 @@
-import CardInfo from './componentns/CardInfo/CardInfo';
-import CardInfoPrimarySection from './componentns/CardInfo/CardInfo.PrimaryInformation';
-import PersonItem from './componentns/CardInfo/CardInfo.PersonItem';
 import { createUseStyles } from 'react-jss';
+import { ITheme } from '.';
 import { createClassName } from './modules/join';
-import EventList from './componentns/EventsList';
-let CardInfoPrimaryInformation =
-	CardInfoPrimarySection.CardInfoPrimaryInformation;
+import CardObject from './pages/CardObject';
 
-const style = createUseStyles({
+const style = createUseStyles((theme: ITheme) => ({
+	'@global': {
+		a: {
+			color: theme.linkColor,
+			outline: 'none',
+			textDecoration: 'none',
+		},
+	},
 	flex: {
 		display: 'flex',
 	},
@@ -15,31 +18,12 @@ const style = createUseStyles({
 		justifyContent: 'space-between',
 		flexWrap: 'wrap',
 	},
-});
+}));
 
 function App() {
 	let className = style();
 	let join = createClassName(className);
-	return (
-		<>
-			<CardInfo title={'Первый заказчик'}>
-				<div className="hello">hello</div>
-			</CardInfo>
-			<CardInfo title={'Второй заказчик'}>
-				<div className="hello">hello</div>
-			</CardInfo>
-
-			<CardInfoPrimaryInformation></CardInfoPrimaryInformation>
-			<CardInfo title={'Проектировщик'}>
-				<div className={join('flex', 'wrapper')}>
-					<PersonItem></PersonItem>
-					<PersonItem></PersonItem>
-					<PersonItem></PersonItem>
-				</div>
-			</CardInfo>
-			<EventList></EventList>
-		</>
-	);
+	return <CardObject></CardObject>;
 }
 
 export default App;

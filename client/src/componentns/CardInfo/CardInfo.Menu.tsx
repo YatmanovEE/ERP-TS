@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { createUseStyles } from 'react-jss';
-import { createClassName } from '../modules/join';
-import { ITheme } from '..';
+import { ITheme } from '../..';
+import { createClassName } from '../../modules/join';
 
 const style = createUseStyles((theme: ITheme) => ({
 	wrapper: {
