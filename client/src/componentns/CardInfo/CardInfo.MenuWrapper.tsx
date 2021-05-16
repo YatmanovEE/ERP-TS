@@ -17,7 +17,7 @@ const menuWrapper__style = createUseStyles((theme: ITheme) => ({
 		height: '20px',
 		pointsEvents: 'none',
 		'&>span': {
-			pointsEvents: 'none',
+			pointEvents: 'none',
 			textAlign: 'center',
 			borderRadius: '100%',
 			width: '4px',
@@ -41,10 +41,10 @@ const MenuWrapper: FC = () => {
 	let join = createClassName(className);
 
 	useEffect(() => {
-		const current = document.querySelector(`.${className.btn}`);
+		const current = document.querySelector(`.${className.menu}>span`);
 		const menuHandler = (e: Event) => {
-			console.dir(e.currentTarget);
-			if (e.target === current) {
+			e.stopPropagation();
+			if (e.target === current || e.target === current?.parentNode) {
 				setToolTipState(!toolTipState);
 			} else {
 				setToolTipState(false);
@@ -57,13 +57,9 @@ const MenuWrapper: FC = () => {
 			document.body!.removeEventListener('click', menuHandler, {
 				capture: true,
 			});
-	}, [className.btn, toolTipState]);
+	}, [className.btn, className.menu, toolTipState]);
 	return (
-		<button
-			className={join('menu', 'btn')}
-			ref={node}
-			onClick={() => setToolTipState(!toolTipState)}
-		>
+		<button className={join('menu', 'btn')} ref={node}>
 			<div className={className.menu}>
 				<span></span>
 				<span></span>
