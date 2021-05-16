@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { connect } from 'react-redux';
 import CardInfo from '../componentns/CardInfo/CardInfo';
-import { Wrapper } from '../componentns/Wrapper';
+import { Wrapper } from '../componentns/StyledComponents';
 import CardInfoSection from './../componentns/CardInfo/CardInfo.PrimaryInformation';
 
 const CardObject: FC = () => {
@@ -18,6 +18,46 @@ const CardObject: FC = () => {
 					</CardInfoSection>
 					<CardInfoSection>
 						<a href="#">Проверка</a>
+					</CardInfoSection>
+					<CardInfoSection>
+						<img src="#" alt="#" />
+						<img src="#" alt="#" />
+					</CardInfoSection>
+				</>
+			</CardInfo>
+			<CardInfo title={'Основная информация'}>
+				<>
+					<CardInfoSection>
+						Российское судостроительное и судоремонтное предприятие, находящееся
+						в городе Большой Камень Приморского края. Ведущее предприятие по
+						ремонту подводных лодок Тихоокеанского флота и единственное на
+						Дальнем Востоке, специализирующееся на ремонте, переоборудовании и
+						модернизации атомных подводных ракетоносцев.
+					</CardInfoSection>
+					<CardInfoSection>
+						<a href="#">Проверка</a>
+					</CardInfoSection>
+					<CardInfoSection>
+						<img src="#" alt="#" />
+						<img src="#" alt="#" />
+					</CardInfoSection>
+				</>
+			</CardInfo>
+			<CardInfo title={'Основная информация'}>
+				<>
+					<CardInfoSection>
+						Российское судостроительное и судоремонтное предприятие, находящееся
+						в городе Большой Камень Приморского края. Ведущее предприятие по
+						ремонту подводных лодок Тихоокеанского флота и единственное на
+						Дальнем Востоке, специализирующееся на ремонте, переоборудовании и
+						модернизации атомных подводных ракетоносцев.
+					</CardInfoSection>
+					<CardInfoSection>
+						<a href="#">Проверка</a>
+					</CardInfoSection>
+					<CardInfoSection>
+						<img src="#" alt="#" />
+						<img src="#" alt="#" />
 					</CardInfoSection>
 				</>
 			</CardInfo>

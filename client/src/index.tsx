@@ -37,6 +37,7 @@ function store(initialState: IRootReducer): Store<IRootReducer> {
 		composeWithDevTools(applyMiddleware(sagaMiddleware))
 	);
 }
+
 let init: any = {};
 
 let mountStore = store(init);

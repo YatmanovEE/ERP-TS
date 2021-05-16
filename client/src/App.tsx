@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '.';
-import { createClassName } from './modules/join';
+import { registryGlobalName } from './modules/join';
 import CardObject from './pages/CardObject';
 
 const style = createUseStyles((theme: ITheme) => ({
@@ -11,18 +11,24 @@ const style = createUseStyles((theme: ITheme) => ({
 			textDecoration: 'none',
 		},
 	},
-	flex: {
-		display: 'flex',
-	},
+
 	wrapper: {
 		justifyContent: 'space-between',
 		flexWrap: 'wrap',
 	},
 }));
 
+const globalStyle = createUseStyles({
+	flex: {
+		display: 'flex',
+	},
+	container: {
+		color: 'red',
+	},
+});
+
 function App() {
-	let className = style();
-	let join = createClassName(className);
+	registryGlobalName(globalStyle());
 	return <CardObject></CardObject>;
 }
 

@@ -1,23 +1,21 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 import { ITheme } from '../../';
-import { ToolTipWrapper } from '../ToolTipWrapper';
 import { createClassName } from '../../modules/join';
-import CardInfoMenu from './CardInfo.Menu';
 import CardInfoMenuWrapper from './CardInfo.MenuWrapper';
 
 const cardInfo__style = createUseStyles((theme: ITheme) => ({
 	wrapper: {
 		border: theme.border,
-		margin: '11px 0px 11px 0px',
+		margin: '0px 11px 0px 11px',
+		minWidth: '300px',
 	},
 	payloadContainer: {
 		padding: '16px',
 	},
 
 	flex: {
-		display: 'flex',
 		justifyContent: 'space-between',
 	},
 }));
@@ -41,13 +39,13 @@ const CardInfo: FunctionComponent<ICardInfo__Props> = ({ title, children }) => {
 };
 
 const cardInfoTitle__style = createUseStyles((theme: ITheme) => ({
-	title: {},
 	payloadContainer: {
 		padding: '16px',
 	},
-	flex: {
-		display: 'flex',
+	title: {},
+	flex1: {
 		justifyContent: 'space-between',
+		// display: 'flex',
 	},
 	titleContainer: {
 		backgroundColor: theme.backgroundColor,
@@ -86,7 +84,9 @@ const CardInfoTitle: FunctionComponent<ICardInfoTitle__Props> = (props) => {
 	let join = createClassName(className);
 
 	return (
-		<div className={join('payloadContainer', 'titleContainer', 'flex')}>
+		<div
+			className={join('payloadContainer', 'titleContainer', 'flex1', 'flex')}
+		>
 			<div className={className.title}>{props.title}</div>
 			<CardInfoMenuWrapper></CardInfoMenuWrapper>
 		</div>

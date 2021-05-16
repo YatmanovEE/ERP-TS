@@ -66,14 +66,13 @@ const personItemDescription__style = createUseStyles((theme: ITheme) => ({
 			color: 'red',
 		},
 	},
-	flex: {
-		display: 'flex',
-		justifyContent: 'space-between',
-	},
-
 	wrapper: {
+		justifyContent: 'space-between',
 		padding: '10px',
 		alignItems: 'center',
+	},
+	flex: {
+		display: 'flex',
 	},
 }));
 
@@ -81,7 +80,7 @@ const PersonItemDescription: FC = () => {
 	let className = personItemDescription__style();
 	let join = createClassName(className);
 	return (
-		<div className={join('flex', 'wrapper')}>
+		<div className={join('wrapper', 'flex')}>
 			<img src="#" alt="avatar" className={className.avatar} />
 
 			<div className={className.personInfo}>
