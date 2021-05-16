@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '.';
-import { registryGlobalName } from './modules/join';
+import { createClassName, registryGlobalName } from './modules/join';
 import CardObject from './pages/CardObject';
 
 const style = createUseStyles((theme: ITheme) => ({

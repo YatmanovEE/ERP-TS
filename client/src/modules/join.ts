@@ -7,6 +7,8 @@ export function joinWithoutDouble(str: string[]): string {
 		})
 		.join(' ');
 }
+//TODO Выдавать предупреждение, если стиль не обнаружен
+//NOTE Пока стиль, который не обнаружен просто отбрасывается
 
 interface ICreateClassName {
 	[key: string]: string;
@@ -22,6 +24,7 @@ export function createClassName(className: ICreateClassName) {
 			if (str.includes(item)) {
 				list.push(className[item]);
 			}
+
 			//TODO Решить как обрабатывать стили, которые совпадают по названию
 			//NOTE Пока вставленные стили вставляются заранее, чем перечеркивают параметры глобальных стилей
 		});
