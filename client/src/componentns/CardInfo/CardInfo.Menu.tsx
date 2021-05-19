@@ -10,11 +10,14 @@ const style = createUseStyles((theme: ITheme) => ({
 		flexDirection: 'column',
 		background: theme.backgroundColor,
 		boxShadow: theme.boxShadow,
-		padding: '10px',
 		'&>div': {
 			whiteSpace: 'nowrap',
-			padding: '5px',
+			padding: '10px',
 			cursor: 'pointer',
+			transition: 'background-color 0.5s ease',
+			'&:hover': {
+				backgroundColor: '#8a8787',
+			},
 		},
 	},
 }));

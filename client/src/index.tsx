@@ -25,7 +25,7 @@ const theme: ITheme = {
 	backgroundColor: '#FBFBFB',
 	filterBorderColor__active: '#4583CC',
 	borderColor: '#E1E1E1',
-	boxShadow: '#E5E5E5',
+	boxShadow: '0px 4px 12px #E5E5E5',
 	secondaryBackground: '0px 4px 12px rgba(0, 0, 0, 0.16)',
 	linkColor: '#2F80ED',
 };
