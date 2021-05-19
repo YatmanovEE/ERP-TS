@@ -40,26 +40,12 @@ const MenuWrapper: FC = () => {
 	const className = menuWrapper__style();
 	let join = createClassName(className);
 
-	useEffect(() => {
-		const current = document.querySelector(`.${className.menu}>span`);
-		const menuHandler = (e: Event) => {
-			e.stopPropagation();
-			if (e.target === current || e.target === current?.parentNode) {
-				setToolTipState(!toolTipState);
-			} else {
-				setToolTipState(false);
-			}
-		};
-		document.body!.addEventListener('click', menuHandler, {
-			capture: true,
-		});
-		return () =>
-			document.body!.removeEventListener('click', menuHandler, {
-				capture: true,
-			});
-	}, [className.btn, className.menu, toolTipState]);
 	return (
-		<button className={join('menu', 'btn')} ref={node}>
+		<button
+			className={join('menu', 'btn')}
+			ref={node}
+			onClick={() => setToolTipState(!toolTipState)}
+		>
 			<div className={className.menu}>
 				<span></span>
 				<span></span>
@@ -67,7 +53,7 @@ const MenuWrapper: FC = () => {
 			</div>
 
 			{toolTipState && (
-				<ToolTipWrapper refNode={node}>
+				<ToolTipWrapper refNode={node} handler={() => setToolTipState(false)}>
 					<CardInfoMenu></CardInfoMenu>
 				</ToolTipWrapper>
 			)}
