@@ -75,7 +75,6 @@ const once = (fn: () => void) => {
 	let done = true;
 	return () => {
 		if (done) {
-			console.log('handler');
 			done = false;
 			return fn();
 		}

@@ -25,6 +25,9 @@ const globalStyle = createUseStyles({
 	container: {
 		color: 'red',
 	},
+	wrap: {
+		flexWrap: 'wrap',
+	},
 });
 
 function App() {

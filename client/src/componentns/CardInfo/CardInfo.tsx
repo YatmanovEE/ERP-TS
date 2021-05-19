@@ -8,7 +8,7 @@ import CardInfoMenuWrapper from './CardInfo.MenuWrapper';
 const cardInfo__style = createUseStyles((theme: ITheme) => ({
 	wrapper: {
 		border: theme.border,
-		margin: '0px 11px 0px 11px',
+		margin: '11px',
 		minWidth: '300px',
 	},
 	payloadContainer: {
