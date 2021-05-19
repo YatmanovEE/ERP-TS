@@ -1,10 +1,11 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { createUseStyles } from 'react-jss';
 
 interface IToolTipWrapper__Props {
 	readonly refNode: React.RefObject<HTMLDivElement>;
 	readonly children: React.ReactNode;
+	readonly handler: () => void;
 }
 
 interface IPos {
@@ -37,6 +38,14 @@ const style = createUseStyles({
 		top: `${posParent.y}px`,
 		left: `${posParent.x}px`,
 	}),
+	container: {
+		position: 'fixed',
+		top: '0px',
+		left: '0px',
+		width: '100%',
+		height: '100%',
+		backgroundColor: 'transparent',
+	},
 });
 
 function yPos({ posParent, childrenHeight }: IPosY): number {
@@ -61,9 +70,22 @@ function xPos({ posParent, childrenWidth }: IPosX): number {
 	}
 	return ret;
 }
+
+const once = (fn: () => void) => {
+	let done = true;
+	return () => {
+		if (done) {
+			console.log('handler');
+			done = false;
+			return fn();
+		}
+	};
+};
+
 export const ToolTipWrapper = ({
 	refNode,
 	children,
+	handler,
 }: IToolTipWrapper__Props) => {
 	const [posChildren, setPosChildren] = useState<IPosStyle>({
 		y: 0,
@@ -90,10 +112,21 @@ export const ToolTipWrapper = ({
 		}
 	}, [className.payloadContainer, refNode]);
 
+	useEffect(() => {
+		let handleWrapper = once(() => handler());
+		window.addEventListener('scroll', (e) => {
+			e.preventDefault();
+			handleWrapper();
+		});
+		return window.removeEventListener('scroll', (e) => {});
+	}, [handler]);
+
 	if (refNode?.current) {
 		return ReactDOM.createPortal(
-			<div className={className.wrapper}>
-				<div className={className.payloadContainer}>{children}</div>
+			<div className={className.container} onClick={() => handler()}>
+				<div className={className.wrapper}>
+					<div className={className.payloadContainer}>{children}</div>
+				</div>
 			</div>,
 			document.body
 		);
