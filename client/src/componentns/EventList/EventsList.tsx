@@ -5,6 +5,7 @@ import { ITheme } from '../../index';
 import { createClassName } from '../../modules/join';
 import { showEvent } from '../../redux/actions/eventList';
 import { IRootReducer } from '../../redux/stores/rootStore';
+import { IEventState } from './../../redux/reducers/eventList.reducer';
 export enum eventItemType {
 	calendar = 'calendar',
 	addComment = 'addComment',
@@ -23,17 +24,21 @@ const eventList__style = createUseStyles((theme: ITheme) => ({
 		padding: '35px 25px',
 	},
 }));
+interface Props {
+	list: IEventState;
+}
 
-export const EventList: FC = () => {
+export const EventList: FC<any> = (props: Props) => {
 	let className = eventList__style();
 	let join = createClassName(className);
 	const dispatch = useDispatch();
+	console.log(props.list);
 
 	useEffect(() => {
 		dispatch(
-			showEvent({ url: 'https://jsonplaceholder.typicode.com/todos/1' })
+			showEvent({ url: 'https://jsonplaceholder.typicode.com/todos/20' })
 		);
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className={className.wrapper}>
@@ -158,7 +163,7 @@ let monthEnum: string[] = [
 	'Июня',
 	'Июля',
 	'Августа',
-	'Сентября	',
+	'Сентября',
 	'Октября',
 	'Ноября',
 	'Декабря',
@@ -216,4 +221,4 @@ const mapStateToProps = ({ eventList }: IRootReducer) => {
 	};
 };
 
-export default connect(null, null)(EventList);
+export default connect(mapStateToProps, null)(EventList);

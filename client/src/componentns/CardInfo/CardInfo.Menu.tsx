@@ -1,26 +1,7 @@
-import { FunctionComponent } from 'react';
+import { FC } from 'react';
 import { connect } from 'react-redux';
-import { createUseStyles } from 'react-jss';
-import { ITheme } from '../..';
 import { createClassName } from '../../modules/join';
-
-const style = createUseStyles((theme: ITheme) => ({
-	wrapper: {
-		display: 'flex',
-		flexDirection: 'column',
-		background: theme.backgroundColor,
-		boxShadow: theme.boxShadow,
-		'&>div': {
-			whiteSpace: 'nowrap',
-			padding: '10px',
-			cursor: 'pointer',
-			transition: 'background-color 0.5s ease',
-			'&:hover': {
-				backgroundColor: '#8a8787',
-			},
-		},
-	},
-}));
+import { cardInfoMenu__style } from './CardInfo.Menu.styled';
 
 let cardInfoMenu: string[] = [
 	'Изменить описание',
@@ -28,8 +9,8 @@ let cardInfoMenu: string[] = [
 	'Добавить фотографии',
 ];
 
-const CardInfoMenu: FunctionComponent = () => {
-	let className = style();
+const CardInfoMenu: FC = () => {
+	let className = cardInfoMenu__style();
 	let join = createClassName(className);
 
 	return (
