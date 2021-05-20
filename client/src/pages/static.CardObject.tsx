@@ -6,13 +6,19 @@ import CardInfo from '../componentns/CardInfo/CardInfo';
 import CardInfoPersonItem from '../componentns/CardInfo/CardInfo.PersonItem';
 import { Wrapper } from '../componentns/StyledComponents';
 import { createClassName } from '../modules/join';
-import CardInfoSection from './../componentns/CardInfo/CardInfo.PrimaryInformation';
+import CardInfoSection from '../componentns/CardInfo/CardInfo.PrimaryInformation';
 import img from './img/img.jpg';
 
 const cardObject__style = createUseStyles((theme: ITheme) => ({
 	container__image: {
 		margin: '-10px',
 		overflowX: 'auto',
+		'-ms-overflow-style': 'none' /* IE and Edge */,
+		scrollbarWidth: 'none' /* Firefox */,
+
+		'&::-webkit-scrollbar': {
+			display: 'none' /* Chronium */,
+		},
 		'&>img': {
 			margin: '10px',
 		},
@@ -104,7 +110,7 @@ const CardObject: FC = () => {
 							<figcaption>
 								<span>
 									Приморский край, г. Большой камень, ул.
-									Пролетарско-красноармейская здание 53 длиный литер 2кл4Ж{' '}
+									Пролетарско-красноармейская здание 53 длиный литер 2кл4Ж
 								</span>
 							</figcaption>
 							<div className={join('locationWrapper__image')}>
