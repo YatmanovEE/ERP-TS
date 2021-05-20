@@ -1,11 +1,10 @@
+import { IAction } from '../reducers/reducers';
 import { CardInfoTypes } from '../types';
 import { ICardInfoState } from './../reducers/cardInfo.reducer';
-type actions = {
-	type: string;
-	payload: ICardInfoState;
-};
 
-export function toogleMenu(payload: ICardInfoState): actions {
+export function toogleMenu(
+	payload: ICardInfoState
+): IAction<CardInfoTypes, ICardInfoState> {
 	return {
 		type: CardInfoTypes.TOOGLE_MENU,
 		payload,
