@@ -2,12 +2,13 @@ import { FC } from 'react';
 import { ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { createClassName } from '../../modules/join';
-import MenuWrapper from './CardInfo.MenuWrapper';
 import {
 	personItemComments__style,
 	personItemDescription__style,
 	personItem__style,
 } from './CardInfo.PresonItem.styled';
+import { CardMenuWrapper } from './CardInfo.MenuWrapper';
+import CardInfoMenu from './CardInfo.Menu';
 
 interface IPersonItemComments__Props {
 	comments?: string;
@@ -46,8 +47,16 @@ const PersonItemDescription: FC = () => {
 					<span>Дмитрий Сергеевич</span>
 				</div>
 			</div>
-			<MenuWrapper></MenuWrapper>
+			<MenuPersonItem></MenuPersonItem>
 		</div>
+	);
+};
+
+export const MenuPersonItem: FC = () => {
+	return (
+		<CardMenuWrapper>
+			<CardInfoMenu></CardInfoMenu>
+		</CardMenuWrapper>
 	);
 };
 

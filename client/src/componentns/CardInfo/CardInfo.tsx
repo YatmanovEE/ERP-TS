@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { connect } from 'react-redux';
 import { createClassName } from '../../modules/join';
-import CardInfoMenuWrapper from './CardInfo.MenuWrapper';
+import { MenuPersonItem } from './CardInfo.PersonItem';
 import { cardInfoTitle__style, cardInfo__style } from './CardInfo.styled';
 
 interface ICardInfoTitle__Props {
@@ -29,7 +29,7 @@ const CardInfoTitle: FC<ICardInfoTitle__Props> = (props) => {
 	return (
 		<div className={join('payloadContainer', 'titleContainer', 'flex')}>
 			<div className={className.title}>{props.title}</div>
-			<CardInfoMenuWrapper></CardInfoMenuWrapper>
+			<MenuPersonItem></MenuPersonItem>
 		</div>
 	);
 };

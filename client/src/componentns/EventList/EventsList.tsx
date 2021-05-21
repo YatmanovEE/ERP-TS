@@ -28,11 +28,9 @@ interface Props {
 	list: IEventState;
 }
 
-export const EventList: FC<any> = (props: Props) => {
+export const EventList: FC<Props> = (props) => {
 	let className = eventList__style();
-	let join = createClassName(className);
 	const dispatch = useDispatch();
-	console.log(props.list);
 
 	useEffect(() => {
 		dispatch(
@@ -53,9 +51,6 @@ const eventItem__style = createUseStyles((theme: ITheme) => ({
 	container: {
 		flexDirection: 'row',
 		alignItems: 'center',
-	},
-	flex: {
-		display: 'flex',
 	},
 	icon: {
 		width: '40px',
@@ -139,9 +134,6 @@ const eventTitleCalendar__style = createUseStyles((theme: ITheme) => ({
 		backgroundColor: 'black',
 		justifySelf: 'flex-end',
 	},
-	flex: {
-		display: 'flex',
-	},
 }));
 
 interface IEventTitle__Style {
@@ -192,11 +184,7 @@ const EventTitleCalendar: FC = () => {
 	);
 };
 
-const eventTitle__style = createUseStyles((theme: ITheme) => ({}));
-
 const EventTitle: FC = () => {
-	let className = eventTitle__style();
-	let join = createClassName(className);
 	return <div>Объект создан</div>;
 };
 
@@ -207,12 +195,10 @@ const eventComment__style = createUseStyles((theme: ITheme) => ({
 	},
 }));
 
-const EventComment: FC = (props) => {
+const EventComment: FC = ({ children }) => {
 	let className = eventComment__style();
 	let join = createClassName(className);
-	return (
-		<div className={join('comment')}>{props.children || 'Ничего нет'}</div>
-	);
+	return <div className={join('comment')}>{children || 'Ничего нет'}</div>;
 };
 
 const mapStateToProps = ({ eventList }: IRootReducer) => {
