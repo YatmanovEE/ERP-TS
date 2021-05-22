@@ -26,9 +26,6 @@ export const personItemDescription__style = createUseStyles(
 			padding: '10px',
 			alignItems: 'center',
 		},
-		flex: {
-			display: 'flex',
-		},
 	}),
 	{
 		name: 'PersonItemDescription',

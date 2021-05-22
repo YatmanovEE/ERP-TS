@@ -2,13 +2,12 @@ import { FC } from 'react';
 import { ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { createClassName } from '../../modules/join';
+import { MenuPersonItem } from './CardInfo.Menu';
 import {
 	personItemComments__style,
 	personItemDescription__style,
 	personItem__style,
 } from './CardInfo.PresonItem.styled';
-import { CardMenuWrapper } from './CardInfo.MenuWrapper';
-import CardInfoMenu from './CardInfo.Menu';
 
 interface IPersonItemComments__Props {
 	comments?: string;
@@ -49,14 +48,6 @@ const PersonItemDescription: FC = () => {
 			</div>
 			<MenuPersonItem></MenuPersonItem>
 		</div>
-	);
-};
-
-export const MenuPersonItem: FC = () => {
-	return (
-		<CardMenuWrapper>
-			<CardInfoMenu></CardInfoMenu>
-		</CardMenuWrapper>
 	);
 };
 

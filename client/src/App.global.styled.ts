@@ -15,4 +15,11 @@ export const globalStyle = createUseStyles((theme: ITheme) => ({
 	wrap: {
 		flexWrap: 'wrap',
 	},
+	btn: {
+		outline: 'none',
+		border: 'none',
+		padding: '10px',
+		backgroundColor: 'transparent',
+		cursor: 'pointer',
+	},
 }));
