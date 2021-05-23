@@ -1,16 +1,20 @@
 import { combineReducers } from 'redux';
-import { eventListReducer, IEventState } from './../reducers/eventList.reducer';
+import { EventListReducer, IEventState } from './../reducers/eventList.reducer';
 import {
-	cardInfoReducer,
+	CardInfoReducer,
 	ICardInfoState,
 } from './../reducers/cardInfo.reducer';
+import { IModalState } from '../reducers/modal.reducer';
+import { ModalReducer } from './../reducers/modal.reducer';
 
 export interface IRootReducer {
 	card: ICardInfoState;
 	eventList: IEventState;
+	modal: IModalState;
 }
 
 export const rootReducer = combineReducers({
-	card: cardInfoReducer,
-	eventList: eventListReducer,
+	card: CardInfoReducer,
+	eventList: EventListReducer,
+	modal: ModalReducer,
 });

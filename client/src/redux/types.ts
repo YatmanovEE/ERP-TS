@@ -1,8 +1,12 @@
-export enum CardInfoTypes {
-	TOOGLE_MENU = 'TOOGLE_MENU',
+export enum CardInfoTypeActions {
+	TOOGLE_MENU = 'CardInfo/TOOGLE_MENU',
 }
 
-export enum EventListTypes {
-	ADD_EVENT = 'ADD_EVENT',
-	SHOW_EVENT = 'SHOW_EVENT',
+export enum EventListTypeActions {
+	ADD_EVENT = 'EventList/ADD_EVENT',
+	SHOW_EVENT = 'EventList/SHOW_EVENT',
+}
+
+export enum ModalTypesActions {
+	OPEN = 'Modal/OPEN_EVENT',
 }
