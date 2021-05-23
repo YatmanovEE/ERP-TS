@@ -6,17 +6,6 @@ import { createClassName } from '../../modules/join';
 import { showEvent } from '../../redux/actions/eventList';
 import { IRootReducer } from '../../redux/stores/rootStore';
 import { IEventState } from './../../redux/reducers/eventList.reducer';
-export enum eventItemType {
-	calendar = 'calendar',
-	addComment = 'addComment',
-	createObject = 'createObject',
-	call = 'call',
-}
-
-interface IEventItemWrapper {
-	type: eventItemType;
-	children?: ReactNode;
-}
 
 const eventList__style = createUseStyles((theme: ITheme) => ({
 	wrapper: {
@@ -24,11 +13,26 @@ const eventList__style = createUseStyles((theme: ITheme) => ({
 		padding: '35px 25px',
 	},
 }));
-interface Props {
-	list: IEventState;
+
+namespace IEventList {
+	export interface Props {
+		list: IEventState[];
+	}
+}
+export enum eventItemType {
+	calendar = 'calendar',
+	addComment = 'addComment',
+	createObject = 'createObject',
+	call = 'call',
+}
+namespace IEventItemWrapper {
+	export interface Props {
+		type: eventItemType;
+		children?: ReactNode;
+	}
 }
 
-export const EventList: FC<Props> = (props) => {
+export const EventList: FC<IEventList.Props> = (props) => {
 	let className = eventList__style();
 	const dispatch = useDispatch();
 
@@ -67,10 +71,9 @@ const eventItem__style = createUseStyles((theme: ITheme) => ({
 	},
 }));
 
-const EventItemWrapper: FC<IEventItemWrapper> = ({ type, children }) => {
+const EventItemWrapper: FC<IEventItemWrapper.Props> = ({ type, children }) => {
 	let className = eventItem__style();
 	let join = createClassName(className);
-
 	switch (type) {
 		case eventItemType.calendar:
 			return (
@@ -123,7 +126,7 @@ const eventTitleCalendar__style = createUseStyles((theme: ITheme) => ({
 			flex: 'auto',
 		},
 	},
-	title__date: ({ color }: IEventTitle__Style) => ({
+	title__date: ({ color }: IEventTitleCalendar.Style) => ({
 		marginRight: '10px',
 		color: color,
 	}),
@@ -135,10 +138,6 @@ const eventTitleCalendar__style = createUseStyles((theme: ITheme) => ({
 		justifySelf: 'flex-end',
 	},
 }));
-
-interface IEventTitle__Style {
-	color: string;
-}
 
 function dateFromFuture(date: string): boolean {
 	let future = Date.parse(date);
@@ -160,6 +159,12 @@ let monthEnum: string[] = [
 	'Ноября',
 	'Декабря',
 ];
+
+namespace IEventTitleCalendar {
+	export interface Style {
+		color: string;
+	}
+}
 
 const EventTitleCalendar: FC = () => {
 	let date = '05-12-2021';
@@ -201,10 +206,8 @@ const EventComment: FC = ({ children }) => {
 	return <div className={join('comment')}>{children || 'Ничего нет'}</div>;
 };
 
-const mapStateToProps = ({ eventList }: IRootReducer) => {
-	return {
-		list: eventList,
-	};
-};
+const mapStateToProps = ({ eventList }: IRootReducer) => ({
+	list: eventList,
+});
 
 export default connect(mapStateToProps, null)(EventList);

@@ -1,6 +1,6 @@
 import { Reducer } from 'react';
-import { CardInfoTypes } from './../types';
-import { IAction } from './reducers';
+import { ICardMenu } from '../actions/cardInfo';
+import { CardInfoTypeActions } from './../types';
 
 export interface ICardInfoState {
 	id: string;
@@ -12,13 +12,13 @@ const initialState: ICardInfoState = {
 	status: true,
 };
 
-export const cardInfoReducer: Reducer<
+export const CardInfoReducer: Reducer<
 	ICardInfoState,
-	IAction<CardInfoTypes, ICardInfoState>
+	ICardMenu<ICardInfoState>
 > = (state = initialState, action) => {
 	switch (action.type) {
-		case CardInfoTypes.TOOGLE_MENU:
-			return { ...state, status: !action.payload.status };
+		case CardInfoTypeActions.TOOGLE_MENU:
+			return { ...state, status: action.payload.status };
 		default:
 			return state;
 	}

@@ -7,12 +7,6 @@ import { createUseStyles } from 'react-jss';
 import { ITheme } from '..';
 import { createClassName } from '../modules/join';
 
-interface ICreateModalForm {
-	children?: ReactChild;
-	title: string;
-	id: string;
-}
-
 function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>) {
 	// console.dir(e.target.files);
 	let fileList = e.target.files;
@@ -54,7 +48,15 @@ const createModal__style = createUseStyles((theme: ITheme) => ({
 	},
 }));
 
-export const CreateModalForm: FC<ICreateModalForm> = ({
+namespace ICreateModalForm {
+	export interface Props {
+		children?: ReactChild;
+		title: string;
+		id: string;
+	}
+}
+
+export const CreateModalForm: FC<ICreateModalForm.Props> = ({
 	title,
 	id,
 	...props

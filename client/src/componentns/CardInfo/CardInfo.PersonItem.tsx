@@ -2,17 +2,12 @@ import { FC } from 'react';
 import { ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { createClassName } from '../../modules/join';
-import { MenuPersonItem } from './CardInfo.Menu';
+import { MenuPerson } from './CardInfo.MenuPerson';
 import {
 	personItemComments__style,
 	personItemDescription__style,
 	personItem__style,
 } from './CardInfo.PresonItem.styled';
-
-interface IPersonItemComments__Props {
-	comments?: string;
-	children?: ReactNode;
-}
 
 const PersonItem: FC = () => {
 	let className = personItem__style();
@@ -25,7 +20,14 @@ const PersonItem: FC = () => {
 	);
 };
 
-const PersonItemComments: FC<IPersonItemComments__Props> = ({ comments }) => {
+namespace IPersonItemComments {
+	export interface Props {
+		comments?: string;
+		children?: ReactNode;
+	}
+}
+
+const PersonItemComments: FC<IPersonItemComments.Props> = ({ comments }) => {
 	let className = personItemComments__style();
 	if (comments) {
 		return <div className={className.comments}>Есть комментарий</div>;
@@ -46,7 +48,7 @@ const PersonItemDescription: FC = () => {
 					<span>Дмитрий Сергеевич</span>
 				</div>
 			</div>
-			<MenuPersonItem></MenuPersonItem>
+			<MenuPerson></MenuPerson>
 		</div>
 	);
 };

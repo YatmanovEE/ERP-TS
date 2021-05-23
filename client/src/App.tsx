@@ -1,7 +1,6 @@
 import { globalStyle } from './App.global.styled';
 import { registryGlobalName } from './modules/join';
-import CardObject from './pages/static.CardObject';
-import { CreateModalForm } from './componentns/CreateModal';
+import { CardObject } from './pages/static.CardObject';
 
 function App() {
 	let className = globalStyle();
@@ -9,6 +8,7 @@ function App() {
 	return (
 		<CardObject></CardObject>
 		// <CreateModalForm title={'Основная информация'} id={'0'}></CreateModalForm>
+		// <EventsList list={[]}></EventsList>
 	);
 }
 

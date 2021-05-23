@@ -1,14 +1,14 @@
 import { IAction } from '../reducers/reducers';
-import { EventListTypes } from '../types';
+import { EventListTypeActions } from '../types';
 import { eventItemType } from './../../componentns/EventList/EventsList';
 
 export interface IAddEvent {
-	type: eventItemType;
+	type: typeof eventItemType;
 	date: 'string';
 	whoCreate: 'string';
 }
 
-type IEvent<T> = IAction<EventListTypes, T>;
+export type IEvent<T> = IAction<EventListTypeActions, T>;
 
 export function addEvent({
 	type,
@@ -16,7 +16,7 @@ export function addEvent({
 	whoCreate,
 }: IAddEvent): IEvent<IAddEvent> {
 	return {
-		type: EventListTypes.ADD_EVENT,
+		type: EventListTypeActions.ADD_EVENT,
 		payload: {
 			type,
 			date,
@@ -31,7 +31,7 @@ export interface IShowEvent {
 
 export function showEvent({ url }: IShowEvent): IEvent<IShowEvent> {
 	return {
-		type: EventListTypes.SHOW_EVENT,
+		type: EventListTypeActions.SHOW_EVENT,
 		payload: {
 			url,
 		},

@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { createUseStyles } from 'react-jss';
-import { connect } from 'react-redux';
 import { ITheme } from '..';
 import CardInfo from '../componentns/CardInfo/CardInfo';
 import CardInfoPersonItem from '../componentns/CardInfo/CardInfo.PersonItem';
@@ -57,7 +56,7 @@ const cardObject__style = createUseStyles((theme: ITheme) => ({
 	},
 }));
 
-const CardObject: FC = () => {
+export const CardObject: FC = () => {
 	let className = cardObject__style();
 	let join = createClassName(className);
 	return (
@@ -131,5 +130,3 @@ const CardObject: FC = () => {
 		</Wrapper>
 	);
 };
-
-export default connect(null, null)(CardObject);

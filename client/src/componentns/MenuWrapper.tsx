@@ -6,12 +6,15 @@ import { createClassName } from '../modules/join';
 import { ToolTipWrapper } from './ToolTipWrapper';
 
 /**
-	@declare children: div in Button;
+	@declare children: HTMLDivElement in Button;
 	@declare component: The menu that opens
  */
-export interface IMenuWrapper {
-	children: React.ReactChild;
-	component: React.ReactChild;
+
+namespace IMenuWrapper {
+	export interface Props {
+		children: React.ReactChild;
+		component: React.ReactChild;
+	}
 }
 
 export const menuWrapperStyle = createUseStyles((theme: ITheme) => ({
@@ -24,10 +27,10 @@ export const menuWrapperStyle = createUseStyles((theme: ITheme) => ({
 	},
 }));
 
-const MenuWrapper: FC<IMenuWrapper> = ({
+const MenuWrapper: FC<IMenuWrapper.Props> = ({
 	children,
 	component,
-}: IMenuWrapper) => {
+}: IMenuWrapper.Props) => {
 	let node = useRef(null);
 	const [toolTipState, setToolTipState] = useState(false);
 	const className = menuWrapperStyle();
