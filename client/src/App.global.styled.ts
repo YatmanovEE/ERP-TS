@@ -22,4 +22,7 @@ export const globalStyle = createUseStyles((theme: ITheme) => ({
 		backgroundColor: 'transparent',
 		cursor: 'pointer',
 	},
+	none: {
+		display: 'none',
+	},
 }));
