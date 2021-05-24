@@ -6,6 +6,8 @@ import CardInfoSection from './CardInfo/CardInfo.PrimaryInformation';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '..';
 import { createClassName } from '../modules/join';
+import { IRootReducer } from './../redux/stores/rootStore';
+import { connect, ConnectedProps } from 'react-redux';
 
 function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>) {
 	// console.dir(e.target.files);
@@ -49,25 +51,20 @@ const createModal__style = createUseStyles((theme: ITheme) => ({
 }));
 
 namespace ICreateModalForm {
-	export interface Props {
+	export interface Props extends ConnectedProps<typeof connector> {
 		children?: ReactChild;
-		title: string;
-		id: string;
 	}
 }
 
-export const CreateModalForm: FC<ICreateModalForm.Props> = ({
-	title,
-	id,
-	...props
-}) => {
+const CreateModalForm: FC<ICreateModalForm.Props> = ({ modal }) => {
 	let className = createModal__style();
 	let join = createClassName(className);
-
-	return ReactDOM.createPortal(
-		<div className={join('wrapper')}>
-			<CardInfo title={title}>
-				<>
+	if (!modal.active) {
+		return null;
+	} else {
+		return ReactDOM.createPortal(
+			<div className={join('wrapper')}>
+				<CardInfo title={modal.id}>
 					<CardInfoSection>
 						<input
 							type={'file'}
@@ -82,9 +79,16 @@ export const CreateModalForm: FC<ICreateModalForm.Props> = ({
 							</label>
 						</button>
 					</CardInfoSection>
-				</>
-			</CardInfo>
-		</div>,
-		document.body
-	);
+				</CardInfo>
+			</div>,
+			document.body
+		);
+	}
 };
+
+const mapStateToProps = ({ modal }: IRootReducer) => ({
+	modal,
+});
+
+const connector = connect(mapStateToProps);
+export default connector(CreateModalForm);

@@ -6,8 +6,8 @@ import CardInfoPersonItem from '../componentns/CardInfo/CardInfo.PersonItem';
 import { Wrapper } from '../componentns/StyledComponents';
 import { createClassName } from '../modules/join';
 import CardInfoSection from '../componentns/CardInfo/CardInfo.PrimaryInformation';
+import CreateModal from '../componentns/CreateModal';
 import img from './img/img.jpg';
-
 const cardObject__style = createUseStyles((theme: ITheme) => ({
 	container__image: {
 		margin: '-10px',
@@ -61,6 +61,7 @@ export const CardObject: FC = () => {
 	let join = createClassName(className);
 	return (
 		<Wrapper>
+			<CreateModal></CreateModal>
 			<div className={join('cardInfoWrapper')}>
 				<CardInfo title={'Основная информация'}>
 					<>

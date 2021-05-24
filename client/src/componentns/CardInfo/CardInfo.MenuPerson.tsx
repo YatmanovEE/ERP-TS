@@ -4,8 +4,10 @@ import CardMenuWrapper from './CardInfo.MenuWrapper';
 
 export const MenuPerson: FC = () => {
 	return (
-		<CardMenuWrapper>
-			<CardInfoMenu></CardInfoMenu>
-		</CardMenuWrapper>
+		<>
+			<CardMenuWrapper>
+				<CardInfoMenu></CardInfoMenu>
+			</CardMenuWrapper>
+		</>
 	);
 };

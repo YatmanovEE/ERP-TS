@@ -1,18 +1,16 @@
 import React, { FC } from 'react';
 import MenuWrapper from '../MenuWrapper';
 import { cardInfoMenu__style } from './CardInfo.Menu.styled';
-import { connect, ConnectedProps } from 'react-redux';
-import { IRootReducer } from './../../redux/stores/rootStore';
+import { connect } from 'react-redux';
 
 namespace ICardMenuWrapper {
-	export type Props = ConnectedProps<typeof connector> & {
+	export type Props = {
 		children: React.ReactChild;
 	};
 }
 
-const CardMenuWrapper: FC<ICardMenuWrapper.Props> = ({ children, modal }) => {
+const CardMenuWrapper: FC<ICardMenuWrapper.Props> = ({ children }) => {
 	let className = cardInfoMenu__style();
-
 	return (
 		<>
 			<MenuWrapper component={children}>
@@ -22,19 +20,8 @@ const CardMenuWrapper: FC<ICardMenuWrapper.Props> = ({ children, modal }) => {
 					<span></span>
 				</div>
 			</MenuWrapper>
-			{/* {modal.active && (
-				<CreateModalForm id={modal.id} title={modal.id}></CreateModalForm>
-			)}  
-			
-			TODO FIX infinity loop
-			*/}
 		</>
 	);
 };
 
-const mapStateToProps = ({ modal }: IRootReducer) => ({
-	modal,
-});
-
-const connector = connect(mapStateToProps);
-export default connector(CardMenuWrapper);
+export default connect(null, null)(CardMenuWrapper);
