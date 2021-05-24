@@ -57,13 +57,13 @@ const cardObject__style = createUseStyles((theme: ITheme) => ({
 }));
 
 export const CardObject: FC = () => {
+	let id = '1';
 	let className = cardObject__style();
 	let join = createClassName(className);
 	return (
 		<Wrapper>
-			<CreateModal></CreateModal>
 			<div className={join('cardInfoWrapper')}>
-				<CardInfo title={'Основная информация'}>
+				<CardInfo id={id} title={'Основная информация'}>
 					<>
 						<CardInfoSection>
 							Российское судостроительное и судоремонтное предприятие,
@@ -104,7 +104,7 @@ export const CardObject: FC = () => {
 						</CardInfoSection>
 					</>
 				</CardInfo>
-				<CardInfo title={'Местонахождение'}>
+				<CardInfo id={id} title={'Местонахождение'}>
 					<div className={join('locationWrapper')}>
 						<figure>
 							<figcaption>
@@ -120,14 +120,6 @@ export const CardObject: FC = () => {
 					</div>
 				</CardInfo>
 			</div>
-
-			<CardInfo title={'Проектировщик'}>
-				<div className={join('flex', 'wrap')}>
-					<CardInfoPersonItem></CardInfoPersonItem>
-					<CardInfoPersonItem></CardInfoPersonItem>
-					<CardInfoPersonItem></CardInfoPersonItem>
-				</div>
-			</CardInfo>
 		</Wrapper>
 	);
 };

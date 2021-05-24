@@ -25,7 +25,12 @@ export const ModalReducer: Reducer<IModalState, IModal<IModalReducer>> = (
 				id: action.payload.id,
 				active: action.payload.active,
 			};
-
+		case ModalTypesActions.CLOSE:
+			return {
+				...state,
+				id: action.payload.id,
+				active: action.payload.active,
+			};
 		default:
 			return state;
 	}

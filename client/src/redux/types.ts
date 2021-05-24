@@ -9,4 +9,5 @@ export enum EventListTypeActions {
 
 export enum ModalTypesActions {
 	OPEN = 'Modal/OPEN_EVENT',
+	CLOSE = 'Modal/CLOSE_EVENT',
 }

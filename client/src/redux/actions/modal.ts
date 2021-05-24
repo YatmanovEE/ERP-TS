@@ -4,17 +4,23 @@ import { IAction } from './../reducers/reducers';
 
 export type IModal<T> = IAction<ModalTypesActions, T>;
 
-export declare type IOpenModal = ({
-	id,
-	active,
-}: IModalState) => IModal<IModalState>;
+export declare type Modal = (id: string) => IModal<IModalState>;
 
-export const openModal: IOpenModal = ({ id, active }) => {
+export const openModal: Modal = (id) => {
 	return {
 		type: ModalTypesActions.OPEN,
 		payload: {
 			id,
-			active,
+			active: true,
+		},
+	};
+};
+export const closeModal: Modal = (id) => {
+	return {
+		type: ModalTypesActions.CLOSE,
+		payload: {
+			id,
+			active: false,
 		},
 	};
 };

@@ -1,13 +1,13 @@
 import { ReactChild } from 'react';
 import { FC } from 'react';
 import ReactDOM from 'react-dom';
-import CardInfo from './CardInfo/CardInfo';
 import CardInfoSection from './CardInfo/CardInfo.PrimaryInformation';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '..';
 import { createClassName } from '../modules/join';
 import { IRootReducer } from './../redux/stores/rootStore';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
+import { closeModal } from './../redux/actions/modal';
 
 function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>) {
 	// console.dir(e.target.files);
@@ -53,33 +53,39 @@ const createModal__style = createUseStyles((theme: ITheme) => ({
 namespace ICreateModalForm {
 	export interface Props extends ConnectedProps<typeof connector> {
 		children?: ReactChild;
+		id: string;
 	}
 }
 
-const CreateModalForm: FC<ICreateModalForm.Props> = ({ modal }) => {
+const CreateModalForm: FC<ICreateModalForm.Props> = ({ modal, id }) => {
 	let className = createModal__style();
 	let join = createClassName(className);
+	const dispatch = useDispatch();
 	if (!modal.active) {
 		return null;
 	} else {
 		return ReactDOM.createPortal(
 			<div className={join('wrapper')}>
-				<CardInfo title={modal.id}>
-					<CardInfoSection>
-						<input
-							type={'file'}
-							id="fileSender"
-							accept={'.jpeg, .jpg, .png'}
-							className={className.inputFileSender}
-							onChange={(e) => chooseFileHandler(e)}
-						/>
-						<button className={join('btn', 'fileSender')}>
-							<label htmlFor="fileSender" className={join('btn')}>
-								Загрузить файл
-							</label>
-						</button>
-					</CardInfoSection>
-				</CardInfo>
+				<CardInfoSection>
+					<input
+						type={'file'}
+						id="fileSender"
+						accept={'.jpeg, .jpg, .png'}
+						className={className.inputFileSender}
+						onChange={(e) => chooseFileHandler(e)}
+					/>
+					<button className={join('btn', 'fileSender')}>
+						<label htmlFor="fileSender" className={join('btn')}>
+							Загрузить файл
+						</label>
+					</button>
+				</CardInfoSection>
+				<button
+					className={join('btn')}
+					onClick={() => dispatch(closeModal(id))}
+				>
+					Закрыть
+				</button>
 			</div>,
 			document.body
 		);

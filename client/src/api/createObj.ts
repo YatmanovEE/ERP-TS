@@ -4,16 +4,22 @@ export interface createObj {
 	description: string;
 }
 
-export type personItem = {
-	photo: URL;
-	post: string;
+export type name = {
 	fullName: {
 		firstName: string;
 		lastName: string;
 		surName: string;
 	};
-	comment: string;
 };
+
+export type comment = string;
+
+export type personItem = comment &
+	name & {
+		photo: URL;
+		post: string;
+		id: string;
+	};
 
 export type contractorItem = {
 	from: string;
@@ -22,7 +28,7 @@ export type contractorItem = {
 };
 
 export type link = {
-	href: URL;
+	href: string;
 	title: string;
 };
 
