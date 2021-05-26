@@ -2,10 +2,22 @@ import { FC } from 'react';
 import { connect } from 'react-redux';
 import { createClassName } from '../../modules/join';
 import { MenuPerson } from './CardInfo.MenuPerson';
-import { ICardInfo } from './CardInfo.styled';
+import { ICardInfoStyle } from './CardInfo.styled';
+
+export namespace ICardInfo {
+	export interface Props extends ICardInfoTitle.Props {
+		children: JSX.Element;
+	}
+}
+export namespace ICardInfoTitle {
+	export interface Props {
+		title: string;
+		id: string;
+	}
+}
 
 const CardInfo: FC<ICardInfo.Props> = ({ title, children, id }) => {
-	const className = ICardInfo.Style();
+	const className = ICardInfoStyle.Style();
 	return (
 		<div className={className.wrapper}>
 			<CardInfoTitle id={id} title={title}></CardInfoTitle>
@@ -14,8 +26,8 @@ const CardInfo: FC<ICardInfo.Props> = ({ title, children, id }) => {
 	);
 };
 
-const CardInfoTitle: FC<ICardInfo.Title.Props> = (props) => {
-	let className = ICardInfo.Title.Style();
+const CardInfoTitle: FC<ICardInfoTitle.Props> = (props) => {
+	let className = ICardInfoStyle.Title();
 	let join = createClassName(className);
 
 	return (

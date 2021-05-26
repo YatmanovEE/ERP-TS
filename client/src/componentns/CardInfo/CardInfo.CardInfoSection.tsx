@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { ITheme } from '../../';
+import { ITheme } from '../..';
 import { createUseStyles } from 'react-jss';
 import { FC } from 'react';
 import { ReactNode } from 'react';

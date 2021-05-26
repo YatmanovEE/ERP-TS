@@ -3,11 +3,7 @@ import { ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { createClassName } from '../../modules/join';
 import { MenuPerson } from './CardInfo.MenuPerson';
-import {
-	personItemComments__style,
-	personItemDescription__style,
-	personItem__style,
-} from './CardInfo.PresonItem.styled';
+import { PersonItemStyle } from './CardInfo.PresonItem.styled';
 
 namespace IPersonItem {
 	export type Props = IPersonItemComments.Props &
@@ -17,7 +13,7 @@ namespace IPersonItem {
 		};
 }
 const PersonItem: FC<IPersonItem.Props> = ({ comments, ...props }) => {
-	let className = personItem__style();
+	let className = PersonItemStyle.Style();
 	let join = createClassName(className);
 	return (
 		<div className={join('flex', 'wrapper')}>
@@ -35,7 +31,7 @@ namespace IPersonItemComments {
 }
 
 const PersonItemComments: FC<IPersonItemComments.Props> = ({ comments }) => {
-	let className = personItemComments__style();
+	let className = PersonItemStyle.Comments();
 	if (comments) {
 		return <div className={className.comments}>{comments}</div>;
 	} else {
@@ -62,7 +58,7 @@ const PersonItemDescription: FC<IPersonItemDescription.Props> = ({
 	fullName,
 	id,
 }) => {
-	let className = personItemDescription__style();
+	let className = PersonItemStyle.Description();
 	let join = createClassName(className);
 	return (
 		<div className={join('wrapper', 'flex', 'wrapperJustify')}>
