@@ -32,10 +32,15 @@ export function createClassName(className: ICreateClassName) {
 	};
 }
 
-export function registryGlobalName(className: ICreateClassName): void {
-	if (globalName) {
-		console.error('Уже зарегистрирован один глобальный стиль');
-	} else {
-		globalName = className;
+export function registryGlobalName(
+	className?: ICreateClassName
+): ICreateClassName {
+	if (className) {
+		if (globalName) {
+			console.error('Уже зарегистрирован один глобальный стиль');
+		} else {
+			globalName = className;
+		}
 	}
+	return globalName;
 }
