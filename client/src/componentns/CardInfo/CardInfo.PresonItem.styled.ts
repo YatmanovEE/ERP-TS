@@ -1,7 +1,21 @@
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '../..';
 
-export namespace PersonItemStyle {
+export namespace PersonItemStyled {
+	export const Style = createUseStyles(
+		(theme: ITheme) => ({
+			wrapper: {
+				flexDirection: 'column',
+				border: theme.border,
+				marginRight: '10px',
+				flexGrow: '1',
+			},
+		}),
+		{
+			name: 'PersonItem',
+		}
+	);
+
 	export const Description = createUseStyles(
 		(theme: ITheme) => ({
 			avatar: {
@@ -30,20 +44,6 @@ export namespace PersonItemStyle {
 		}),
 		{
 			name: 'PersonItemDescription',
-		}
-	);
-
-	export let Style = createUseStyles(
-		(theme: ITheme) => ({
-			wrapper: {
-				flexDirection: 'column',
-				border: theme.border,
-				marginRight: '10px',
-				flexGrow: '1',
-			},
-		}),
-		{
-			name: 'PersonItem',
 		}
 	);
 

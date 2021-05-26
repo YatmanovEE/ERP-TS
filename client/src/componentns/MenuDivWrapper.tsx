@@ -3,41 +3,38 @@ import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 import { ITheme } from '..';
 import { createClassName } from '../modules/join';
-import CreateModal from './CreateModal';
 import { ToolTipWrapper } from './ToolTipWrapper';
 
-/**
-	@declare children: HTMLDivElement in Button;
-	@declare component: The menu that opens
-	@declare modal: Modal component
+namespace IMenuDivWrapper {
+	/**
+	@param children HTMLDivElement in Button;
+	@param component The menu that opens
+	@param modal Modal component
  */
-
-namespace IMenuWrapper {
 	export interface Props {
 		children: React.ReactChild;
 		component: React.ReactChild;
 		modal?: React.ReactChild;
 	}
+	export const Style = createUseStyles((theme: ITheme) => ({
+		btn: {
+			outline: 'none',
+			border: 'none',
+			padding: '10px',
+			backgroundColor: 'transparent',
+			cursor: 'pointer',
+		},
+	}));
 }
 
-export const menuWrapperStyle = createUseStyles((theme: ITheme) => ({
-	btn: {
-		outline: 'none',
-		border: 'none',
-		padding: '10px',
-		backgroundColor: 'transparent',
-		cursor: 'pointer',
-	},
-}));
-
-const MenuWrapper: FC<IMenuWrapper.Props> = ({
+const MenuDivWrapper: FC<IMenuDivWrapper.Props> = ({
 	children,
 	component,
 	modal,
-}: IMenuWrapper.Props) => {
+}: IMenuDivWrapper.Props) => {
 	let node = useRef(null);
 	const [toolTipState, setToolTipState] = useState(false);
-	const className = menuWrapperStyle();
+	const className = IMenuDivWrapper.Style();
 	let join = createClassName(className);
 	return (
 		<>
@@ -58,4 +55,4 @@ const MenuWrapper: FC<IMenuWrapper.Props> = ({
 	);
 };
 
-export default connect(null, null)(MenuWrapper);
+export default connect(null, null)(MenuDivWrapper);

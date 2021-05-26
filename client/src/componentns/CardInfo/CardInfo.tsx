@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { connect } from 'react-redux';
 import { createClassName } from '../../modules/join';
-import { MenuPerson } from './CardInfo.MenuPerson';
+import { MenuPerson } from './MenuPerson';
 import { ICardInfoStyle } from './CardInfo.styled';
 
 export namespace ICardInfo {

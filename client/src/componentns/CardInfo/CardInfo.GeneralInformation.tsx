@@ -1,9 +1,8 @@
 import { FC } from 'react';
-import { ITheme } from '../..';
-import { createUseStyles } from 'react-jss';
 import CardInfo from './CardInfo';
 import CardInfoSection from './CardInfo.CardInfoSection';
 import { createClassName } from '../../modules/join';
+import { GeneralInformationStyled } from './CardInfo.GeneralInformation.styled';
 
 namespace IGeneralInformation {
 	export type Props = IPhotoSection.Props &
@@ -37,7 +36,7 @@ namespace IPhotoSection {
 }
 
 export const PhotoSection: FC<IPhotoSection.Props> = ({ photoSrc }) => {
-	let className = style();
+	let className = GeneralInformationStyled.Style();
 	let join = createClassName(className);
 	return (
 		<CardInfoSection>
@@ -57,7 +56,7 @@ namespace ILinkSection {
 }
 
 export const LinkSection: FC<ILinkSection.Props> = ({ linkSection }) => {
-	let className = style();
+	let className = GeneralInformationStyled.Style();
 	let join = createClassName(className);
 	return (
 		<CardInfoSection>
@@ -78,7 +77,7 @@ namespace ILinkItem {
 }
 
 export const LinkItem: FC<ILinkItem.Props> = ({ link, title }) => {
-	let className = style();
+	let className = GeneralInformationStyled.Style();
 	let join = createClassName(className);
 	return (
 		<div className={join('link__a')}>
@@ -108,7 +107,7 @@ namespace ILocation {
 }
 
 export const Location: FC<ILocation.Props> = ({ description, src, id }) => {
-	let className = style();
+	let className = GeneralInformationStyled.Style();
 	let join = createClassName(className);
 
 	return (
@@ -126,51 +125,3 @@ export const Location: FC<ILocation.Props> = ({ description, src, id }) => {
 		</CardInfo>
 	);
 };
-
-const style = createUseStyles((theme: ITheme) => ({
-	container__image: {
-		margin: '-10px',
-		overflowX: 'auto',
-		'-ms-overflow-style': 'none' /* IE and Edge */,
-		scrollbarWidth: 'none' /* Firefox */,
-
-		'&::-webkit-scrollbar': {
-			display: 'none' /* Chronium */,
-		},
-		'&>img': {
-			margin: '10px',
-		},
-	},
-	link: {
-		margin: '-10px',
-	},
-	link__a: {
-		margin: '10px',
-	},
-
-	locationWrapper: {
-		'&>figure': {
-			margin: '0px',
-			'&>figCaption': {
-				margin: '10px',
-				'&>span': {
-					margin: '-10px',
-				},
-			},
-		},
-	},
-	locationWrapper__image: {
-		overflow: 'hidden',
-		'&>img': {},
-	},
-	cardInfoWrapper: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		'&>:first-child': {
-			flex: '2 2 300px',
-		},
-		'&>:last-child': {
-			flex: '1 2 300px',
-		},
-	},
-}));
