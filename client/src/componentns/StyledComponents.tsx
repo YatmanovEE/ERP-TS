@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '../index';
 import { createClassName } from '../modules/join';
-import { IComponentWrapper } from './CardInfo/CardInfo.PrimaryInformation';
+import { IComponentWrapper } from './CardInfo/CardInfo.CardInfoSection';
 
 const style = createUseStyles((theme: ITheme) => ({
 	wrapper: {

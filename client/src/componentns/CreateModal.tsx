@@ -1,7 +1,7 @@
 import { ReactChild } from 'react';
 import { FC } from 'react';
 import ReactDOM from 'react-dom';
-import CardInfoSection from './CardInfo/CardInfo.PrimaryInformation';
+import CardInfoSection from './CardInfo/CardInfo.CardInfoSection';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '..';
 import { createClassName } from '../modules/join';
