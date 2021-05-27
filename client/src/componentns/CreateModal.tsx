@@ -8,6 +8,7 @@ import { createClassName } from '../modules/join';
 import { IRootReducer } from './../redux/stores/rootStore';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import { closeModal } from './../redux/actions/modal';
+import { IModaltypes } from '../redux/reducers/modal.reducer';
 
 function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>) {
 	// console.dir(e.target.files);
@@ -58,38 +59,48 @@ namespace ICreateModalForm {
 }
 
 const CreateModalForm: FC<ICreateModalForm.Props> = ({ modal, id }) => {
-	let className = createModal__style();
-	let join = createClassName(className);
-	const dispatch = useDispatch();
 	if (!modal.active) {
 		return null;
 	} else {
-		return ReactDOM.createPortal(
-			<div className={join('wrapper')}>
-				<CardInfoSection>
-					<input
-						type={'file'}
-						id="fileSender"
-						accept={'.jpeg, .jpg, .png'}
-						className={className.inputFileSender}
-						onChange={(e) => chooseFileHandler(e)}
-					/>
-					<button className={join('btn', 'fileSender')}>
-						<label htmlFor="fileSender" className={join('btn')}>
-							Загрузить файл
-						</label>
-					</button>
-				</CardInfoSection>
-				<button
-					className={join('btn')}
-					onClick={() => dispatch(closeModal(id))}
-				>
-					Закрыть
-				</button>
-			</div>,
-			document.body
-		);
+		switch (modal.type) {
+			case IModaltypes.GeneralInfo:
+				return <ModalGeneral id={id}></ModalGeneral>;
+
+			default:
+				return null;
+		}
 	}
+};
+
+const ModalGeneral: FC<{ id: string }> = ({ id }) => {
+	let className = createModal__style();
+	let join = createClassName(className);
+	const dispatch = useDispatch();
+	return ReactDOM.createPortal(
+		<div className={join('wrapper')}>
+			<CardInfoSection>
+				<input
+					type={'file'}
+					id="fileSender"
+					accept={'.jpeg, .jpg, .png'}
+					className={className.inputFileSender}
+					onChange={(e) => chooseFileHandler(e)}
+				/>
+				<button className={join('btn', 'fileSender')}>
+					<label htmlFor="fileSender" className={join('btn')}>
+						Загрузить файл
+					</label>
+				</button>
+			</CardInfoSection>
+			<button
+				className={join('btn')}
+				onClick={() => dispatch(closeModal({ id }))}
+			>
+				Закрыть
+			</button>
+		</div>,
+		document.body
+	);
 };
 
 const mapStateToProps = ({ modal }: IRootReducer) => ({

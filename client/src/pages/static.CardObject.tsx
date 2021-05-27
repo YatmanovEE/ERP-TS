@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Wrapper } from '../componentns/StyledComponents';
-import { LocationMenu } from '../componentns/CardInfo/LocationMenu';
 import CreateModal from '../componentns/CreateModal';
+import { GeneralInfoMenu } from './../componentns/CardInfo/GeneralInfoMenu';
 
 export const CardObject: FC = () => {
 	let id = '1';
@@ -9,7 +9,7 @@ export const CardObject: FC = () => {
 		<Wrapper>
 			{/* TODO Добавить стиль */}
 			{/* <div className={join('cardInfoWrapper')}></div> */}
-			<LocationMenu id={'id'}></LocationMenu>
+			<GeneralInfoMenu id={'id'}></GeneralInfoMenu>
 			<CreateModal id={'id'}></CreateModal>
 		</Wrapper>
 	);

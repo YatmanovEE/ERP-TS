@@ -1,26 +1,34 @@
-import { IModalState } from '../reducers/modal.reducer';
+import { IModalState, IModaltypes } from '../reducers/modal.reducer';
 import { ModalTypesActions } from '../types';
 import { IAction } from './../reducers/reducers';
 
 export type IModal<T> = IAction<ModalTypesActions, T>;
 
-export declare type Modal = (id: string) => IModal<IModalState>;
+export declare type Modal<T> = (payload: T) => IModal<IModalState>;
+type ModalTypeClose = {
+	id: string;
+};
+type ModalTypeOpen = ModalTypeClose & {
+	type: IModaltypes;
+};
 
-export const openModal: Modal = (id) => {
+export const openModal: Modal<ModalTypeOpen> = (payload) => {
 	return {
 		type: ModalTypesActions.OPEN,
 		payload: {
-			id,
+			id: payload.id,
 			active: true,
+			type: payload.type,
 		},
 	};
 };
-export const closeModal: Modal = (id) => {
+export const closeModal: Modal<ModalTypeClose> = (payload) => {
 	return {
 		type: ModalTypesActions.CLOSE,
 		payload: {
-			id,
+			id: payload.id,
 			active: false,
+			type: IModaltypes.GeneralInfo,
 		},
 	};
 };

@@ -1,47 +1,51 @@
-import { connect } from 'react-redux';
-import { Dispatch, FC, SyntheticEvent } from 'react';
-import { IModal, openModal } from '../../redux/actions/modal';
-import { IModalState } from '../../redux/reducers/modal.reducer';
-import { IRootReducer } from '../../redux/stores/rootStore';
-import { IMenu, MenuWrapper } from './Menu';
+import { MenuWrapper } from './Menu';
+import { MenuButton } from './LocationMenu';
+import { FC, SyntheticEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../redux/actions/modal';
+import { IModaltypes } from '../../redux/reducers/modal.reducer';
+import { KebubMenu } from './KebubMenu';
 
-export const GeneralInfo: FC<IMenu.Props<typeof connector>> = ({
-	openModal,
-	id,
-}) => {
+export const GeneralInfoMenu: FC<{ id: string }> = ({ id }) => {
+	return (
+		<KebubMenu id={id}>
+			<Menu id={id}></Menu>
+		</KebubMenu>
+	);
+};
+
+const Menu: FC<{ id: string }> = ({ id }) => {
 	return (
 		<MenuWrapper>
 			<>
-				<div
-					data-id="Изменить описание"
-					onClick={(e: SyntheticEvent<HTMLDivElement>) => openModal(id)}
-				>
-					Изменить описание
-				</div>
-				<div
-					data-id="Изменить ссылки"
-					onClick={(e: SyntheticEvent<HTMLDivElement>) => openModal(id)}
-				>
-					Изменить ссылки
-				</div>
-				<div
-					data-id="Добавить фотографии"
-					onClick={(e: SyntheticEvent<HTMLDivElement>) => openModal(id)}
-				>
-					Добавить фотографии
-				</div>
+				<GeneralInfoButton
+					title={'Изменить описани'}
+					id={id}
+				></GeneralInfoButton>
+				<GeneralInfoButton
+					title={'Изменить ссылки'}
+					id={id}
+				></GeneralInfoButton>
+				<GeneralInfoButton
+					title={'Добавить фотографии'}
+					id={id}
+				></GeneralInfoButton>
 			</>
 		</MenuWrapper>
 	);
 };
 
-const mapStateToProps = ({ modal }: IRootReducer) => ({
-	modal,
-});
-const mapDispatchToProps = (dispatch: Dispatch<IModal<IModalState>>) => ({
-	openModal: (id: string) => dispatch(openModal(id)),
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(GeneralInfo);
+const GeneralInfoButton: FC<{ title: string; id: string }> = ({
+	title,
+	id,
+}) => {
+	const dispatch = useDispatch();
+	return (
+		<MenuButton
+			title={title}
+			handler={(e: SyntheticEvent) =>
+				dispatch(openModal({ id, type: IModaltypes.GeneralInfo }))
+			}
+		></MenuButton>
+	);
+};

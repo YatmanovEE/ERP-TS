@@ -3,6 +3,7 @@ import { openModal } from '../../redux/actions/modal';
 import { MenuWrapper } from './Menu';
 import { KebubMenu } from './KebubMenu';
 import { useDispatch } from 'react-redux';
+import { IModaltypes } from '../../redux/reducers/modal.reducer';
 
 namespace IMenuPerson {
 	export type Props = {
@@ -25,7 +26,9 @@ const Menu: FC<{ id: string }> = ({ id }) => {
 			<>
 				<MenuButton
 					title={'Изменить местонахождение'}
-					handler={() => dispatch(openModal(id))}
+					handler={() =>
+						dispatch(openModal({ id, type: IModaltypes.Location }))
+					}
 				></MenuButton>
 			</>
 		</MenuWrapper>
@@ -40,7 +43,7 @@ namespace IMenuButton {
 	};
 }
 
-const MenuButton: FC<IMenuButton.Props> = ({ handler, title }) => {
+export const MenuButton: FC<IMenuButton.Props> = ({ handler, title }) => {
 	return (
 		<div
 			data-id={title}

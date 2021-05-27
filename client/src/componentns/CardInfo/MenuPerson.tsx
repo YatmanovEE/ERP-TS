@@ -1,10 +1,10 @@
-import { Dispatch, SyntheticEvent } from 'react';
 import { FC } from 'react';
-import { connect } from 'react-redux';
-import { IModal, openModal } from '../../redux/actions/modal';
-import { IModalState } from '../../redux/reducers/modal.reducer';
-import { IMenu, MenuWrapper } from './Menu';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../redux/actions/modal';
+import { IModaltypes } from '../../redux/reducers/modal.reducer';
+import { MenuWrapper } from './Menu';
 import { KebubMenu } from './KebubMenu';
+import { MenuButton } from './LocationMenu';
 
 namespace IMenuPerson {
 	export type Props = {
@@ -24,45 +24,31 @@ const Menu: FC<{ id: string }> = ({ id }) => {
 	return (
 		<MenuWrapper>
 			<>
-				<div
-					data-id="Изменить комментарий"
-					onClick={(e: SyntheticEvent<HTMLDivElement>) => openModal(id)}
-				>
-					Изменить комментарий
-				</div>
-				<div
-					data-id="Изменить ссылки"
-					onClick={(e: SyntheticEvent<HTMLDivElement>) => openModal(id)}
-				>
-					Позвонить
-				</div>
-				<div
-					data-id="Совершить встречу"
-					onClick={(e: SyntheticEvent<HTMLDivElement>) => openModal(id)}
-				>
-					Совершить встречу
-				</div>
-				<div
-					data-id="Отвзять сотрудника"
-					onClick={(e: SyntheticEvent<HTMLDivElement>) => openModal(id)}
-				>
-					Отвзять сотрудника
-				</div>
-				<div
-					data-id="Перейти в анкету"
-					onClick={(e: SyntheticEvent<HTMLDivElement>) => openModal(id)}
-				>
-					Перейти в анкету
-				</div>
+				<MenuPersonButton
+					title={'Изменить комментарий'}
+					id={id}
+				></MenuPersonButton>
+				<MenuPersonButton title={'Позвонить'} id={id}></MenuPersonButton>
+				<MenuPersonButton
+					title={'Совершить встречу'}
+					id={id}
+				></MenuPersonButton>
+				<MenuPersonButton
+					title={'Отвзять сотрудника'}
+					id={id}
+				></MenuPersonButton>
+				<MenuPersonButton title={'Перейти в анкету'} id={id}></MenuPersonButton>
 			</>
 		</MenuWrapper>
 	);
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<IModal<IModalState>>) => ({
-	openModal: (id: string) => dispatch(openModal(id)),
-});
-
-const connector = connect(mapDispatchToProps);
-
-export default connector(MenuPerson);
+const MenuPersonButton: FC<{ title: string; id: string }> = ({ title, id }) => {
+	const dispatch = useDispatch();
+	return (
+		<MenuButton
+			title={title}
+			handler={dispatch(openModal({ id, type: IModaltypes.PersonItem }))}
+		></MenuButton>
+	);
+};
