@@ -1,4 +1,4 @@
-import { ReactChild } from 'react';
+import { ReactChild, useLayoutEffect, useState } from 'react';
 import { FC } from 'react';
 import ReactDOM from 'react-dom';
 import CardInfoSection from './CardInfo/CardInfo.CardInfoSection';
@@ -8,7 +8,6 @@ import { createClassName } from '../modules/join';
 import { IRootReducer } from './../redux/stores/rootStore';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import { closeModal } from './../redux/actions/modal';
-import { IModaltypes } from '../redux/reducers/modal.reducer';
 
 function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>) {
 	// console.dir(e.target.files);
@@ -41,6 +40,15 @@ namespace IModalGeneral {
 				boxShadow: 'none',
 			},
 		},
+	}));
+}
+
+namespace ICreateModalForm {
+	export interface Props extends ConnectedProps<typeof connector> {
+		children?: ReactChild;
+		id: string;
+	}
+	export const Style = createUseStyles((theme: ITheme) => ({
 		wrapper: {
 			backgroundColor: 'red',
 			position: 'fixed',
@@ -52,18 +60,16 @@ namespace IModalGeneral {
 	}));
 }
 
-namespace ICreateModalForm {
-	export interface Props extends ConnectedProps<typeof connector> {
-		children?: ReactChild;
-		id: string;
-	}
-}
-
 const CreateModalForm: FC<ICreateModalForm.Props> = ({ modal, id }) => {
-	if (!modal.active) {
-		return null;
+	let className = ICreateModalForm.Style();
+	let join = createClassName(className);
+	if (modal.active && modal.id === id) {
+		return ReactDOM.createPortal(
+			<div className={join('wrapper')}>{modal.component}</div>,
+			document.body
+		);
 	} else {
-		return modal.component;
+		return null;
 	}
 };
 
@@ -71,8 +77,8 @@ export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
 	let className = IModalGeneral.Style();
 	let join = createClassName(className);
 	const dispatch = useDispatch();
-	return ReactDOM.createPortal(
-		<div className={join('wrapper')}>
+	return (
+		<>
 			<CardInfoSection>
 				<input
 					type={'file'}
@@ -93,8 +99,7 @@ export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
 			>
 				Закрыть
 			</button>
-		</div>,
-		document.body
+		</>
 	);
 };
 

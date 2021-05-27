@@ -9,8 +9,9 @@ export const CardObject: FC = () => {
 		<Wrapper>
 			{/* TODO Добавить стиль */}
 			{/* <div className={join('cardInfoWrapper')}></div> */}
-			<GeneralInfoMenu id={'id'}></GeneralInfoMenu>
-			<CreateModal id={'id'}></CreateModal>
+			<GeneralInfoMenu id={'2'}></GeneralInfoMenu>
+			<GeneralInfoMenu id={'1'}></GeneralInfoMenu>
+			{/* <CreateModal id={id}></CreateModal> */}
 		</Wrapper>
 	);
 };
