@@ -5,7 +5,7 @@ import { ModalTypesActions } from '../types';
 export interface IModalState {
 	id: string;
 	active: boolean;
-	type: IModaltypes;
+	component: React.ReactElement | null;
 }
 
 export enum IModaltypes {
@@ -17,7 +17,7 @@ export enum IModaltypes {
 const initialState: IModalState = {
 	id: 'null',
 	active: false,
-	type: IModaltypes.GeneralInfo,
+	component: null,
 };
 
 export type IModalReducer = IModalState;

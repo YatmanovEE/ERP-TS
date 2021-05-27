@@ -26,8 +26,9 @@ const Menu: FC<{ id: string }> = ({ id }) => {
 			<>
 				<MenuButton
 					title={'Изменить местонахождение'}
-					handler={() =>
-						dispatch(openModal({ id, type: IModaltypes.Location }))
+					handler={
+						() => null
+						// dispatch(openModal({ id, type: IModaltypes.Location }))
 					}
 				></MenuButton>
 			</>

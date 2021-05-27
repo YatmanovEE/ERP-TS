@@ -48,7 +48,10 @@ const MenuPersonButton: FC<{ title: string; id: string }> = ({ title, id }) => {
 	return (
 		<MenuButton
 			title={title}
-			handler={dispatch(openModal({ id, type: IModaltypes.PersonItem }))}
+			handler={
+				() => null
+				// dispatch(openModal({ id, type: IModaltypes.PersonItem }))
+			}
 		></MenuButton>
 	);
 };

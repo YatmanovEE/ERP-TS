@@ -3,8 +3,8 @@ import { MenuButton } from './LocationMenu';
 import { FC, SyntheticEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../redux/actions/modal';
-import { IModaltypes } from '../../redux/reducers/modal.reducer';
 import { KebubMenu } from './KebubMenu';
+import { ModalGeneral } from '../CreateModal';
 
 export const GeneralInfoMenu: FC<{ id: string }> = ({ id }) => {
 	return (
@@ -44,7 +44,7 @@ const GeneralInfoButton: FC<{ title: string; id: string }> = ({
 		<MenuButton
 			title={title}
 			handler={(e: SyntheticEvent) =>
-				dispatch(openModal({ id, type: IModaltypes.GeneralInfo }))
+				dispatch(openModal({ id, component: <ModalGeneral id={id} /> }))
 			}
 		></MenuButton>
 	);

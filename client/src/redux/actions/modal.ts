@@ -9,7 +9,7 @@ type ModalTypeClose = {
 	id: string;
 };
 type ModalTypeOpen = ModalTypeClose & {
-	type: IModaltypes;
+	component: React.ReactElement;
 };
 
 export const openModal: Modal<ModalTypeOpen> = (payload) => {
@@ -18,7 +18,7 @@ export const openModal: Modal<ModalTypeOpen> = (payload) => {
 		payload: {
 			id: payload.id,
 			active: true,
-			type: payload.type,
+			component: payload.component,
 		},
 	};
 };
@@ -28,7 +28,7 @@ export const closeModal: Modal<ModalTypeClose> = (payload) => {
 		payload: {
 			id: payload.id,
 			active: false,
-			type: IModaltypes.GeneralInfo,
+			component: null,
 		},
 	};
 };

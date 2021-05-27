@@ -26,30 +26,31 @@ function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>) {
 		}
 	}
 }
-
-const createModal__style = createUseStyles((theme: ITheme) => ({
-	inputFileSender: {
-		display: 'none',
-	},
-	fileSender: {
-		background: '#FFFFFF',
-		border: '1px solid rgba(0, 0, 0, 0.15)',
-		borderRadius: '1px',
-		boxShadow: theme.boxShadow,
-		transition: 'box-shadow 0.3s ease',
-		'&:active': {
-			boxShadow: 'none',
+namespace IModalGeneral {
+	export const Style = createUseStyles((theme: ITheme) => ({
+		inputFileSender: {
+			display: 'none',
 		},
-	},
-	wrapper: {
-		backgroundColor: 'red',
-		position: 'fixed',
-		width: '100%',
-		height: '100%',
-		left: '0px',
-		top: '0px',
-	},
-}));
+		fileSender: {
+			background: '#FFFFFF',
+			border: '1px solid rgba(0, 0, 0, 0.15)',
+			borderRadius: '1px',
+			boxShadow: theme.boxShadow,
+			transition: 'box-shadow 0.3s ease',
+			'&:active': {
+				boxShadow: 'none',
+			},
+		},
+		wrapper: {
+			backgroundColor: 'red',
+			position: 'fixed',
+			width: '100%',
+			height: '100%',
+			left: '0px',
+			top: '0px',
+		},
+	}));
+}
 
 namespace ICreateModalForm {
 	export interface Props extends ConnectedProps<typeof connector> {
@@ -62,18 +63,12 @@ const CreateModalForm: FC<ICreateModalForm.Props> = ({ modal, id }) => {
 	if (!modal.active) {
 		return null;
 	} else {
-		switch (modal.type) {
-			case IModaltypes.GeneralInfo:
-				return <ModalGeneral id={id}></ModalGeneral>;
-
-			default:
-				return null;
-		}
+		return modal.component;
 	}
 };
 
-const ModalGeneral: FC<{ id: string }> = ({ id }) => {
-	let className = createModal__style();
+export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
+	let className = IModalGeneral.Style();
 	let join = createClassName(className);
 	const dispatch = useDispatch();
 	return ReactDOM.createPortal(
