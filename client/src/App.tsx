@@ -5,6 +5,7 @@ import Modal from './componentns/Modal';
 import { useDispatch } from 'react-redux';
 import { openModal } from './redux/actions/modal';
 import { LocationMenu } from './componentns/CardInfo/LocationMenu';
+import { GeneralInfoMenu } from './componentns/CardInfo/GeneralInfoMenu';
 function App() {
 	let className = globalStyle();
 	registryGlobalName(className);
@@ -21,7 +22,7 @@ function App() {
 	// );
 	return (
 		<>
-			<LocationMenu id={'id'}></LocationMenu>
+			<GeneralInfoMenu id="1"></GeneralInfoMenu>
 			<Modal></Modal>
 		</>
 	);
