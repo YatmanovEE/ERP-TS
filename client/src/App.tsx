@@ -1,31 +1,27 @@
 import { globalStyle } from './App.global.styled';
 import { registryGlobalName } from './modules/join';
-import { CardObject } from './pages/static.CardObject';
-import CreateModalForm from './componentns/Modal';
 import { ModalTemplate } from './componentns/ModalTemplate';
 import Modal from './componentns/Modal';
 import { useDispatch } from 'react-redux';
 import { openModal } from './redux/actions/modal';
+import { LocationMenu } from './componentns/CardInfo/LocationMenu';
 function App() {
 	let className = globalStyle();
 	registryGlobalName(className);
 	let dispatch = useDispatch();
-	dispatch(
-		openModal({
-			id: 'id',
-			component: (
-				<ModalTemplate id={'id'} title="fromApp">
-					FromApp
-				</ModalTemplate>
-			),
-		})
-	);
+	// dispatch(
+	// 	openModal({
+	// 		id: 'id',
+	// 		component: (
+	// 			<ModalTemplate id={'id'} title="fromApp">
+	// 				FromApp
+	// 			</ModalTemplate>
+	// 		),
+	// 	})
+	// );
 	return (
 		<>
-			{/* <CardObject></CardObject> */}
-			{/* // <CreateModalForm title={'Основная информация'} id={'0'}></CreateModalForm> */}
-			{/* // <EventsList list={[]}></EventsList> */}
-			{/* <CreateModalForm></CreateModalForm> */}
+			<LocationMenu id={'id'}></LocationMenu>
 			<Modal></Modal>
 		</>
 	);
