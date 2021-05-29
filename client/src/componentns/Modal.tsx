@@ -49,7 +49,7 @@ namespace IModal {
 	export const Style = createUseStyles(
 		(theme: ITheme) => ({
 			wrapper: {
-				backgroundColor: 'red',
+				backgroundColor: 'transparent',
 				position: 'fixed',
 				width: '100%',
 				height: '100%',
