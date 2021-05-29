@@ -24,6 +24,9 @@ export function createClassName(className: ICreateClassName) {
 			if (str.includes(item)) {
 				list.push(className[item]);
 			}
+			if (Object.values(className).includes(item)) {
+				list.push(item);
+			}
 
 			//TODO Решить как обрабатывать стили, которые совпадают по названию
 			//NOTE Пока вставленные стили вставляются заранее, чем перечеркивают параметры глобальных стилей
