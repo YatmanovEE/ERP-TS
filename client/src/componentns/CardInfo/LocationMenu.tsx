@@ -1,9 +1,8 @@
 import { FC, SyntheticEvent } from 'react';
-import { openModal } from '../../redux/actions/modal';
 import { MenuWrapper } from './Menu';
 import { KebubMenu } from './KebubMenu';
 import { useDispatch } from 'react-redux';
-import { IModaltypes } from '../../redux/reducers/modal.reducer';
+import { openModal } from '../../redux/actions/modal';
 
 namespace IMenuPerson {
 	export type Props = {
@@ -26,9 +25,8 @@ const Menu: FC<{ id: string }> = ({ id }) => {
 			<>
 				<MenuButton
 					title={'Изменить местонахождение'}
-					handler={
-						() => null
-						// dispatch(openModal({ id, type: IModaltypes.Location }))
+					handler={() =>
+						dispatch(openModal({ id: id, component: <LocationModal /> }))
 					}
 				></MenuButton>
 			</>
@@ -53,4 +51,8 @@ export const MenuButton: FC<IMenuButton.Props> = ({ handler, title }) => {
 			{title}
 		</div>
 	);
+};
+
+export const LocationModal: FC = () => {
+	return <span>LocationModal</span>;
 };

@@ -1,18 +1,18 @@
-import { IModalState, IModaltypes } from '../reducers/modal.reducer';
+import { IModalState } from '../reducers/modal.reducer';
 import { ModalTypesActions } from '../types';
 import { IAction } from './../reducers/reducers';
 
 export type IModal<T> = IAction<ModalTypesActions, T>;
 
 export declare type Modal<T> = (payload: T) => IModal<IModalState>;
-type ModalTypeClose = {
+export type IModalTypeClose = {
 	id: string;
 };
-type ModalTypeOpen = ModalTypeClose & {
+export type IModalTypeOpen = IModalTypeClose & {
 	component: React.ReactElement;
 };
 
-export const openModal: Modal<ModalTypeOpen> = (payload) => {
+export const openModal: Modal<IModalTypeOpen> = (payload: IModalTypeOpen) => {
 	return {
 		type: ModalTypesActions.OPEN,
 		payload: {
@@ -22,7 +22,9 @@ export const openModal: Modal<ModalTypeOpen> = (payload) => {
 		},
 	};
 };
-export const closeModal: Modal<ModalTypeClose> = (payload) => {
+export const closeModal: Modal<IModalTypeClose> = (
+	payload: IModalTypeClose
+) => {
 	return {
 		type: ModalTypesActions.CLOSE,
 		payload: {

@@ -14,7 +14,6 @@ namespace IMenuDivWrapper {
 	export interface Props {
 		children: React.ReactChild;
 		component: React.ReactChild;
-		modal?: React.ReactChild;
 	}
 	export const Style = createUseStyles((theme: ITheme) => ({
 		btn: {
@@ -30,7 +29,6 @@ namespace IMenuDivWrapper {
 const MenuDivWrapper: FC<IMenuDivWrapper.Props> = ({
 	children,
 	component,
-	modal,
 }: IMenuDivWrapper.Props) => {
 	let node = useRef(null);
 	const [toolTipState, setToolTipState] = useState(false);
@@ -50,7 +48,6 @@ const MenuDivWrapper: FC<IMenuDivWrapper.Props> = ({
 					</ToolTipWrapper>
 				)}
 			</button>
-			{modal}
 		</>
 	);
 };

@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../redux/actions/modal';
-import { IModaltypes } from '../../redux/reducers/modal.reducer';
 import { MenuWrapper } from './Menu';
 import { KebubMenu } from './KebubMenu';
 import { MenuButton } from './LocationMenu';
+import { createUseStyles } from 'react-jss';
+import { ITheme } from '../..';
 
 namespace IMenuPerson {
 	export type Props = {
@@ -48,10 +49,27 @@ const MenuPersonButton: FC<{ title: string; id: string }> = ({ title, id }) => {
 	return (
 		<MenuButton
 			title={title}
-			handler={
-				() => null
-				// dispatch(openModal({ id, type: IModaltypes.PersonItem }))
-			}
+			handler={() => dispatch(openModal({ id, component: <MenuForm /> }))}
 		></MenuButton>
+	);
+};
+
+namespace IMenuForm {
+	export const Style = createUseStyles((theme: ITheme) => ({
+		wrapper: {
+			backgroundColor: 'white',
+			width: '200px',
+			height: '400px',
+		},
+	}));
+}
+
+const MenuForm: FC = () => {
+	let className = IMenuForm.Style();
+
+	return (
+		<div className={className.wrapper}>
+			<span>MENUFORM</span>;
+		</div>
 	);
 };

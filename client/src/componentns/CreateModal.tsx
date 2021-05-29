@@ -1,4 +1,4 @@
-import { ReactChild, useLayoutEffect, useState } from 'react';
+import { ReactChild, SyntheticEvent } from 'react';
 import { FC } from 'react';
 import ReactDOM from 'react-dom';
 import CardInfoSection from './CardInfo/CardInfo.CardInfoSection';
@@ -10,7 +10,6 @@ import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import { closeModal } from './../redux/actions/modal';
 
 function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>) {
-	// console.dir(e.target.files);
 	let fileList = e.target.files;
 	if (fileList) {
 		for (let i = 0; i < fileList.length; i++) {
@@ -46,26 +45,48 @@ namespace IModalGeneral {
 namespace ICreateModalForm {
 	export interface Props extends ConnectedProps<typeof connector> {
 		children?: ReactChild;
-		id: string;
 	}
-	export const Style = createUseStyles((theme: ITheme) => ({
-		wrapper: {
-			backgroundColor: 'red',
-			position: 'fixed',
-			width: '100%',
-			height: '100%',
-			left: '0px',
-			top: '0px',
-		},
-	}));
+	export const Style = createUseStyles(
+		(theme: ITheme) => ({
+			wrapper: {
+				backgroundColor: 'red',
+				position: 'fixed',
+				width: '100%',
+				height: '100%',
+				left: '0px',
+				top: '0px',
+			},
+			container: {
+				display: 'flex',
+				justifyContent: 'center',
+			},
+		}),
+		{ name: 'Modal' }
+	);
 }
-
-const CreateModalForm: FC<ICreateModalForm.Props> = ({ modal, id }) => {
+/**
+ * @param component must have a close button.
+ *
+ */
+const CreateModalForm: FC<ICreateModalForm.Props> = ({ modal }) => {
 	let className = ICreateModalForm.Style();
-	let join = createClassName(className);
-	if (modal.active && modal.id === id) {
+	let dispatch = useDispatch();
+	function closeModalhandler(event: SyntheticEvent<HTMLDivElement>): void {
+		if (event.target === event.currentTarget) {
+			dispatch(closeModal({ id: modal.id }));
+		}
+	}
+
+	if (modal.active) {
 		return ReactDOM.createPortal(
-			<div className={join('wrapper')}>{modal.component}</div>,
+			<div className={className.wrapper}>
+				<div
+					className={className.container}
+					onClick={(e) => closeModalhandler(e)}
+				>
+					{modal.component}
+				</div>
+			</div>,
 			document.body
 		);
 	} else {
