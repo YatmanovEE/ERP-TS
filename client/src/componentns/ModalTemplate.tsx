@@ -12,6 +12,13 @@ namespace IModalTemplate {
 		onSaveHandler?: () => void;
 	};
 }
+/**
+ *
+ * @param title title Modal
+ * @param id id CardInfo
+ * @param onSaveHandler Handler onClick save button
+ * @returns ReactElement
+ */
 
 export const ModalTemplate: FC<IModalTemplate.Props> = ({
 	title,
