@@ -16,6 +16,10 @@ export interface ITheme {
 	filterBorderColor__active: string;
 	borderColor: string;
 	boxShadow: string;
+	white: string;
+	grey: string;
+	shadowBlack: string;
+	shadowOffset: string;
 	secondaryBackground: string;
 	linkColor: string;
 }
@@ -26,6 +30,10 @@ const theme: ITheme = {
 	filterBorderColor__active: '#4583CC',
 	borderColor: '#E1E1E1',
 	boxShadow: '0px 4px 12px #E5E5E5',
+	grey: '#E5E5E5',
+	shadowOffset: '0px 4px 12px',
+	white: 'white',
+	shadowBlack: 'rgba(0, 0, 0, 0.2)',
 	secondaryBackground: '0px 4px 12px rgba(0, 0, 0, 0.16)',
 	linkColor: '#2F80ED',
 };
