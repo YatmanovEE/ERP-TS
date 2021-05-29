@@ -5,9 +5,9 @@ import CardInfoSection from './CardInfo/CardInfo.CardInfoSection';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '..';
 import { createClassName } from '../modules/join';
-import { IRootReducer } from './../redux/stores/rootStore';
+import { IRootReducer } from '../redux/stores/rootStore';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
-import { closeModal } from './../redux/actions/modal';
+import { closeModal } from '../redux/actions/modal';
 
 function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>) {
 	let fileList = e.target.files;
@@ -42,7 +42,7 @@ namespace IModalGeneral {
 	}));
 }
 
-namespace ICreateModalForm {
+namespace IModal {
 	export interface Props extends ConnectedProps<typeof connector> {
 		children?: ReactChild;
 	}
@@ -64,12 +64,9 @@ namespace ICreateModalForm {
 		{ name: 'Modal' }
 	);
 }
-/**
- * @param component must have a close button.
- *
- */
-const CreateModalForm: FC<ICreateModalForm.Props> = ({ modal }) => {
-	let className = ICreateModalForm.Style();
+
+const Modal: FC<IModal.Props> = ({ modal }) => {
+	let className = IModal.Style();
 	let dispatch = useDispatch();
 	function closeModalhandler(event: SyntheticEvent<HTMLDivElement>): void {
 		if (event.target === event.currentTarget) {
@@ -129,4 +126,4 @@ const mapStateToProps = ({ modal }: IRootReducer) => ({
 });
 
 const connector = connect(mapStateToProps);
-export default connector(CreateModalForm);
+export default connector(Modal);

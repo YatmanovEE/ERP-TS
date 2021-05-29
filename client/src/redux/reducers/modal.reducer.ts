@@ -1,5 +1,5 @@
 import { Reducer } from 'react';
-import { IModal } from '../actions/modal';
+import { IModalAction } from '../actions/modal';
 import { ModalTypesActions } from '../types';
 
 export interface IModalState {
@@ -22,7 +22,7 @@ const initialState: IModalState = {
 
 export type IModalReducer = IModalState;
 
-export const ModalReducer: Reducer<IModalState, IModal<IModalReducer>> = (
+export const ModalReducer: Reducer<IModalState, IModalAction<IModalReducer>> = (
 	state = initialState,
 	action
 ) => {
