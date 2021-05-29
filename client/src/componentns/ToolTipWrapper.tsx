@@ -80,7 +80,6 @@ const once = (fn: () => void) => {
 		}
 	};
 };
-
 export const ToolTipWrapper = ({
 	refNode,
 	children,
@@ -94,6 +93,7 @@ export const ToolTipWrapper = ({
 		y: 0,
 		x: 0,
 	});
+	const [state, setState] = useState(0);
 
 	let className = style({ posChildren, posParent });
 	useLayoutEffect(() => {
@@ -109,15 +109,24 @@ export const ToolTipWrapper = ({
 			setPosChildren({ x, y });
 			setPosParent({ x: rectParent?.left, y: rectParent?.top });
 		}
-	}, [className.payloadContainer, refNode]);
-
+	}, [className.payloadContainer, refNode, state]);
+	function resizeHandler() {
+		setState((prev) => prev + 1);
+	}
 	useEffect(() => {
 		let handleWrapper = once(() => handler());
 		window.addEventListener('scroll', (e) => {
 			e.preventDefault();
 			handleWrapper();
 		});
-		return window.removeEventListener('scroll', (e) => {});
+		window.addEventListener('resize', resizeHandler);
+		return () => {
+			window.removeEventListener('scroll', (e) => {
+				e.preventDefault();
+				handleWrapper();
+			});
+			window.removeEventListener('resize', resizeHandler);
+		};
 	}, [handler]);
 
 	if (refNode?.current) {
