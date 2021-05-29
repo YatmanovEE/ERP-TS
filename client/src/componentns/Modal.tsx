@@ -1,5 +1,5 @@
-import { ReactChild, SyntheticEvent } from 'react';
-import { FC } from 'react';
+import { ReactChild, SyntheticEvent, useEffect, useState } from 'react';
+import { FC, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import CardInfoSection from './CardInfo/CardInfo.CardInfoSection';
 import { createUseStyles } from 'react-jss';
@@ -8,6 +8,7 @@ import { createClassName } from '../modules/join';
 import { IRootReducer } from '../redux/stores/rootStore';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import { closeModal } from '../redux/actions/modal';
+import { CSSTransition } from 'react-transition-group';
 
 function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>) {
 	let fileList = e.target.files;
@@ -48,14 +49,31 @@ namespace IModal {
 	}
 	export const Style = createUseStyles(
 		(theme: ITheme) => ({
-			wrapper: {
-				backgroundColor: 'transparent',
+			wrapper: (duration: number) => ({
 				position: 'fixed',
 				width: '100%',
 				height: '100%',
 				left: '0px',
 				top: '0px',
-			},
+				opacity: 0,
+				'&-enter': {
+					opacity: 0,
+				},
+				'&-enter-active': {
+					opacity: 1,
+					transition: `opacity ${duration}ms`,
+				},
+				'&-enter-done': {
+					opacity: 1,
+				},
+				'&-exit': {
+					opacity: 1,
+				},
+				'&-exit-active': {
+					opacity: 0,
+					transition: `opacity ${duration}ms`,
+				},
+			}),
 			container: {
 				display: 'flex',
 				justifyContent: 'center',
@@ -66,29 +84,54 @@ namespace IModal {
 }
 
 const Modal: FC<IModal.Props> = ({ modal }) => {
-	let className = IModal.Style();
+	let duration = 200;
+	let className = IModal.Style(duration);
 	let dispatch = useDispatch();
 	function closeModalhandler(event: SyntheticEvent<HTMLDivElement>): void {
 		if (event.target === event.currentTarget) {
 			dispatch(closeModal({ id: modal.id }));
 		}
 	}
-
-	if (modal.active) {
+	const [active, setActive] = useState(false);
+	const [render, setRender] = useState(false);
+	useEffect(() => {
+		if (modal.active) {
+			setRender(modal.active);
+			setTimeout(() => {
+				setActive(true);
+			}, 0);
+		} else {
+			setActive(false);
+			setTimeout(() => {
+				setRender(modal.active);
+			}, duration);
+		}
+	}, [duration, modal.active]);
+	const node = useRef(null);
+	if (render) {
 		return ReactDOM.createPortal(
-			<div className={className.wrapper}>
-				<div
-					className={className.container}
-					onClick={(e) => closeModalhandler(e)}
-				>
-					{modal.component}
+			<CSSTransition
+				in={active}
+				timeout={duration}
+				classNames={className.wrapper}
+				nodeRef={node}
+				mountOnEnter
+			>
+				<div className={className.wrapper} ref={node}>
+					<div
+						className={className.container}
+						onClick={(e: SyntheticEvent<HTMLDivElement>) =>
+							closeModalhandler(e)
+						}
+					>
+						{modal.component}
+					</div>
 				</div>
-			</div>,
+			</CSSTransition>,
 			document.body
 		);
-	} else {
-		return null;
 	}
+	return null;
 };
 
 export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
