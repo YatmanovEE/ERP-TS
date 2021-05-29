@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../redux/actions/modal';
-import { MenuWrapper } from './Menu';
+import { MenuWrapper } from './MenuWrapper';
 import { KebubMenu } from './KebubMenu';
 import { MenuButton } from './LocationMenu';
 import { createUseStyles } from 'react-jss';

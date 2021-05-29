@@ -23,16 +23,18 @@ export namespace IModalTemplateStyled {
 				backgroundColor: 'white',
 				marginLeft: '10px',
 			},
-			modal__border: {
+			modal__bottom: {
 				backgroundColor: theme.grey,
+				'&>:first-child': {
+					marginLeft: '0px',
+				},
 			},
-			border__btn: {
+			bottom__btn: {
 				border: theme.border,
 			},
 			btn__save: {
 				backgroundColor: theme.linkColor,
 				color: 'white',
-				marginLeft: '-10px',
 			},
 		}),
 		{

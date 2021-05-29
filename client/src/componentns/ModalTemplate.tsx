@@ -9,6 +9,7 @@ namespace IModalTemplate {
 		title: string;
 		id: string;
 		children: ReactChild;
+		onSaveHandler?: () => void;
 	};
 }
 
@@ -16,6 +17,7 @@ export const ModalTemplate: FC<IModalTemplate.Props> = ({
 	title,
 	id,
 	children,
+	onSaveHandler,
 }) => {
 	let className = IModalTemplateStyled.Style();
 	let join = createClassName(className);
@@ -33,11 +35,21 @@ export const ModalTemplate: FC<IModalTemplate.Props> = ({
 				</button>
 			</div>
 			<div className={className.container}>{children}</div>
-			<div className={join(className.modal__border, 'container')}>
-				<button className={join('btn', 'border__btn', className.btn__save)}>
-					Сохранить
+			<div className={join(className.modal__bottom, 'container')}>
+				{onSaveHandler && (
+					<button
+						className={join('btn', 'border__btn', className.btn__save)}
+						onClick={() => onSaveHandler()}
+					>
+						Сохранить
+					</button>
+				)}
+				<button
+					className={join('btn', 'border__btn')}
+					onClick={() => dispatch(closeModal({ id }))}
+				>
+					Отменить
 				</button>
-				<button className={join('btn', 'border__btn')}>Отменить</button>
 			</div>
 		</div>
 	);

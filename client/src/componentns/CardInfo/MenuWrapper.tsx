@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { createClassName } from '../../modules/join';
 import { ConnectedProps } from 'react-redux';
-import { MenuStyled } from './Menu.Styled';
+import { MenuStyled } from './MenuWrapper.Styled';
 
 namespace IMenuWrapper {
 	export type Props = {

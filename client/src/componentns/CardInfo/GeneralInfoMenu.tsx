@@ -1,4 +1,4 @@
-import { MenuWrapper } from './Menu';
+import { MenuWrapper } from './MenuWrapper';
 import { MenuButton } from './LocationMenu';
 import { FC, SyntheticEvent } from 'react';
 import { useDispatch } from 'react-redux';
@@ -43,7 +43,7 @@ const GeneralInfoButton: FC<{ title: string; id: string }> = ({
 	return (
 		<MenuButton
 			title={title}
-			handler={(e: SyntheticEvent) =>
+			handler={() =>
 				dispatch(openModal({ id, component: <ModalGeneral id={id} /> }))
 			}
 		></MenuButton>
