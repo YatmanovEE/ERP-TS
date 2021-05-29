@@ -1,8 +1,9 @@
 import { FC, SyntheticEvent } from 'react';
-import { MenuWrapper } from './Menu';
+import { MenuWrapper } from './MenuWrapper';
 import { KebubMenu } from './KebubMenu';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../redux/actions/modal';
+import { ModalTemplate } from '../ModalTemplate';
 
 namespace IMenuPerson {
 	export type Props = {
@@ -37,7 +38,7 @@ const Menu: FC<{ id: string }> = ({ id }) => {
 namespace IMenuButton {
 	export type Props = {
 		//TODO Разобраться какой тут тип
-		handler: any;
+		handler: () => void;
 		title: string;
 	};
 }
@@ -54,5 +55,13 @@ export const MenuButton: FC<IMenuButton.Props> = ({ handler, title }) => {
 };
 
 export const LocationModal: FC = () => {
-	return <span>LocationModal</span>;
+	return (
+		<ModalTemplate
+			title={'Location'}
+			id={'id'}
+			onSaveHandler={() => console.log('log')}
+		>
+			<span>LocationModal</span>
+		</ModalTemplate>
+	);
 };
