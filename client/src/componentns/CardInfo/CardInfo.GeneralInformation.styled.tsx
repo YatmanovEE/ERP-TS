@@ -23,7 +23,7 @@ export namespace GeneralInformationStyled {
 			margin: '10px',
 		},
 
-		locationWrapper: {
+		location: {
 			'&>figure': {
 				margin: '0px',
 				'&>figCaption': {
@@ -34,7 +34,7 @@ export namespace GeneralInformationStyled {
 				},
 			},
 		},
-		locationWrapper__image: {
+		location__image: {
 			overflow: 'hidden',
 			'&>img': {},
 		},

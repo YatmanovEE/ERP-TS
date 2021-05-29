@@ -1,5 +1,5 @@
 export enum CardInfoTypeActions {
-	TOOGLE_MENU = 'CardInfo/TOOGLE_MENU',
+	UPDATE = 'CardInfo/UPDATE',
 }
 
 export enum EventListTypeActions {

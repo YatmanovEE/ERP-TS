@@ -4,7 +4,7 @@ import CardInfoSection from './CardInfo.CardInfoSection';
 import { createClassName } from '../../modules/join';
 import { GeneralInformationStyled } from './CardInfo.GeneralInformation.styled';
 
-namespace IGeneralInformation {
+export namespace IGeneralInformation {
 	export type Props = IPhotoSection.Props &
 		ILinkSection.Props &
 		IDescriptionSection.Props & {
@@ -98,7 +98,7 @@ export const DescriptionSection: FC<IDescriptionSection.Props> = ({
 	return <CardInfoSection>{description}</CardInfoSection>;
 };
 
-namespace ILocation {
+export namespace ILocation {
 	export type Props = {
 		description: string;
 		src: string;
@@ -112,13 +112,13 @@ export const Location: FC<ILocation.Props> = ({ description, src, id }) => {
 
 	return (
 		<CardInfo id={id} title={'Местонахождение'}>
-			<div className={join('locationWrapper')}>
+			<div className={join(className.location)}>
 				<figure>
 					<figcaption>
 						<span>{description}</span>
 					</figcaption>
-					<div className={join('locationWrapper__image')}>
-						<img src={src} alt="" />
+					<div className={join(className.location__image)}>
+						<img src={src} alt="" />;
 					</div>
 				</figure>
 			</div>

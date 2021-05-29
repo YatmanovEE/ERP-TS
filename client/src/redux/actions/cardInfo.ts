@@ -4,9 +4,9 @@ import { ICardInfoState } from './../reducers/cardInfo.reducer';
 
 export type ICardMenu<T> = IAction<CardInfoTypeActions, T>;
 
-export function toogleMenu(payload: ICardInfoState): ICardMenu<ICardInfoState> {
+export function updateMenu(payload: ICardInfoState): ICardMenu<ICardInfoState> {
 	return {
-		type: CardInfoTypeActions.TOOGLE_MENU,
+		type: CardInfoTypeActions.UPDATE,
 		payload,
 	};
 }
