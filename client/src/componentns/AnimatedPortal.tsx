@@ -9,7 +9,7 @@ namespace IAnimatedPortal {
 		duration: number;
 		//TODO Найти какой тип для truthy and falsy значений
 		activeState: any;
-		nodeRef: React.MutableRefObject<null>;
+		nodeRef: React.RefObject<HTMLDivElement>;
 		className: string;
 	}
 }
