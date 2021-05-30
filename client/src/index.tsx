@@ -22,6 +22,7 @@ export interface ITheme {
 	shadowOffset: string;
 	secondaryBackground: string;
 	linkColor: string;
+	placeHolderColor: string;
 }
 
 const theme: ITheme = {
@@ -36,6 +37,7 @@ const theme: ITheme = {
 	shadowBlack: 'rgba(0, 0, 0, 0.2)',
 	secondaryBackground: '0px 4px 12px rgba(0, 0, 0, 0.16)',
 	linkColor: '#2F80ED',
+	placeHolderColor: '#828282',
 };
 const sagaMiddleware = createSagaMiddleware();
 
