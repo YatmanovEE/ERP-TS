@@ -1,5 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { AnimatedPortal } from './AnimatedPortal';
 
@@ -13,10 +12,10 @@ interface IPos {
 	readonly posParent: DOMRect | undefined;
 }
 interface IPosY extends IPos {
-	readonly childrenHeight: number;
+	readonly childHeight: number;
 }
 interface IPosX extends IPos {
-	readonly childrenWidth: number;
+	readonly childWidth: number;
 }
 
 interface IPosStyle {
@@ -73,7 +72,7 @@ const style = createUseStyles(
 	}
 );
 
-function yPos({ posParent, childrenHeight }: IPosY): number {
+function yPos({ posParent, childHeight: childrenHeight }: IPosY): number {
 	let ret = 0;
 	if (posParent?.y !== undefined) {
 		if (posParent.y < childrenHeight) {
@@ -84,7 +83,7 @@ function yPos({ posParent, childrenHeight }: IPosY): number {
 	}
 	return ret;
 }
-function xPos({ posParent, childrenWidth }: IPosX): number {
+function xPos({ posParent, childWidth: childrenWidth }: IPosX): number {
 	let ret = 0;
 	if (posParent?.x !== undefined) {
 		if (posParent.x < childrenWidth) {
@@ -106,7 +105,7 @@ const once = (fn: () => void) => {
 	};
 };
 export const ToolTipWrapper = ({
-	refNode,
+	refNode: parentRef,
 	children,
 	handler,
 }: IToolTipWrapper__Props) => {
@@ -119,26 +118,31 @@ export const ToolTipWrapper = ({
 		x: 0,
 	});
 
-	let nodeRef = useRef(null);
-	const [state, setState] = useState(0);
+	// let childRef = useRef<HTMLDivElement>(null);
+	const [updatePos, setUpdatePos] = useState(0);
 	let duration = 200;
-	let className = style({ posChildren, posParent, duration });
-	useLayoutEffect(() => {
-		let elem = document.getElementsByClassName(className.payloadContainer)[0];
-		let rectParent = refNode?.current?.getBoundingClientRect();
-		let paramElem = elem?.getBoundingClientRect();
-		if (paramElem) {
-			let childrenHeight = paramElem.height;
-			let childrenWidth = paramElem.width;
-			let y = yPos({ posParent: rectParent, childrenHeight });
-			let x = xPos({ posParent: rectParent, childrenWidth });
 
-			setPosChildren({ x, y });
-			setPosParent({ x: rectParent?.left, y: rectParent?.top });
-		}
-	}, [className.payloadContainer, refNode, state]);
+	let className = style({ posChildren, posParent, duration });
+	let animationRef = useRef(null);
+	const childRef = useCallback(
+		(childRef: HTMLDivElement) => {
+			let parentRect = parentRef?.current?.getBoundingClientRect();
+			let childRect = childRef?.getBoundingClientRect();
+			if (childRect) {
+				let childHeight = childRect?.height;
+				let childWidth = childRect?.width;
+				let y = yPos({ posParent: parentRect, childHeight: childHeight });
+				let x = xPos({ posParent: parentRect, childWidth: childWidth });
+
+				setPosChildren({ x, y });
+				setPosParent({ x: parentRect?.left, y: parentRect?.top });
+			}
+		},
+		[parentRef]
+	);
+
 	function resizeHandler() {
-		setState((prev) => prev + 1);
+		setUpdatePos((prev) => prev + 1);
 	}
 	useEffect(() => {
 		let handleWrapper = once(() => handler());
@@ -155,25 +159,23 @@ export const ToolTipWrapper = ({
 			window.removeEventListener('resize', resizeHandler);
 		};
 	}, [handler]);
-	console.group('ToolTipWrapper');
-	console.log(posChildren);
-	console.log(posParent);
-	console.groupEnd();
 	return (
 		<AnimatedPortal
 			whereElem={document.body}
 			duration={duration}
-			activeState={refNode?.current}
+			activeState={parentRef?.current}
 			className={className.container}
-			nodeRef={nodeRef}
+			nodeRef={animationRef}
 		>
 			<div
 				className={className.container}
 				onClick={() => handler()}
-				ref={nodeRef}
+				ref={animationRef}
 			>
 				<div className={className.wrapper}>
-					<div className={className.payloadContainer}>{children}</div>
+					<div className={className.payloadContainer} ref={childRef}>
+						{children}
+					</div>
 				</div>
 			</div>
 		</AnimatedPortal>
