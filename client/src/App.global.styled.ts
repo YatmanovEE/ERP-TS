@@ -17,7 +17,6 @@ export const globalStyle = createUseStyles(
 			flexWrap: 'wrap',
 		},
 		btn: {
-			outline: 'none',
 			border: 'none',
 			padding: '10px',
 			backgroundColor: 'transparent',

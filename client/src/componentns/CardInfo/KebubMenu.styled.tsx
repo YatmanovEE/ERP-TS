@@ -9,14 +9,13 @@ export namespace IKebubMenuStyled {
 			justifyContent: 'center',
 			alignItems: 'center',
 			width: '20px',
-			height: '20px',
 			'&>span': {
 				textAlign: 'center',
 				borderRadius: '100%',
 				width: '4px',
 				height: '4px',
 				backgroundColor: 'black',
-				marginTop: '2px',
+				marginTop: '4px',
 			},
 		},
 	}));

@@ -7,15 +7,6 @@ export namespace MenuStyled {
 			flexDirection: 'column',
 			background: theme.backgroundColor,
 			boxShadow: theme.boxShadow,
-			'&>div': {
-				whiteSpace: 'nowrap',
-				padding: '10px',
-				cursor: 'pointer',
-				transition: 'background-color 0.5s ease',
-				'&:hover': {
-					backgroundColor: '#8a8787',
-				},
-			},
 		},
 	}));
 }

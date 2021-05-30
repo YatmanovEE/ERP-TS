@@ -1,9 +1,12 @@
-import { FC, SyntheticEvent } from 'react';
+import { FC, MouseEventHandler, SyntheticEvent } from 'react';
 import { MenuWrapper } from './MenuWrapper';
 import { KebubMenu } from './KebubMenu';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../redux/actions/modal';
 import { ModalTemplate } from '../ModalTemplate';
+import { createUseStyles } from 'react-jss';
+import { ITheme } from '../..';
+import { createClassName } from '../../modules/join';
 
 namespace IMenuPerson {
 	export type Props = {
@@ -38,19 +41,31 @@ const Menu: FC<{ id: string }> = ({ id }) => {
 namespace IMenuButton {
 	export type Props = {
 		//TODO Разобраться какой тут тип
-		handler: () => void;
+		handler: MouseEventHandler<HTMLButtonElement>;
 		title: string;
 	};
 }
 
+const MenuButtonStyled = createUseStyles((theme: ITheme) => ({
+	btn: {
+		whiteSpace: 'nowrap',
+		padding: '10px',
+		cursor: 'pointer',
+		transition: 'background-color 0.5s ease',
+		textAlign: 'start',
+		'&:hover': {
+			backgroundColor: '#8a8787',
+		},
+	},
+}));
+
 export const MenuButton: FC<IMenuButton.Props> = ({ handler, title }) => {
+	let className = MenuButtonStyled();
+	let join = createClassName(className);
 	return (
-		<div
-			data-id={title}
-			onClick={(e: SyntheticEvent<HTMLDivElement>) => handler()}
-		>
+		<button className={join('btn')} data-id={title} onClick={(e) => handler(e)}>
 			{title}
-		</div>
+		</button>
 	);
 };
 
