@@ -1,12 +1,11 @@
-import { ReactChild, SyntheticEvent, useEffect, useState } from 'react';
+import { ReactChild, SyntheticEvent } from 'react';
 import { FC, useRef } from 'react';
-import ReactDOM from 'react-dom';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '..';
 import { IRootReducer } from '../redux/stores/rootStore';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import { closeModal } from '../redux/actions/modal';
-import { CSSTransition } from 'react-transition-group';
+import { AnimatedPortal } from './AnimatedPortal';
 
 namespace IModal {
 	export interface Props extends ConnectedProps<typeof connector> {
@@ -57,46 +56,25 @@ const Modal: FC<IModal.Props> = ({ modal }) => {
 			dispatch(closeModal({ id: modal.id }));
 		}
 	}
-	const [active, setActive] = useState(false);
-	const [render, setRender] = useState(false);
-	useEffect(() => {
-		if (modal.active) {
-			setRender(modal.active);
-			setTimeout(() => {
-				setActive(true);
-			}, 0);
-		} else {
-			setActive(false);
-			setTimeout(() => {
-				setRender(modal.active);
-			}, duration);
-		}
-	}, [duration, modal.active]);
-	const node = useRef(null);
-	if (render) {
-		return ReactDOM.createPortal(
-			<CSSTransition
-				in={active}
-				timeout={duration}
-				classNames={className.wrapper}
-				nodeRef={node}
-				mountOnEnter
-			>
-				<div className={className.wrapper} ref={node}>
-					<div
-						className={className.container}
-						onClick={(e: SyntheticEvent<HTMLDivElement>) =>
-							closeModalhandler(e)
-						}
-					>
-						{modal.component}
-					</div>
+	let node = useRef(null);
+	return (
+		<AnimatedPortal
+			whereElem={document.body}
+			duration={duration}
+			activeState={modal.active}
+			nodeRef={node}
+			className={className.wrapper}
+		>
+			<div className={className.wrapper} ref={node}>
+				<div
+					className={className.container}
+					onClick={(e: SyntheticEvent<HTMLDivElement>) => closeModalhandler(e)}
+				>
+					{modal.component}
 				</div>
-			</CSSTransition>,
-			document.body
-		);
-	}
-	return null;
+			</div>
+		</AnimatedPortal>
+	);
 };
 
 const mapStateToProps = ({ modal }: IRootReducer) => ({
