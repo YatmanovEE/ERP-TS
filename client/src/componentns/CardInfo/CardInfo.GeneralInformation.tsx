@@ -41,8 +41,8 @@ export const PhotoSection: FC<IPhotoSection.Props> = ({ photoSrc }) => {
 	return (
 		<CardInfoSection>
 			<div className={join('flex', 'container__image')}>
-				{photoSrc.map((src) => {
-					return <img src={src} alt="#" />;
+				{photoSrc.map((src, key) => {
+					return <img src={src} alt="#" key={key + Math.random()} />;
 				})}
 			</div>
 		</CardInfoSection>
