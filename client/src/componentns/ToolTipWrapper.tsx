@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { createUseStyles } from 'react-jss';
+import { once } from '../modules/once';
 import { AnimatedPortal } from './AnimatedPortal';
-
-interface IToolTipWrapper__Props {
-	readonly refNode: React.RefObject<HTMLDivElement>;
-	readonly children: React.ReactNode;
-	readonly handler: () => void;
-}
+import { ToolTipWrapperStyled } from './ToolTipWrapper.styled';
 
 interface IPos {
 	readonly posParent: DOMRect | undefined;
@@ -17,60 +12,6 @@ interface IPosY extends IPos {
 interface IPosX extends IPos {
 	readonly childWidth: number;
 }
-
-interface IPosStyle {
-	readonly x: number | undefined;
-	readonly y: number | undefined;
-}
-
-interface ITooltipWrapperStyle__props {
-	posChildren: IPosStyle;
-	posParent: IPosStyle;
-	duration: number;
-}
-const style = createUseStyles(
-	{
-		payloadContainer: ({ posChildren }: ITooltipWrapperStyle__props) => ({
-			position: 'absolute',
-			top: `${posChildren.y}px`,
-			left: `${posChildren.x}px`,
-		}),
-		wrapper: ({ posParent }: ITooltipWrapperStyle__props) => ({
-			position: 'absolute',
-			top: `${posParent.y}px`,
-			left: `${posParent.x}px`,
-		}),
-		container: ({ duration }: ITooltipWrapperStyle__props) => ({
-			position: 'fixed',
-			top: '0px',
-			left: '0px',
-			width: '100%',
-			height: '100%',
-			backgroundColor: 'transparent',
-			opacity: 0,
-			'&-enter': {
-				opacity: 0,
-			},
-			'&-enter-active': {
-				opacity: 1,
-				transition: `opacity ${duration}ms`,
-			},
-			'&-enter-done': {
-				opacity: 1,
-			},
-			'&-exit': {
-				opacity: 1,
-			},
-			'&-exit-active': {
-				opacity: 0,
-				transition: `opacity ${duration}ms`,
-			},
-		}),
-	},
-	{
-		name: 'ToolTipWrapper',
-	}
-);
 
 function yPos({ posParent, childHeight: childrenHeight }: IPosY): number {
 	let ret = 0;
@@ -95,34 +36,37 @@ function xPos({ posParent, childWidth: childrenWidth }: IPosX): number {
 	return ret;
 }
 
-const once = (fn: () => void) => {
-	let done = true;
-	return () => {
-		if (done) {
-			done = false;
-			return fn();
-		}
+namespace IToolTipWrapper {
+	export type Props = {
+		readonly refNode: React.RefObject<HTMLDivElement>;
+		readonly children: React.ReactNode;
+		readonly handler: () => void;
 	};
-};
+}
+
 export const ToolTipWrapper = ({
 	refNode: parentRef,
 	children,
 	handler,
-}: IToolTipWrapper__Props) => {
-	const [posChildren, setPosChildren] = useState<IPosStyle>({
-		y: 0,
-		x: 0,
-	});
-	const [posParent, setPosParent] = useState<IPosStyle>({
+}: IToolTipWrapper.Props) => {
+	const [posChildren, setPosChildren] =
+		useState<ToolTipWrapperStyled.IPosStyle>({
+			y: 0,
+			x: 0,
+		});
+	const [posParent, setPosParent] = useState<ToolTipWrapperStyled.IPosStyle>({
 		y: 0,
 		x: 0,
 	});
 
-	// let childRef = useRef<HTMLDivElement>(null);
 	const [updatePos, setUpdatePos] = useState(0);
 	let duration = 200;
 
-	let className = style({ posChildren, posParent, duration });
+	let className = ToolTipWrapperStyled.Style({
+		posChildren,
+		posParent,
+		duration,
+	});
 	let animationRef = useRef(null);
 	const childRef = useCallback(
 		(childRef: HTMLDivElement) => {
