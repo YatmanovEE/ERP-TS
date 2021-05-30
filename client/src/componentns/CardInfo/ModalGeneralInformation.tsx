@@ -109,6 +109,7 @@ export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
 					{photo.length > 0 && <PhotoSection photoSrc={photo}></PhotoSection>}
 					<CardInfoSection>
 						<div className={join('flex', className.photoContainer)}>
+							{/* TODO Добавить возможность управления по tab */}
 							<label
 								role={'button'}
 								htmlFor="fileSender"
