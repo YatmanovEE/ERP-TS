@@ -1,6 +1,7 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { createUseStyles } from 'react-jss';
+import { AnimatedPortal } from './AnimatedPortal';
 
 interface IToolTipWrapper__Props {
 	readonly refNode: React.RefObject<HTMLDivElement>;
@@ -26,27 +27,51 @@ interface IPosStyle {
 interface ITooltipWrapperStyle__props {
 	posChildren: IPosStyle;
 	posParent: IPosStyle;
+	duration: number;
 }
-const style = createUseStyles({
-	payloadContainer: ({ posChildren }: ITooltipWrapperStyle__props) => ({
-		position: 'absolute',
-		top: `${posChildren.y}px`,
-		left: `${posChildren.x}px`,
-	}),
-	wrapper: ({ posParent }: ITooltipWrapperStyle__props) => ({
-		position: 'absolute',
-		top: `${posParent.y}px`,
-		left: `${posParent.x}px`,
-	}),
-	container: {
-		position: 'fixed',
-		top: '0px',
-		left: '0px',
-		width: '100%',
-		height: '100%',
-		backgroundColor: 'transparent',
+const style = createUseStyles(
+	{
+		payloadContainer: ({ posChildren }: ITooltipWrapperStyle__props) => ({
+			position: 'absolute',
+			top: `${posChildren.y}px`,
+			left: `${posChildren.x}px`,
+		}),
+		wrapper: ({ posParent }: ITooltipWrapperStyle__props) => ({
+			position: 'absolute',
+			top: `${posParent.y}px`,
+			left: `${posParent.x}px`,
+		}),
+		container: ({ duration }: ITooltipWrapperStyle__props) => ({
+			position: 'fixed',
+			top: '0px',
+			left: '0px',
+			width: '100%',
+			height: '100%',
+			backgroundColor: 'transparent',
+			opacity: 0,
+			'&-enter': {
+				opacity: 0,
+			},
+			'&-enter-active': {
+				opacity: 1,
+				transition: `opacity ${duration}ms`,
+			},
+			'&-enter-done': {
+				opacity: 1,
+			},
+			'&-exit': {
+				opacity: 1,
+			},
+			'&-exit-active': {
+				opacity: 0,
+				transition: `opacity ${duration}ms`,
+			},
+		}),
 	},
-});
+	{
+		name: 'ToolTipWrapper',
+	}
+);
 
 function yPos({ posParent, childrenHeight }: IPosY): number {
 	let ret = 0;
@@ -93,12 +118,14 @@ export const ToolTipWrapper = ({
 		y: 0,
 		x: 0,
 	});
-	const [state, setState] = useState(0);
 
-	let className = style({ posChildren, posParent });
+	let nodeRef = useRef(null);
+	const [state, setState] = useState(0);
+	let duration = 200;
+	let className = style({ posChildren, posParent, duration });
 	useLayoutEffect(() => {
-		let rectParent = refNode?.current?.getBoundingClientRect();
 		let elem = document.getElementsByClassName(className.payloadContainer)[0];
+		let rectParent = refNode?.current?.getBoundingClientRect();
 		let paramElem = elem?.getBoundingClientRect();
 		if (paramElem) {
 			let childrenHeight = paramElem.height;
@@ -128,17 +155,27 @@ export const ToolTipWrapper = ({
 			window.removeEventListener('resize', resizeHandler);
 		};
 	}, [handler]);
-
-	if (refNode?.current) {
-		return ReactDOM.createPortal(
-			<div className={className.container} onClick={() => handler()}>
+	console.group('ToolTipWrapper');
+	console.log(posChildren);
+	console.log(posParent);
+	console.groupEnd();
+	return (
+		<AnimatedPortal
+			whereElem={document.body}
+			duration={duration}
+			activeState={refNode?.current}
+			className={className.container}
+			nodeRef={nodeRef}
+		>
+			<div
+				className={className.container}
+				onClick={() => handler()}
+				ref={nodeRef}
+			>
 				<div className={className.wrapper}>
 					<div className={className.payloadContainer}>{children}</div>
 				</div>
-			</div>,
-			document.body
-		);
-	} else {
-		return null;
-	}
+			</div>
+		</AnimatedPortal>
+	);
 };
