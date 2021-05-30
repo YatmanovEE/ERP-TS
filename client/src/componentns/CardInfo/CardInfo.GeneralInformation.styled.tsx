@@ -15,6 +15,7 @@ export namespace GeneralInformationStyled {
 			'&>img': {
 				margin: '10px',
 			},
+			'&>img:first-child': { marginLeft: '0px' },
 		},
 		link: {
 			margin: '-10px',
