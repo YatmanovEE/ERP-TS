@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FC } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useDispatch } from 'react-redux';
 import { ITheme } from '../..';
 import { createClassName } from '../../modules/join';
 import { ModalTemplate } from '../ModalTemplate';
@@ -77,7 +76,6 @@ namespace IModalGeneral {
 export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
 	let className = IModalGeneral.Style();
 	let join = createClassName(className);
-	const dispatch = useDispatch();
 
 	const [photo, setPhoto] = useState<string[]>([]);
 	const [event] = useState<Event>(() => {

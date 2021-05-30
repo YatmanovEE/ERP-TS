@@ -59,7 +59,7 @@ export const ToolTipWrapper = ({
 		x: 0,
 	});
 
-	const [updatePos, setUpdatePos] = useState(0);
+	const [, setUpdatePos] = useState(0);
 	let duration = 200;
 
 	let className = ToolTipWrapperStyled.Style({
