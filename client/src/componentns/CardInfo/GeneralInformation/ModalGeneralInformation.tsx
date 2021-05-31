@@ -38,6 +38,17 @@ function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>, id: string) {
 					});
 					sessionStorage.setItem(id, json);
 
+					window.dispatchEvent(
+						new CustomEvent<ISession>('session', {
+							detail: {
+								General: {
+									photo: getJSON?.General?.photo
+										? getJSON.General.photo.concat(result)
+										: [result],
+								},
+							},
+						})
+					);
 					//TODO Fetch fileReader.result
 				};
 			}
@@ -82,13 +93,22 @@ export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
 	const [photo, setPhoto] = useState<string[]>([]);
 
 	useEffect(() => {
+		function setItem(e?: CustomEvent<ISession>): void {
 			let photoSrc = sessionStorage.getItem(id);
+			if (e) {
+				setPhoto(e.detail.General.photo);
+			}
 			if (photoSrc) {
 				let photoJSON = JSON.parse(photoSrc);
+				// setPhoto(photoJSON.General.photo);
 			}
+			//TODO Изменить логику работы с localStorage, возможно притянуть Redux вместо кастомных событий
 		}
+		window.addEventListener('session', setItem as (e: Event) => void);
+
 		setItem();
 		return () => {
+			window.removeEventListener('session', setItem as (e: Event) => void);
 		};
 	}, [id]);
 	return (

@@ -80,10 +80,36 @@ namespace IPhotoSection {
 export const PhotoSection: FC<IPhotoSection.Props> = ({ photoSrc }) => {
 	let className = IPhotoSection.Style();
 	let join = createClassName(className);
+	function handler(count: number) {
+		let m_photoSrc = photoSrc.filter((item, key) => {
+			return key !== count && 1;
+		});
+		window.dispatchEvent(
+			new CustomEvent<ISession>('session', {
+				detail: {
+					General: {
+						photo: m_photoSrc,
+					},
+				},
+			})
+		);
+	}
 	return (
 		<CardInfoSection>
 			<div className={join('flex', 'container__image')}>
 				{photoSrc.map((src, key) => {
+					return (
+						<div className={join('image__item')} key={key + Math.random()}>
+							<button
+								className={join('btn')}
+								data-key={key}
+								onClick={() => handler(key)}
+							>
+								X
+							</button>
+							<img src={src} alt="#" />
+						</div>
+					);
 				})}
 			</div>
 		</CardInfoSection>
