@@ -1,22 +1,8 @@
 import { createUseStyles } from 'react-jss';
-import { ITheme } from '../..';
+import { ITheme } from '../../..';
 
 export namespace GeneralInformationStyled {
 	export const Style = createUseStyles((theme: ITheme) => ({
-		container__image: {
-			margin: '-10px',
-			overflowX: 'auto',
-			'-ms-overflow-style': 'none' /* IE and Edge */,
-			scrollbarWidth: 'none' /* Firefox */,
-
-			'&::-webkit-scrollbar': {
-				display: 'none' /* Chronium */,
-			},
-			'&>img': {
-				margin: '10px',
-			},
-			'&>img:first-child': { marginLeft: '0px' },
-		},
 		link: {
 			margin: '-10px',
 		},

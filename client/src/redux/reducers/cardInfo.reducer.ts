@@ -2,7 +2,8 @@ import { Reducer } from 'react';
 import {
 	IGeneralInformation,
 	ILocation,
-} from '../../componentns/CardInfo/CardInfo.GeneralInformation';
+} from '../../componentns/CardInfo/GeneralInformation/GeneralInformation';
+
 import { ICardMenu } from '../actions/cardInfo';
 import { CardInfoTypeActions } from './../types';
 

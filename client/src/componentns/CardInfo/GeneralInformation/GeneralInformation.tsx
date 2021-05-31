@@ -1,8 +1,11 @@
-import { FC } from 'react';
-import CardInfo from './CardInfo';
-import CardInfoSection from './CardInfo.CardInfoSection';
-import { createClassName } from '../../modules/join';
-import { GeneralInformationStyled } from './CardInfo.GeneralInformation.styled';
+import { FC, ReactEventHandler, SyntheticEvent, useState } from 'react';
+import CardInfo from '../../CardInfo/CardInfo';
+import CardInfoSection from '../../CardInfo/CardInfo.CardInfoSection';
+import { createClassName } from '../../../modules/join';
+import { GeneralInformationStyled } from './GeneralInformation.styled';
+import { createUseStyles } from 'react-jss';
+import { ITheme } from '../../..';
+import { ISession } from './ModalGeneralInformation';
 
 export namespace IGeneralInformation {
 	export type Props = IPhotoSection.Props &
@@ -33,16 +36,54 @@ namespace IPhotoSection {
 	export type Props = {
 		photoSrc: string[];
 	};
+	export const Style = createUseStyles((theme: ITheme) => ({
+		container__image: {
+			margin: '-10px',
+			overflowX: 'auto',
+			'-ms-overflow-style': 'none' /* IE and Edge */,
+			scrollbarWidth: 'none' /* Firefox */,
+
+			'&::-webkit-scrollbar': {
+				display: 'none' /* Chronium */,
+			},
+			'&>div': {
+				margin: '10px',
+			},
+			'&>div:first-child': { marginLeft: '0px' },
+		},
+		image__item: {
+			cursor: 'pointer',
+			position: 'relative',
+			transition: 'background-color 1s ease',
+			padding: '10px',
+			'&>img': {
+				maxWidth: '10rem',
+			},
+			'&:hover': {
+				backgroundColor: '#00000044',
+			},
+			'&:hover>button': {
+				opacity: '1',
+			},
+		},
+		btn: {
+			position: 'absolute',
+			opacity: '0',
+			transition: 'opacity 1s ease',
+			padding: '0px',
+			right: '5px',
+			top: '5px',
+		},
+	}));
 }
 
 export const PhotoSection: FC<IPhotoSection.Props> = ({ photoSrc }) => {
-	let className = GeneralInformationStyled.Style();
+	let className = IPhotoSection.Style();
 	let join = createClassName(className);
 	return (
 		<CardInfoSection>
 			<div className={join('flex', 'container__image')}>
 				{photoSrc.map((src, key) => {
-					return <img src={src} alt="#" key={key + Math.random()} />;
 				})}
 			</div>
 		</CardInfoSection>

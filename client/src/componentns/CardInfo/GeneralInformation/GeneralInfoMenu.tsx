@@ -1,9 +1,9 @@
-import { MenuWrapper } from './MenuWrapper';
-import { MenuButton } from './LocationMenu';
+import { MenuWrapper } from '../MenuWrapper';
+import { MenuButton } from '../LocationMenu';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { openModal } from '../../redux/actions/modal';
-import { KebubMenu } from './KebubMenu';
+import { openModal } from '../../../redux/actions/modal';
+import { KebubMenu } from '../KebubMenu';
 import { ModalGeneral } from './ModalGeneralInformation';
 
 export const GeneralInfoMenu: FC<{ id: string }> = ({ id }) => {

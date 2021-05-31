@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import { FC } from 'react';
 import { createUseStyles } from 'react-jss';
-import { ITheme } from '../..';
-import { createClassName } from '../../modules/join';
-import { ModalTemplate } from '../ModalTemplate';
-import CardInfoSection from './CardInfo.CardInfoSection';
-import { PhotoSection } from './CardInfo.GeneralInformation';
+import { ITheme } from '../../..';
+import { createClassName } from '../../../modules/join';
+import { ModalTemplate } from '../../ModalTemplate';
+import CardInfoSection from '../../CardInfo/CardInfo.CardInfoSection';
+import { PhotoSection } from './GeneralInformation';
 
-function chooseFileHandler(
-	e: React.ChangeEvent<HTMLInputElement>,
-	id: string,
-	event: Event
-) {
+export interface ISession {
+	General: {
+		photo: string[];
+	};
+}
+
+function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>, id: string) {
 	let fileList = e.target.files;
 	if (fileList) {
 		for (let i = 0; i < fileList.length; i++) {
@@ -35,7 +37,7 @@ function chooseFileHandler(
 						},
 					});
 					sessionStorage.setItem(id, json);
-					window.dispatchEvent(event);
+
 					//TODO Fetch fileReader.result
 				};
 			}
@@ -78,26 +80,17 @@ export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
 	let join = createClassName(className);
 
 	const [photo, setPhoto] = useState<string[]>([]);
-	const [event] = useState<Event>(() => {
-		let event = document.createEvent('Event');
-		event.initEvent('session', true, true);
-		return event;
-	});
+
 	useEffect(() => {
-		function setItem(): void {
 			let photoSrc = sessionStorage.getItem(id);
 			if (photoSrc) {
 				let photoJSON = JSON.parse(photoSrc);
-				setPhoto(photoJSON.General.photo);
 			}
 		}
-		window.addEventListener('session', setItem);
 		setItem();
 		return () => {
-			window.removeEventListener('session', setItem);
 		};
 	}, [id]);
-
 	return (
 		<>
 			<ModalTemplate
@@ -121,7 +114,7 @@ export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
 									id="fileSender"
 									accept={'.jpeg, .jpg, .png'}
 									className={className.inputFileSender}
-									onChange={(e) => chooseFileHandler(e, id, event)}
+									onChange={(e) => chooseFileHandler(e, id)}
 								/>
 							</label>
 							<div className={className.placeHolder}>
