@@ -1,11 +1,12 @@
-import { FC, ReactEventHandler, SyntheticEvent, useState } from 'react';
+import { FC } from 'react';
 import CardInfo from '../../CardInfo/CardInfo';
 import CardInfoSection from '../../CardInfo/CardInfo.CardInfoSection';
 import { createClassName } from '../../../modules/join';
 import { GeneralInformationStyled } from './GeneralInformation.styled';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '../../..';
-import { ISession } from './ModalGeneralInformation';
+import { useDispatch } from 'react-redux';
+import { removePhoto } from '../../../redux/actions/generalInfo';
 
 export namespace IGeneralInformation {
 	export type Props = IPhotoSection.Props &
@@ -80,17 +81,14 @@ namespace IPhotoSection {
 export const PhotoSection: FC<IPhotoSection.Props> = ({ photoSrc }) => {
 	let className = IPhotoSection.Style();
 	let join = createClassName(className);
-	function handler(count: number) {
-		let m_photoSrc = photoSrc.filter((item, key) => {
-			return key !== count && 1;
-		});
-		window.dispatchEvent(
-			new CustomEvent<ISession>('session', {
-				detail: {
-					General: {
-						photo: m_photoSrc,
-					},
-				},
+	let dispatch = useDispatch();
+	function handler(src: string) {
+		dispatch(
+			removePhoto({
+				photoSrc: [src],
+				linkSection: [],
+				id: 'none',
+				description: 'none',
 			})
 		);
 	}
@@ -103,7 +101,7 @@ export const PhotoSection: FC<IPhotoSection.Props> = ({ photoSrc }) => {
 							<button
 								className={join('btn')}
 								data-key={key}
-								onClick={() => handler(key)}
+								onClick={() => handler(src)}
 							>
 								X
 							</button>

@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../../redux/actions/modal';
 import { KebubMenu } from '../KebubMenu';
-import { ModalGeneral } from './ModalGeneralInformation';
+import ModalGeneral from './ModalGeneralInformation';
 
 export const GeneralInfoMenu: FC<{ id: string }> = ({ id }) => {
 	return (

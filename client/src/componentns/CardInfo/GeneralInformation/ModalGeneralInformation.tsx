@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch } from 'react';
 import { FC } from 'react';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '../../..';
@@ -6,14 +6,15 @@ import { createClassName } from '../../../modules/join';
 import { ModalTemplate } from '../../ModalTemplate';
 import CardInfoSection from '../../CardInfo/CardInfo.CardInfoSection';
 import { PhotoSection } from './GeneralInformation';
+import { connect, useDispatch, ConnectedProps } from 'react-redux';
+import { IRootReducer } from './../../../redux/stores/rootStore';
+import { addPhoto } from '../../../redux/actions/generalInfo';
 
-export interface ISession {
-	General: {
-		photo: string[];
-	};
-}
-
-function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>, id: string) {
+function chooseFileHandler(
+	e: React.ChangeEvent<HTMLInputElement>,
+	id: string,
+	dispatch: Dispatch<any>
+) {
 	let fileList = e.target.files;
 	if (fileList) {
 		for (let i = 0; i < fileList.length; i++) {
@@ -23,34 +24,19 @@ function chooseFileHandler(e: React.ChangeEvent<HTMLInputElement>, id: string) {
 				fileReader.readAsDataURL(file);
 				fileReader.onload = () => {
 					let result = fileReader.result;
-					let get = sessionStorage.getItem(id);
-					let getJSON;
-					if (get) {
-						getJSON = JSON.parse(get);
+					if (result) {
+						dispatch(
+							addPhoto({
+								id,
+								photoSrc: [result.toString()],
+								description: '',
+								linkSection: [],
+							})
+						);
 					}
-
-					let json = JSON.stringify({
-						General: {
-							photo: getJSON?.General?.photo
-								? getJSON.General.photo.concat(result)
-								: [result],
-						},
-					});
-					sessionStorage.setItem(id, json);
-
-					window.dispatchEvent(
-						new CustomEvent<ISession>('session', {
-							detail: {
-								General: {
-									photo: getJSON?.General?.photo
-										? getJSON.General.photo.concat(result)
-										: [result],
-								},
-							},
-						})
-					);
-					//TODO Fetch fileReader.result
 				};
+
+				//TODO Fetch fileReader.result
 			}
 		}
 	}
@@ -86,31 +72,16 @@ namespace IModalGeneral {
 	}));
 }
 
-export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
+type Props = ConnectedProps<typeof connector> & {
+	id: string;
+};
+
+const ModalGeneral: FC<Props> = ({ id, generalInfo }) => {
 	let className = IModalGeneral.Style();
 	let join = createClassName(className);
-
-	const [photo, setPhoto] = useState<string[]>([]);
-
-	useEffect(() => {
-		function setItem(e?: CustomEvent<ISession>): void {
-			let photoSrc = sessionStorage.getItem(id);
-			if (e) {
-				setPhoto(e.detail.General.photo);
-			}
-			if (photoSrc) {
-				let photoJSON = JSON.parse(photoSrc);
-				// setPhoto(photoJSON.General.photo);
-			}
-			//TODO Изменить логику работы с localStorage, возможно притянуть Redux вместо кастомных событий
-		}
-		window.addEventListener('session', setItem as (e: Event) => void);
-
-		setItem();
-		return () => {
-			window.removeEventListener('session', setItem as (e: Event) => void);
-		};
-	}, [id]);
+	console.log('modal');
+	let photo = generalInfo.photoSrc;
+	let dispatch = useDispatch();
 	return (
 		<>
 			<ModalTemplate
@@ -134,7 +105,7 @@ export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
 									id="fileSender"
 									accept={'.jpeg, .jpg, .png'}
 									className={className.inputFileSender}
-									onChange={(e) => chooseFileHandler(e, id)}
+									onChange={(e) => chooseFileHandler(e, id, dispatch)}
 								/>
 							</label>
 							<div className={className.placeHolder}>
@@ -147,3 +118,10 @@ export const ModalGeneral: FC<{ id: string }> = ({ id }) => {
 		</>
 	);
 };
+
+const mapStateToProps = ({ generalInfo }: IRootReducer) => ({
+	generalInfo,
+});
+
+let connector = connect(mapStateToProps);
+export default connector(ModalGeneral);

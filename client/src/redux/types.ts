@@ -1,5 +1,7 @@
-export enum CardInfoTypeActions {
-	UPDATE = 'CardInfo/UPDATE',
+export enum GeneralInfoTypeActions {
+	UPDATE = 'GeneralInfo/UPDATE',
+	ADDPhoto = 'GeneralInfo/ADDPhoto',
+	REMOVEPhoto = 'GeneralInfo/REMOVEPhoto',
 }
 
 export enum EventListTypeActions {
