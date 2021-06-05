@@ -34,9 +34,7 @@ export const AnimatedPortal: FC<IAnimatedPortal.Props> = ({
 	useEffect(() => {
 		if (activeState) {
 			setRender(activeState);
-			setTimeout(() => {
-				setActive(true);
-			}, 0);
+			queueMicrotask(() => setActive(true));
 		} else {
 			setActive(false);
 			setTimeout(() => {
