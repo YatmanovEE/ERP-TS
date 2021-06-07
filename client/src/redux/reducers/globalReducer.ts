@@ -23,6 +23,7 @@ export const addItem = <T, Y>({
 	arrayState,
 	arrayAction,
 }: IAddRemoveItem<T, Y>): T => {
+	//TODO Добавить Warning if length <=0
 	return {
 		...state,
 		[key]: arrayState.concat(arrayAction),
