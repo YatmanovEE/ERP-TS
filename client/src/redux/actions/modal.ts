@@ -1,6 +1,6 @@
 import { IModalState } from '../reducers/modal.reducer';
 import { ModalTypesActions } from '../types';
-import { IAction } from './../reducers/reducers';
+import { IAction } from '../reducers/types';
 
 export type IModalAction<T> = IAction<ModalTypesActions, T>;
 

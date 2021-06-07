@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { IShowEvent } from './actions/eventList';
-import { IAction } from './reducers/reducers';
+import { IAction } from './reducers/types';
 import { EventListTypeActions } from './types';
 
 export interface IActionShowEvent

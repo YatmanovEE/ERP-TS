@@ -1,5 +1,4 @@
-import { IGeneralInformation } from '../../componentns/CardInfo/GeneralInformation/GeneralInformation';
-import { IAction } from '../reducers/reducers';
+import { IAction } from '../reducers/types';
 import { GeneralInfoTypeActions } from '../types';
 
 export type IGeneralInfo<T> = IAction<GeneralInfoTypeActions, T>;

@@ -1,4 +1,4 @@
-import { IAction } from '../reducers/reducers';
+import { IAction } from '../reducers/types';
 import { EventListTypeActions } from '../types';
 import { eventItemType } from './../../componentns/EventList/EventsList';
 
