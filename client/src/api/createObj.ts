@@ -1,3 +1,5 @@
+import { IID } from '../redux/actions/generalInfo';
+
 export interface createObj {
 	address: string;
 	name: string;
@@ -15,10 +17,10 @@ export type name = {
 export type comment = string;
 
 export type personItem = comment &
-	name & {
+	name &
+	IID & {
 		photo: URL;
 		post: string;
-		id: string;
 	};
 
 export type contractorItem = {

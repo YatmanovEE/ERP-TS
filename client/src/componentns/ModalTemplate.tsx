@@ -1,13 +1,13 @@
 import { FC, ReactChild } from 'react';
 import { useDispatch } from 'react-redux';
 import { createClassName } from '../modules/join';
+import { IID } from '../redux/actions/generalInfo';
 import { closeModal } from '../redux/actions/modal';
 import { IModalTemplateStyled } from './ModalTemplate.styled';
 
 namespace IModalTemplate {
-	export type Props = {
+	export type Props = IID & {
 		title: string;
-		id: string;
 		children: ReactChild;
 		onSaveHandler?: () => void;
 	};

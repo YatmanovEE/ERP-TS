@@ -5,8 +5,9 @@ import { useDispatch } from 'react-redux';
 import { openModal } from '../../../redux/actions/modal';
 import { KebubMenu } from '../KebubMenu';
 import ModalGeneral from './ModalGeneralInformation';
+import { IID } from '../../../redux/actions/generalInfo';
 
-export const GeneralInfoMenu: FC<{ id: string }> = ({ id }) => {
+export const GeneralInfoMenu: FC<IID> = ({ id }) => {
 	return (
 		<KebubMenu id={id}>
 			<Menu id={id}></Menu>
@@ -14,7 +15,7 @@ export const GeneralInfoMenu: FC<{ id: string }> = ({ id }) => {
 	);
 };
 
-const Menu: FC<{ id: string }> = ({ id }) => {
+const Menu: FC<IID> = ({ id }) => {
 	return (
 		<MenuWrapper>
 			<>
@@ -35,10 +36,7 @@ const Menu: FC<{ id: string }> = ({ id }) => {
 	);
 };
 
-const GeneralInfoButton: FC<{ title: string; id: string }> = ({
-	title,
-	id,
-}) => {
+const GeneralInfoButton: FC<{ title: string } & IID> = ({ title, id }) => {
 	const dispatch = useDispatch();
 	return (
 		<MenuButton

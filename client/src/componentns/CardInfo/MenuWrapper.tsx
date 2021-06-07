@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { createClassName } from '../../modules/join';
 import { ConnectedProps } from 'react-redux';
 import { MenuStyled } from './MenuWrapper.Styled';
+import { IID } from '../../redux/actions/generalInfo';
 
 namespace IMenuWrapper {
 	export type Props = {
@@ -16,9 +17,5 @@ export const MenuWrapper: FC<IMenuWrapper.Props> = ({ children }) => {
 };
 
 export namespace IMenu {
-	export type Props<T> = ConnectedProps<T> & {
-		id: string;
-	};
+	export type Props<T> = ConnectedProps<T> & IID;
 }
-
-//TODO сделать общий ID интерфейс

@@ -1,9 +1,9 @@
 import { Reducer } from 'react';
+import { IID } from '../actions/generalInfo';
 import { IModalAction } from '../actions/modal';
 import { ModalTypesActions } from '../types';
 
-export interface IModalState {
-	id: string;
+export interface IModalState extends IID {
 	active: boolean;
 	component: React.ReactElement | null;
 }

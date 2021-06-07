@@ -6,14 +6,13 @@ import { GeneralInformationStyled } from './GeneralInformation.styled';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '../../..';
 import { useDispatch } from 'react-redux';
-import { removePhoto } from '../../../redux/actions/generalInfo';
+import { IID, removePhoto } from '../../../redux/actions/generalInfo';
 
 export namespace IGeneralInformation {
 	export type Props = IPhotoSection.Props &
 		ILinkSection.Props &
-		IDescriptionSection.Props & {
-			id: string;
-		};
+		IDescriptionSection.Props &
+		IID;
 }
 
 export const GeneralInformation: FC<IGeneralInformation.Props> = ({
@@ -161,10 +160,9 @@ export const DescriptionSection: FC<IDescriptionSection.Props> = ({
 };
 
 export namespace ILocation {
-	export type Props = {
+	export type Props = IID & {
 		description: string;
 		src: string;
-		id: string;
 	};
 }
 

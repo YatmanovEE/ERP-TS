@@ -8,7 +8,7 @@ import CardInfoSection from '../../CardInfo/CardInfo.CardInfoSection';
 import { ILinkItem, LinkSection, PhotoSection } from './GeneralInformation';
 import { connect, useDispatch, ConnectedProps } from 'react-redux';
 import { IRootReducer } from './../../../redux/stores/rootStore';
-import { addLink, addPhoto } from '../../../redux/actions/generalInfo';
+import { addLink, addPhoto, IID } from '../../../redux/actions/generalInfo';
 
 function chooseFileHandler(
 	e: React.ChangeEvent<HTMLInputElement>,
@@ -70,9 +70,7 @@ namespace IModalGeneral {
 	}));
 }
 
-type Props = ConnectedProps<typeof connector> & {
-	id: string;
-};
+type Props = ConnectedProps<typeof connector> & IID;
 
 const ModalGeneral: FC<Props> = ({ id, generalInfo }) => {
 	let className = IModalGeneral.Style();

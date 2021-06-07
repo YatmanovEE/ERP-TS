@@ -1,13 +1,12 @@
 import { IModalState } from '../reducers/modal.reducer';
 import { ModalTypesActions } from '../types';
 import { IAction } from '../reducers/types';
+import { IID } from './generalInfo';
 
 export type IModalAction<T> = IAction<ModalTypesActions, T>;
 
 export declare type ModalAction<T> = (payload: T) => IModalAction<IModalState>;
-export type IModalTypeClose = {
-	id: string;
-};
+export type IModalTypeClose = IID;
 export type IModalTypeOpen = IModalTypeClose & {
 	component: React.ReactElement;
 };

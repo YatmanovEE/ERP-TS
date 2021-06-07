@@ -15,7 +15,7 @@ type IPhoto = {
 	photoSrc: string[];
 };
 
-type IId = {
+export type IID = {
 	id: string;
 };
 
@@ -23,7 +23,7 @@ type ILink = {
 	linkSection: ILinkItem.Props[];
 };
 
-export const addLink: IGeneralInfoAction<ILink & IId> = (payload) => {
+export const addLink: IGeneralInfoAction<ILink & IID> = (payload) => {
 	return {
 		type: GeneralInfoTypeActions.ADD_LINK,
 		payload: {
@@ -46,7 +46,7 @@ export const removeLink: IGeneralInfoAction<ILink> = (payload) => {
 	};
 };
 
-export const addPhoto: IGeneralInfoAction<IPhoto & IId> = (payload) => {
+export const addPhoto: IGeneralInfoAction<IPhoto & IID> = (payload) => {
 	return {
 		type: GeneralInfoTypeActions.ADD_PHOTO,
 		payload: {

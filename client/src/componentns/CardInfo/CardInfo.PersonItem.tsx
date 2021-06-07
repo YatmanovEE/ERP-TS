@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { createClassName } from '../../modules/join';
+import { IID } from '../../redux/actions/generalInfo';
 import { PersonItemStyled } from './CardInfo.PresonItem.styled';
 import { MenuPerson } from './MenuPerson';
 
@@ -40,10 +41,9 @@ const PersonItemComments: FC<IPersonItemComments.Props> = ({ comments }) => {
 };
 
 namespace IPersonItemDescription {
-	export type Props = {
+	export type Props = IID & {
 		post: string;
 		photo: string;
-		id: string;
 		fullName: {
 			firstName: string;
 			lastName: string;
