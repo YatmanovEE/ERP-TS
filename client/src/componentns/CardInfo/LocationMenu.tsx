@@ -7,11 +7,10 @@ import { ModalTemplate } from '../ModalTemplate';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '../..';
 import { createClassName } from '../../modules/join';
+import { IID } from '../../redux/actions/generalInfo';
 
 namespace IMenuPerson {
-	export type Props = {
-		id: string;
-	};
+	export type Props = IID;
 }
 
 export const LocationMenu: FC<IMenuPerson.Props> = ({ id }) => {
@@ -22,7 +21,7 @@ export const LocationMenu: FC<IMenuPerson.Props> = ({ id }) => {
 	);
 };
 //TODO Разобраться какой тут тип
-const Menu: FC<{ id: string }> = ({ id }) => {
+const Menu: FC<IID> = ({ id }) => {
 	const dispatch = useDispatch();
 	return (
 		<MenuWrapper>
@@ -40,7 +39,6 @@ const Menu: FC<{ id: string }> = ({ id }) => {
 
 namespace IMenuButton {
 	export type Props = {
-		//TODO Разобраться какой тут тип
 		handler: MouseEventHandler<HTMLButtonElement>;
 		title: string;
 	};

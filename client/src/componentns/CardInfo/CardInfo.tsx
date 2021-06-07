@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createClassName } from '../../modules/join';
 import { MenuPerson } from './MenuPerson';
 import { ICardInfoStyle } from './CardInfo.styled';
+import { IID } from '../../redux/actions/generalInfo';
 
 export namespace ICardInfo {
 	export interface Props extends ICardInfoTitle.Props {
@@ -10,9 +11,8 @@ export namespace ICardInfo {
 	}
 }
 export namespace ICardInfoTitle {
-	export interface Props {
+	export interface Props extends IID {
 		title: string;
-		id: string;
 	}
 }
 

@@ -6,11 +6,10 @@ import { KebubMenu } from './KebubMenu';
 import { MenuButton } from './LocationMenu';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '../..';
+import { IID } from '../../redux/actions/generalInfo';
 
 namespace IMenuPerson {
-	export type Props = {
-		id: string;
-	};
+	export type Props = IID;
 }
 
 export const MenuPerson: FC<IMenuPerson.Props> = ({ id }) => {
@@ -21,7 +20,7 @@ export const MenuPerson: FC<IMenuPerson.Props> = ({ id }) => {
 	);
 };
 
-const Menu: FC<{ id: string }> = ({ id }) => {
+const Menu: FC<IID> = ({ id }) => {
 	return (
 		<MenuWrapper>
 			<>
@@ -44,7 +43,7 @@ const Menu: FC<{ id: string }> = ({ id }) => {
 	);
 };
 
-const MenuPersonButton: FC<{ title: string; id: string }> = ({ title, id }) => {
+const MenuPersonButton: FC<{ title: string } & IID> = ({ title, id }) => {
 	const dispatch = useDispatch();
 	return (
 		<MenuButton

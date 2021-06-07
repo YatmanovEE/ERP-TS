@@ -1,11 +1,11 @@
 import { FC } from 'react';
+import { IID } from '../../redux/actions/generalInfo';
 import MenuDivWrapper from '../MenuDivWrapper';
 import { IKebubMenuStyled } from './KebubMenu.styled';
 
 namespace IKebubMenu {
-	export type Props = {
+	export type Props = IID & {
 		children: React.ReactChild;
-		id: string;
 	};
 }
 
