@@ -33,7 +33,7 @@ export const GeneralInformation: FC<IGeneralInformation.Props> = ({
 	);
 };
 
-namespace IPhotoSection {
+export namespace IPhotoSection {
 	export type Props = {
 		photoSrc: string[];
 	};
@@ -86,9 +86,6 @@ export const PhotoSection: FC<IPhotoSection.Props> = ({ photoSrc }) => {
 		dispatch(
 			removePhoto({
 				photoSrc: [src],
-				linkSection: [],
-				id: 'none',
-				description: 'none',
 			})
 		);
 	}
@@ -134,7 +131,7 @@ export const LinkSection: FC<ILinkSection.Props> = ({ linkSection }) => {
 	);
 };
 
-namespace ILinkItem {
+export namespace ILinkItem {
 	export type Props = {
 		link: string;
 		title: string;
