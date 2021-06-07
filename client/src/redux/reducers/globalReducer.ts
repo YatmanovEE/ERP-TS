@@ -1,3 +1,8 @@
+/**
+ *
+ * @type T - state Type
+ * @type Y - array Type
+ */
 export interface IAddRemoveItem<T, Y> {
 	state: T;
 	key: keyof T & string;
