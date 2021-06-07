@@ -58,7 +58,7 @@ export const GeneralInfoReducer: Reducer<
  * @param IAddRemoveItem
  * @param Add Action Add
  * @param Remove Remove Add
- * @returns reducer
+ * @returns
  */
 
 const addRemoveReducer = <T, Y, P>(
