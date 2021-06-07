@@ -1,14 +1,14 @@
-import { Dispatch } from 'react';
+import { Dispatch, useState } from 'react';
 import { FC } from 'react';
 import { createUseStyles } from 'react-jss';
 import { ITheme } from '../../..';
 import { createClassName } from '../../../modules/join';
 import { ModalTemplate } from '../../ModalTemplate';
 import CardInfoSection from '../../CardInfo/CardInfo.CardInfoSection';
-import { PhotoSection } from './GeneralInformation';
+import { ILinkItem, LinkSection, PhotoSection } from './GeneralInformation';
 import { connect, useDispatch, ConnectedProps } from 'react-redux';
 import { IRootReducer } from './../../../redux/stores/rootStore';
-import { addPhoto } from '../../../redux/actions/generalInfo';
+import { addLink, addPhoto } from '../../../redux/actions/generalInfo';
 
 function chooseFileHandler(
 	e: React.ChangeEvent<HTMLInputElement>,
@@ -29,8 +29,6 @@ function chooseFileHandler(
 							addPhoto({
 								id,
 								photoSrc: [result.toString()],
-								description: '',
-								linkSection: [],
 							})
 						);
 					}
@@ -47,7 +45,7 @@ namespace IModalGeneral {
 			display: 'none',
 		},
 
-		photoContainer: {
+		container: {
 			justifyContent: 'space-between',
 			alignItems: 'center',
 		},
@@ -81,6 +79,11 @@ const ModalGeneral: FC<Props> = ({ id, generalInfo }) => {
 	let join = createClassName(className);
 	console.log('modal');
 	let photo = generalInfo.photoSrc;
+	let link = generalInfo.linkSection;
+	const [linkText, setLinkText] = useState<ILinkItem.Props>({
+		title: '',
+		link: '',
+	});
 	let dispatch = useDispatch();
 	return (
 		<>
@@ -92,7 +95,7 @@ const ModalGeneral: FC<Props> = ({ id, generalInfo }) => {
 				<>
 					{photo.length > 0 && <PhotoSection photoSrc={photo}></PhotoSection>}
 					<CardInfoSection>
-						<div className={join('flex', className.photoContainer)}>
+						<div className={join('flex', className.container)}>
 							{/* TODO Добавить возможность управления по tab */}
 							<label
 								role={'button'}
@@ -110,6 +113,53 @@ const ModalGeneral: FC<Props> = ({ id, generalInfo }) => {
 							</label>
 							<div className={className.placeHolder}>
 								Вы можете добавить фотографии и другие полезные изображения
+							</div>
+						</div>
+					</CardInfoSection>
+					<CardInfoSection>
+						{link.length > 0 && <LinkSection linkSection={link}></LinkSection>}
+
+						<div>
+							link
+							<input
+								type="text"
+								name=""
+								id=""
+								value={linkText.link}
+								onChange={(e) =>
+									setLinkText({ ...linkText, link: e.target.value })
+								}
+							/>
+						</div>
+						<div>
+							title
+							<input
+								type="text"
+								name=""
+								id=""
+								value={linkText.title}
+								onChange={(e) =>
+									setLinkText({ ...linkText, title: e.target.value })
+								}
+							/>
+						</div>
+						<div className={join('flex', className.container)}>
+							<button
+								className={join('inputFileSender', 'btn')}
+								onClick={() =>
+									dispatch(
+										addLink({
+											id,
+											linkSection: [linkText],
+										})
+									)
+								}
+							>
+								Добавить ссылки
+							</button>
+							<div className={className.placeHolder}>
+								Добавьте ссылки на новостные сообщения, торговые площадки если
+								предприятие ведет закупки и другие полезные источники
 							</div>
 						</div>
 					</CardInfoSection>
