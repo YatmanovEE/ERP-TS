@@ -1,7 +1,8 @@
 export enum GeneralInfoTypeActions {
-	UPDATE = 'GeneralInfo/UPDATE',
-	ADDPhoto = 'GeneralInfo/ADDPhoto',
-	REMOVEPhoto = 'GeneralInfo/REMOVEPhoto',
+	ADD_PHOTO = 'GeneralInfo/ADD_PHOTO',
+	REMOVE_PHOTO = 'GeneralInfo/REMOVE_PHOTO',
+	ADD_LINK = 'GeneralInfo/ADD_LINK',
+	REMOVE_LINK = 'GeneralInfo/REMOVE_LINK',
 }
 
 export enum EventListTypeActions {
