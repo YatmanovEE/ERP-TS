@@ -7,7 +7,6 @@ import { KebubMenu } from '../KebubMenu';
 import ModalGeneral from './ModalGeneralInformation';
 import { IID } from '../../../redux/actions/generalInfo';
 import { createUseStyles } from 'react-jss';
-import { createClassName } from '../../../modules/join';
 
 const style = createUseStyles({
 	btn: {
@@ -16,11 +15,8 @@ const style = createUseStyles({
 });
 
 export const GeneralInfoMenu: FC<IID> = ({ id }) => {
-	let className = style();
-	let join = createClassName(className);
 	return (
 		<>
-			<button className={join('btn')}>Test</button>
 			<KebubMenu id={id}>
 				<Menu id={id}></Menu>
 			</KebubMenu>
