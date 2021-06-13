@@ -16,22 +16,24 @@ interface ICreateClassName {
 
 export function createClassName(className: ICreateClassName) {
 	return (...str: string[]) => {
-		let list: string[] = [];
+		let globalList: string[] = [];
+		let classNameList: string[] = [];
+		let strList: string[] = [];
 		str.forEach((item) => {
 			if (Object.keys(globalName).includes(item)) {
-				list.push(globalName[item]);
+				globalList.push(globalName[item]);
 			}
 			if (str.includes(item)) {
-				list.push(className[item]);
+				strList.push(className[item]);
 			}
 			if (Object.values(className).includes(item)) {
-				list.push(item);
+				classNameList.push(item);
 			}
 
 			//TODO Решить как обрабатывать стили, которые совпадают по названию
 			//NOTE Пока вставленные стили вставляются заранее, чем перечеркивают параметры глобальных стилей
 		});
-		return joinWithoutDouble(list);
+		return joinWithoutDouble([...globalList, ...classNameList, ...strList]);
 	};
 }
 
