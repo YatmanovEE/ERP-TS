@@ -1,3 +1,5 @@
+import { IAction } from './types';
+
 /**
  *
  * @type T - state Type
@@ -47,4 +49,36 @@ export const removeItem = <T, Y>({
 		...state,
 		[key]: arrayState.filter((item) => item !== arrayAction[0] && -1),
 	};
+};
+
+/**
+ *
+ * @param IAddRemoveItem
+ * @param Add Action Add
+ * @param Remove Remove Add
+ * @returns
+ */
+
+export const addRemoveReducer = <T, Y, P>(
+	{ state, key, arrayState, arrayAction }: IAddRemoveItem<T, Y>,
+	add: P,
+	remove: P
+) => {
+	const itemSection: IAddRemoveItem<T, Y> = {
+		state,
+		key,
+		arrayState,
+		arrayAction,
+	};
+	const reducer = (action: IAction<P, T>) => {
+		switch (action.type) {
+			case add:
+				return addItem(itemSection);
+			case remove:
+				return removeItem(itemSection);
+			default:
+				return state;
+		}
+	};
+	return reducer;
 };

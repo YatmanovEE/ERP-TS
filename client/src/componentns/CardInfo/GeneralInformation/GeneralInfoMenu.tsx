@@ -6,12 +6,25 @@ import { openModal } from '../../../redux/actions/modal';
 import { KebubMenu } from '../KebubMenu';
 import ModalGeneral from './ModalGeneralInformation';
 import { IID } from '../../../redux/actions/generalInfo';
+import { createUseStyles } from 'react-jss';
+import { createClassName } from '../../../modules/join';
+
+const style = createUseStyles({
+	btn: {
+		backgroundColor: 'red',
+	},
+});
 
 export const GeneralInfoMenu: FC<IID> = ({ id }) => {
+	let className = style();
+	let join = createClassName(className);
 	return (
-		<KebubMenu id={id}>
-			<Menu id={id}></Menu>
-		</KebubMenu>
+		<>
+			<button className={join('btn')}>Test</button>
+			<KebubMenu id={id}>
+				<Menu id={id}></Menu>
+			</KebubMenu>
+		</>
 	);
 };
 

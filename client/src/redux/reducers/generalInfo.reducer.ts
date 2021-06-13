@@ -3,8 +3,7 @@ import { IGeneralInformation } from '../../componentns/CardInfo/GeneralInformati
 import { IGeneralInfo } from '../actions/generalInfo';
 
 import { GeneralInfoTypeActions } from '../types';
-import { addItem, IAddRemoveItem, removeItem } from './globalReducer';
-import { IAction } from './types';
+import { addRemoveReducer } from './globalReducer';
 
 const initialState: IGeneralInformation.Props = {
 	id: 'none',
@@ -51,36 +50,4 @@ export const GeneralInfoReducer: Reducer<
 		return LinkSectionReducer(action);
 	}
 	return state;
-};
-
-/**
- *
- * @param IAddRemoveItem
- * @param Add Action Add
- * @param Remove Remove Add
- * @returns
- */
-
-const addRemoveReducer = <T, Y, P>(
-	{ state, key, arrayState, arrayAction }: IAddRemoveItem<T, Y>,
-	add: P,
-	remove: P
-) => {
-	const itemSection: IAddRemoveItem<T, Y> = {
-		state,
-		key,
-		arrayState,
-		arrayAction,
-	};
-	const reducer = (action: IAction<P, T>) => {
-		switch (action.type) {
-			case add:
-				return addItem(itemSection);
-			case remove:
-				return removeItem(itemSection);
-			default:
-				return state;
-		}
-	};
-	return reducer;
 };
