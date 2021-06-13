@@ -37,9 +37,7 @@ export function createClassName(className: ICreateClassName) {
 	};
 }
 
-export function registryGlobalName(
-	className?: ICreateClassName
-): ICreateClassName {
+export function registryGlobalName(className: ICreateClassName): void {
 	if (className) {
 		if (globalName) {
 			console.error('Уже зарегистрирован один глобальный стиль');
@@ -47,5 +45,18 @@ export function registryGlobalName(
 			globalName = className;
 		}
 	}
-	return globalName;
+}
+
+export function getGlobalName() {
+	return (...str: string[]) => {
+		let list: string[] = [];
+		str.forEach((item) => {
+			if (globalName) {
+				if (Object.keys(globalName).includes(item)) {
+					list.push(globalName[item]);
+				}
+			}
+		});
+		return joinWithoutDouble(list);
+	};
 }
